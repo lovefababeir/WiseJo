@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
 import SignUp from "./pages/SignUp";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 						<Route exact path="/" component={SignIn}></Route>
 						<Route path="/dashboard" component={Dashboard}></Route>
 						<Route path="/signup" component={SignUp}></Route>
+						<Route path="/forgot-password" component={ForgotPassword}></Route>
 					</Switch>
 				</AuthProvider>
 			</Router>
