@@ -30,6 +30,7 @@ function SignInScreen() {
 					<h1>My App</h1>
 					<p>Please sign-in:</p>
 					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+					<Link to="/forgot-password">Forgot password?</Link>
 					<div className="w-100 text-center mt-2">
 						Need an account? <Link to="/signup">Sign Up</Link>
 					</div>
