@@ -11,7 +11,7 @@ const Dashboard = () => {
 		e.preventDefault();
 		try {
 			await logout();
-			history.push("/");
+			history.push("/login");
 		} catch {
 			console.log("Sorry, we could not sign you out");
 			setError("Sorry, we could not sign you out");
