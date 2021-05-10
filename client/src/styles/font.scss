@@ -1,0 +1,51 @@
+//PRIMARY FONT: AVENIR
+@font-face {
+	font-family: "Avenir";
+	src: url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProBold.ttf")
+			format(opentype),
+		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProBold.ttf")
+			format(truetype);
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: "Avenir";
+	src: url("../assets/font/AvenirNextProLT/Linotype-AvenirNextLTPro-Demi.otf")
+			format(opentype),
+		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProDemi.ttf")
+			format(truetype);
+	font-weight: 600;
+}
+
+@font-face {
+	font-family: "Avenir";
+	src: url("../assets/font/AvenirNextProLT/Linotype-AvenirNextLTPro-Regular.otf")
+			format(opentype),
+		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProMedium.ttf")
+			format(truetype);
+	font-weight: normal;
+}
+
+@mixin font(
+	$size: 1.3rem,
+	$height: 1.8rem,
+	$weight: normal,
+	$color: $primary-color
+) {
+	font-family: "Avenir", Arial, Helvetica, sans-serif;
+	font-size: $size;
+	line-height: $height;
+	font-weight: $weight;
+	color: $color;
+}
+
+//Did not do mixin for breakpoint since it takes the same number of key strokes
+
+//FONT MIXINS:
+
+// only need to pass on font parameter if you want $bold
+@mixin font($size, $line-height, $weight: $regular) {
+	font-size: $size;
+	line-height: $line-height;
+	font-family: $weight;
+}
