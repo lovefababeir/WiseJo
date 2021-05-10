@@ -1,27 +1,27 @@
 //PRIMARY FONT: AVENIR
 @font-face {
 	font-family: "Avenir";
-	src: url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProBold.ttf")
+	src: url("../assets/fonts/AvenirNextProLT/Linotype-AvenirNextLTPro-Bold.otf")
 			format(opentype),
-		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProBold.ttf")
+		url("../assets/fonts/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProBold.ttf")
 			format(truetype);
 	font-weight: bold;
 }
 
 @font-face {
 	font-family: "Avenir";
-	src: url("../assets/font/AvenirNextProLT/Linotype-AvenirNextLTPro-Demi.otf")
+	src: url("../assets/fonts/AvenirNextProLT/Linotype-AvenirNextLTPro-Demi.otf")
 			format(opentype),
-		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProDemi.ttf")
+		url("../assets/fonts/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProDemi.ttf")
 			format(truetype);
 	font-weight: 600;
 }
 
 @font-face {
 	font-family: "Avenir";
-	src: url("../assets/font/AvenirNextProLT/Linotype-AvenirNextLTPro-Regular.otf")
+	src: url("../assets/fonts/AvenirNextProLT/Linotype-AvenirNextLTPro-Regular.otf")
 			format(opentype),
-		url("../assets/font/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProMedium.ttf")
+		url("../assets/fonts/AvenirNextProLT/AlternativeFiles/Linotype-AvenirNextLTProMedium.ttf")
 			format(truetype);
 	font-weight: normal;
 }
