@@ -1,0 +1,64 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.form {
+	&__title {
+		font-size: 3rem;
+		color: white;
+		font-weight: bold;
+		margin: 7rem auto 3rem auto;
+		padding: 0 5rem;
+		text-align: center;
+	}
+	&__box {
+		width: 23rem;
+		margin: 0 auto;
+	}
+
+	&__label {
+		text-transform: uppercase;
+		font-size: 1.3rem;
+		margin-bottom: 0;
+		color: #88a593;
+		font-weight: bold;
+	}
+	&__question-1 {
+		@extend .form__title;
+		margin-top: 0;
+		font-weight: normal;
+	}
+	&__question-2 {
+		@extend .form__question-1;
+		margin-top: 5rem;
+	}
+}
+
+#storeList {
+	width: 23rem;
+	height: 3rem;
+	border-radius: 1.5rem;
+	display: block;
+	margin: 0.5rem auto 3rem auto;
+	padding-left: 2rem;
+	border: solid 1px #d3d3d3;
+	background-color: white;
+	outline: none;
+}
+
+#search {
+	@extend #storeList;
+	border-radius: 1.5rem;
+	margin-left: 0;
+}
+#submitBtn {
+	@extend #search;
+	background-color: #88a593;
+	border: #83a08e solid 1px;
+	padding: 0;
+	width: 15rem;
+	color: white;
+	text-transform: uppercase;
+	font-size: 1.6rem;
+	box-shadow: 1px 2px 4px 1px #838383;
+}
