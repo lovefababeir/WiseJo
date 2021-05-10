@@ -1,0 +1,64 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+nav {
+	background-color: hsl(28, 80%, 74%);
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 9rem;
+}
+
+.menu {
+	width: 100vw;
+	height: 9rem;
+	margin: 0 auto;
+	@include flex(row, space-evenly, center);
+	max-width: 900px;
+	& li {
+		list-style-type: none;
+
+		@include flex(column, center, center);
+		width: 7rem;
+		height: 100%;
+		position: relative;
+	}
+	&__icon {
+		width: 4rem;
+		&--3 {
+			width: 3rem;
+		}
+		&--4 {
+			width: 2.5rem;
+		}
+	}
+	&__item {
+		text-decoration: none;
+	}
+	&__label {
+		font-size: 1.4rem;
+		color: #fff;
+		font-weight: bold;
+		text-align: center;
+	}
+	&-item--selected {
+		&::after {
+			content: "";
+			width: 100%;
+			height: 150rem;
+			position: absolute;
+			top: -1rem;
+			left: 0;
+			border-radius: 1rem;
+			background-color: hsl(28, 80%, 74%);
+			z-index: -1;
+			border: solid 1px hsl(28, 70%, 68%);
+			box-shadow: 1px 1px 5px 2px hsl(28, 39%, 58%);
+		}
+	}
+}
+.shoppingcart {
+	fill: #fff;
+	width: 4rem;
+}
