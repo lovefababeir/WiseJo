@@ -36,7 +36,7 @@ const Dashboard = () => {
 				</h2>
 
 				<div className="home__nav">
-					<button className="home__btn" onClick={() => pageHandler("main")}>
+					<button className="home__btn" onClick={() => pageHandler("shop")}>
 						Shop
 					</button>
 					<button className="home__btn" onClick={() => pageHandler("results")}>
@@ -45,10 +45,7 @@ const Dashboard = () => {
 					<button className="home__btn" onClick={() => pageHandler("receipt")}>
 						Log Shopping
 					</button>
-					<button
-						onClick={() => this.pageHandler("receiptslist")}
-						className="home__btn"
-					>
+					<button onClick={() => pageHandler("receiptslist")} className="home__btn">
 						Track History
 					</button>
 				</div>
