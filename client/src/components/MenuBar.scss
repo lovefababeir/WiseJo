@@ -53,11 +53,22 @@ nav {
 			border-radius: 1rem;
 			background-color: hsl(28, 80%, 74%);
 			z-index: -1;
-			border: solid 1px hsl(28, 70%, 68%);
-			box-shadow: 1px 1px 5px 2px hsl(28, 39%, 58%);
+
+			box-shadow: 0px 0px 5px 3px hsl(28, 39%, 58%);
+			animation: shiftUp ease-in-out 0.3s forwards;
 		}
 	}
 }
+
+@keyframes shiftUp {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 .shoppingcart {
 	fill: #fff;
 	width: 4rem;
