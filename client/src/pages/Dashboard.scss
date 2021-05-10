@@ -1,0 +1,51 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.home {
+	height: 100vh;
+	width: 100vw;
+	background-color: white;
+	padding-top: 0.1rem;
+
+	&__logo {
+		width: 12rem;
+		height: 12rem;
+		margin: 0 15rem;
+	}
+	&__icon {
+		fill: white;
+	}
+	&__logo-bg {
+		display: flex;
+		justify-content: center;
+		margin: 8rem auto 3rem auto;
+		border-radius: 50%;
+	}
+	&__heading {
+		width: 30rem;
+		margin: 3rem auto;
+		font-size: 3rem;
+		text-align: center;
+		font-weight: bold;
+		color: #aabfb2;
+	}
+	&__nav {
+		@include flex(column, space-around, center);
+		margin: 5rem auto;
+	}
+	&__btn {
+		width: 20rem;
+		height: 3rem;
+		margin: 0.3rem;
+		border: none;
+		border-radius: 2.5rem;
+		outline: none;
+		background-color: rgba(184, 205, 192, 0.5);
+		font-size: 1.5rem;
+		&:active,
+		&:focus-within {
+			background-color: #aabfb2;
+		}
+	}
+}
