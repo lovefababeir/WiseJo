@@ -1,0 +1,51 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.receipts {
+	height: 100vh;
+	margin: 0rem;
+	padding: 0.1rem 1rem;
+	border-radius: 2rem;
+	padding-bottom: 1rem;
+}
+
+.receipt-form {
+	&__storeSelect {
+		width: 23rem;
+		height: 2.5rem;
+		border-radius: 1.5rem;
+		display: block;
+		margin: 0.5rem auto 3rem auto;
+		padding-left: 2rem;
+		border: none;
+		background-color: white;
+		outline: none;
+	}
+	&__submitBtn {
+		height: 2.5rem;
+		width: 10rem;
+		border-radius: 1.5rem;
+		margin-bottom: 3rem;
+		border: none;
+		background-color: rgba(184, 205, 192, 1);
+		outline: none;
+		text-transform: uppercase;
+		color: #fff;
+		background-color: #88a593;
+		font-size: 1.6rem;
+	}
+	&__errMsg {
+		color: red;
+		font-size: 1.7rem;
+		width: 23rem;
+		margin: 2rem auto;
+	}
+	&__fileUpload {
+		margin-bottom: 2rem;
+	}
+}
+
+.form__label--receipts {
+	margin-top: 5rem;
+}
