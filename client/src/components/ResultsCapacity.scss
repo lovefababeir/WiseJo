@@ -1,0 +1,71 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.capacity {
+	&__carousel {
+		display: flex;
+		// justify-content: left;
+		align-items: flex-start;
+		height: 100%;
+		width: 90vw;
+		overflow-x: scroll;
+		margin: 3rem auto;
+		padding: 1.5rem 0;
+	}
+	&__box {
+		@include flex(column, center, center);
+	}
+	&__size {
+		flex-grow: 1;
+		margin: 0 1rem;
+		border-radius: 3rem;
+		padding: 0.5rem;
+		box-shadow: 0px 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.15);
+		&:nth-child(3n) {
+			background-color: rgba(248, 200, 158, 0.6);
+		}
+		&:nth-child(3n + 1) {
+			background-color: rgba(111, 160, 130, 0.5);
+		}
+		&:nth-child(3n + 2) {
+			background-color: rgba(191, 107, 107, 0.6);
+		}
+		&-title {
+			font-size: 1.8rem;
+			text-align: center;
+			margin-top: 2rem;
+		}
+	}
+	&__image {
+		width: 10rem;
+		height: 17rem;
+		border-radius: 2rem;
+		object-fit: cover;
+		object-position: left;
+		margin: 0.6rem;
+		box-shadow: 0px -3px 6px 4px rgba(0, 0, 0, 0.15);
+		background-color: white;
+	}
+	&__selected {
+		width: 90%;
+		margin: 0 auto 2rem auto;
+	}
+	&__details {
+		font-size: 1.3rem;
+		@include flex(row, space-between);
+	}
+	&__optionsNum {
+		font-size: 1.3rem;
+		color: #a66658;
+		font-style: italic;
+	}
+	&__title {
+		width: 90%;
+		font-size: 1.6rem;
+	}
+	&__options {
+		font-size: 1.6rem;
+		text-transform: capitalize;
+	}
+}
