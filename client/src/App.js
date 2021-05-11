@@ -8,6 +8,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import Search from "./pages/Search";
 import MenuBar from "./components/MenuBar";
+import Results from "./pages/Results";
+import RecordReceipt from "./pages/RecordReceipt";
+import ReceiptsList from "./pages/ReceiptList";
 
 function App() {
 	return (
@@ -20,7 +23,10 @@ function App() {
 							<Route path="/signup" component={SignUp} />
 							<Route path="/forgot-password" component={ForgotPassword} />
 							<PrivateRoute exact path="/" component={Dashboard} />
-							<PrivateRoute exact path="/shop" component={Search} />
+							<PrivateRoute path="/shop" component={Search} />
+							<PrivateRoute path="/compare" component={Results} />
+							<PrivateRoute path="/snap" component={RecordReceipt} />
+							<PrivateRoute path="/track" component={ReceiptsList} />
 						</Switch>
 					</AuthProvider>
 					{(window.location.pathname === "/shop" ||
