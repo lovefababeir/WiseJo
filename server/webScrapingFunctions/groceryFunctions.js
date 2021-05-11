@@ -147,24 +147,26 @@ const walmart = async function (searchWords) {
 			const productID = document
 				.querySelector(`#product-results > div:nth-child(${j}) > div`)
 				.getAttribute("data-product-id");
-
 			const image = document
 				.querySelector(
-					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > img`,
+					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(1) > img`,
 				)
 				.getAttribute("src");
 
 			const grocItem = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(2) > div > div:nth-child(1) > p`,
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p`,
 			).innerText;
 
-			const title = grocItem.substr(0, grocItem.indexOf("|"));
+			// const title = grocItem.substr(0, grocItem.indexOf("|"));
 
 			const price = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div > div > span > span`,
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div > span > span`,
 			).innerText;
 
-			const capacity = grocItem.substr(grocItem.indexOf("|") + 2);
+			// const capacity = grocItem.substr(grocItem.indexOf("|") + 2);
+			const capacity = document.querySelector(
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > p`,
+			).innerText;
 
 			//function to get the capacity of each item as a number
 			const val = C => {
@@ -233,17 +235,13 @@ const walmart = async function (searchWords) {
 				store: "Walmart",
 				productID: productID || "n/a",
 				image: image || "n/a",
-				title: title || "n/a",
+				title: grocItem || "n/a",
 				price: price || "n/a",
 				capacity: capacity || "n/a",
 				value: value,
 				quantity: quantity,
 			});
-
-			// }
 		}
-		// }
-
 		return topResults;
 	});
 	return result;
@@ -251,11 +249,10 @@ const walmart = async function (searchWords) {
 	await page.waitFor(2000);
 	await page.close();
 	await browser.close();
-	// }
 };
 
 const nofrills = async function (searchWords) {
-	const options = { headless: true };
+	const options = { headless: false };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
 	await page.setViewport({ height: 1200, width: 960 });
