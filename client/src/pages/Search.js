@@ -7,11 +7,12 @@ import SearchForm from "../components/SearchForm";
 const Search = () => {
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
+
 	const submitHandler = e => {
 		e.preventDefault();
+
 		const item = e.target.search.value;
 		const currentStore = e.target.storeList.value.toLowerCase();
-
 		const time = Date.now();
 		if (item) {
 			setLoading(true);
@@ -30,9 +31,9 @@ const Search = () => {
 				.all([walmart, longos, nofrills])
 				.then(result => {
 					console.log(result);
-					history.push("/results");
 				})
-				.catch(err => console.log(err));
+				.catch(err => console.log(err))
+				.finally(() => history.push("/compare"));
 		}
 	};
 
