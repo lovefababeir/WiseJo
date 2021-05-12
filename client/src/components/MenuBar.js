@@ -8,7 +8,7 @@ import compare from "../assets/images/tags.svg";
 
 const MenuBar = () => {
 	return (
-		<nav>
+		<nav className="menu-bar">
 			<ul className="menu">
 				<li>
 					<NavLink
@@ -19,7 +19,6 @@ const MenuBar = () => {
 						<img
 							src={search}
 							className="menu__icon"
-							// onClick={() => this.pageHandler("main")}
 							alt="Click here to search the prices of a specific item"
 						/>
 						<h4 className="menu__label">shop</h4>
@@ -27,14 +26,13 @@ const MenuBar = () => {
 				</li>
 				<li>
 					<NavLink
-						to="/results"
+						to="/compare"
 						className="menu__item"
 						activeClassName="menu-item--selected"
 					>
 						<img
 							src={compare}
 							className="menu__icon"
-							// onClick={() => this.pageHandler("results")}
 							alt="Click here to show the results of your most recent search and compare the prices from different locations and sizes"
 						/>
 					</NavLink>
@@ -43,25 +41,23 @@ const MenuBar = () => {
 				<li>
 					<NavLink
 						exact
-						to="/receipt"
+						to="/snap"
 						className="menu__item"
 						activeClassName="menu-item--selected"
 					>
 						<img
 							src={camera}
 							className="menu__icon menu__icon--3"
-							// onClick={() => this.pageHandler("receipt")}
 							alt="Click here to add a new receipt"
 						/>
 					</NavLink>
 					<h4 className="menu__label">snap</h4>
 				</li>
 				<li>
-					<NavLink to="/receiptslist" activeClassName="menu-item--selected">
+					<NavLink to="/track" activeClassName="menu-item--selected">
 						<img
 							src={receipt}
 							className="menu__icon menu__icon--4"
-							// onClick={() => this.pageHandler("receiptslist")}
 							alt="Click here to check the history of your previous purchases"
 						/>
 					</NavLink>
