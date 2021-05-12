@@ -1,6 +1,6 @@
 import React from "react";
 import "./ResultsSolutions.scss";
-import { Spring } from "react-spring";
+import { useSpring, animated } from "react-spring";
 
 const ResultsSolutions = props => {
 	const { list, currentLocation } = props;
@@ -56,126 +56,114 @@ const ResultsSolutions = props => {
 			? BESTinLocation.totalCapacity - curLocationOptions[1].totalCapacity
 			: "";
 
+	const details = useSpring({
+		from: { opacity: 0, marginLeft: 500 },
+		to: { opacity: 1, marginLeft: 0 },
+		config: { duration: 1000 },
+	});
+	const details2 = useSpring({
+		from: { opacity: 0, marginLeft: 500 },
+		to: { opacity: 1, marginLeft: 0 },
+		config: { delay: 300, duration: 1000 },
+	});
+	const details3 = useSpring({
+		from: { opacity: 0, marginLeft: 500 },
+		to: { opacity: 1, marginLeft: 0 },
+		config: { delay: 600, duration: 1000 },
+	});
+
 	return (
 		<>
-			<Spring
-				from={{ opacity: 0, marginLeft: 500 }}
-				to={{ opacity: 1, marginLeft: 0 }}
-				config={{ duration: 1000 }}
-			>
-				{props => (
-					<div style={props}>
-						<div className="solution">
-							<img
-								className="solution__picture"
-								src={BEST.image}
-								alt="Item of overall best choice"
-							/>
-							<div className="solution__details">
-								<p className="solution__advice">
-									Great news! We found the option that will get you more for your money{" "}
-									{!diffStoreFromCur &&
-										"and you don't have to go to another store to get it!"}
-									.
-									{diffStoreFromCur &&
-										savings > 0 &&
-										` You would save $${savings} if you buy this item from ${BEST.store} instead of ${BESTinLocation.store}. However it may take you another 15mins to drive there and make the purchase`}
-								</p>
-								<h2 className="solution__detail solution__detail--store">
-									{BEST.store}
-								</h2>
-								<h2 className="solution__detail solution__detail--price">
-									{BEST.price}
-								</h2>
-								<h2 className="solution__detail solution__detail--capacity">
-									for {BEST.capacity}
-								</h2>
-								<h2 className="solution__detail solution__detail--solution">
-									Unit Rate: ${BEST.unitRate}/100g
-								</h2>
-							</div>
+			<animated.div style={details}>
+				<div className="solution">
+					<img
+						className="solution__picture"
+						src={BEST.image}
+						alt="Item of overall best choice"
+					/>
+					<div className="solution__details">
+						<p className="solution__advice">
+							Great news! We found the option that will get you more for your money{" "}
+							{!diffStoreFromCur &&
+								"and you don't have to go to another store to get it!"}
+							.
+							{diffStoreFromCur &&
+								savings > 0 &&
+								` You would save $${savings} if you buy this item from ${BEST.store} instead of ${BESTinLocation.store}. However it may take you another 15mins to drive there and make the purchase`}
+						</p>
+						<h2 className="solution__detail solution__detail--store">{BEST.store}</h2>
+						<h2 className="solution__detail solution__detail--price">{BEST.price}</h2>
+						<h2 className="solution__detail solution__detail--capacity">
+							for {BEST.capacity}
+						</h2>
+						<h2 className="solution__detail solution__detail--solution">
+							Unit Rate: ${BEST.unitRate}/100g
+						</h2>
+					</div>
+				</div>
+			</animated.div>
+
+			<animated.div style={details2}>
+				{currentLocation && diffStoreFromCur && (
+					<div className="solution">
+						<img
+							className="solution__picture"
+							src={BESTinLocation.image}
+							alt="Best option in current location"
+						/>
+						<div className="solution__details">
+							<p className="solution__advice">
+								This is the item with the best unit price from where you are shopping
+								now.{" "}
+								{capacityDiff &&
+									`It also contains ${capacityDiff}g more than the next option.`}
+							</p>
+							<h2 className="solution__detail solution__detail--store">
+								{BESTinLocation.store}
+							</h2>
+							<h2 className="solution__detail solution__detail--price">
+								{BESTinLocation.price}
+							</h2>
+							<h2 className="solution__detail solution__detail--capacity">
+								{BESTinLocation.capacity}
+							</h2>
+							<h2 className="solution__detail solution__detail--unitRate">
+								Unit Rate: ${BESTinLocation.unitRate}/100g
+							</h2>
 						</div>
 					</div>
 				)}
-			</Spring>
+			</animated.div>
 
-			<Spring
-				from={{ opacity: 0, marginLeft: 500 }}
-				to={{ opacity: 1, marginLeft: 0 }}
-				config={{ delay: 300, duration: 1000 }}
-			>
-				{props => (
-					<div style={props}>
-						{currentLocation && diffStoreFromCur && (
-							<div className="solution">
-								<img
-									className="solution__picture"
-									src={BESTinLocation.image}
-									alt="Best option in current location"
-								/>
-								<div className="solution__details">
-									<p className="solution__advice">
-										This is the item with the best unit price from where you are shopping
-										now.{" "}
-										{capacityDiff &&
-											`It also contains ${capacityDiff}g more than the next option.`}
-									</p>
-									<h2 className="solution__detail solution__detail--store">
-										{BESTinLocation.store}
-									</h2>
-									<h2 className="solution__detail solution__detail--price">
-										{BESTinLocation.price}
-									</h2>
-									<h2 className="solution__detail solution__detail--capacity">
-										{BESTinLocation.capacity}
-									</h2>
-									<h2 className="solution__detail solution__detail--unitRate">
-										Unit Rate: ${BESTinLocation.unitRate}/100g
-									</h2>
-								</div>
-							</div>
-						)}
+			<animated.div style={details3}>
+				{curLocationOptions[1] && (
+					<div className="solution">
+						<img
+							className="solution__picture"
+							src={curLocationOptions[1].image}
+							alt="Second best option in current lcoation"
+						/>
+						<div className="solution__details">
+							<p className="solution__advice">
+								This is the second best option in the store you are currently in. Not
+								bad for a back up plan!{" "}
+							</p>
+							<h2 className="solution__detail solution__detail--store">
+								{curLocationOptions[1].store}
+							</h2>
+							<h2 className="solution__detail solution__detail--price">
+								{curLocationOptions[1].price}
+							</h2>
+							<h2 className="solution__detail solution__detail--capacity">
+								{curLocationOptions[1].capacity}
+							</h2>
+							<h2 className="solution__detail solution__detail--unitRate">
+								Unit Rate: ${curLocationOptions[1].unitRate}/100g
+							</h2>
+						</div>
 					</div>
 				)}
-			</Spring>
-
-			<Spring
-				from={{ opacity: 0, marginLeft: 500 }}
-				to={{ opacity: 1, marginLeft: 0 }}
-				config={{ delay: 600, duration: 1000 }}
-			>
-				{props => (
-					<div style={props}>
-						{curLocationOptions[1] && (
-							<div className="solution">
-								<img
-									className="solution__picture"
-									src={curLocationOptions[1].image}
-									alt="Second best option in current lcoation"
-								/>
-								<div className="solution__details">
-									<p className="solution__advice">
-										This is the second best option in the store you are currently in. Not
-										bad for a back up plan!{" "}
-									</p>
-									<h2 className="solution__detail solution__detail--store">
-										{curLocationOptions[1].store}
-									</h2>
-									<h2 className="solution__detail solution__detail--price">
-										{curLocationOptions[1].price}
-									</h2>
-									<h2 className="solution__detail solution__detail--capacity">
-										{curLocationOptions[1].capacity}
-									</h2>
-									<h2 className="solution__detail solution__detail--unitRate">
-										Unit Rate: ${curLocationOptions[1].unitRate}/100g
-									</h2>
-								</div>
-							</div>
-						)}
-					</div>
-				)}
-			</Spring>
+			</animated.div>
 		</>
 	);
 };
