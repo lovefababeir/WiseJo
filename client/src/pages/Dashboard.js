@@ -39,13 +39,13 @@ const Dashboard = () => {
 					<button className="home__btn" onClick={() => pageHandler("shop")}>
 						Shop
 					</button>
-					<button className="home__btn" onClick={() => pageHandler("results")}>
+					<button className="home__btn" onClick={() => pageHandler("compare")}>
 						Compare Prices
 					</button>
-					<button className="home__btn" onClick={() => pageHandler("receipt")}>
+					<button className="home__btn" onClick={() => pageHandler("snap")}>
 						Log Shopping
 					</button>
-					<button onClick={() => pageHandler("receiptslist")} className="home__btn">
+					<button onClick={() => pageHandler("track")} className="home__btn">
 						Track History
 					</button>
 				</div>
