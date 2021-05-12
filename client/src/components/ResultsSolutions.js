@@ -71,7 +71,7 @@ const ResultsSolutions = props => {
 								src={BEST.image}
 								alt="Item of overall best choice"
 							/>
-							<div class="solution__details">
+							<div className="solution__details">
 								<p className="solution__advice">
 									Great news! We found the option that will get you more for your money{" "}
 									{!diffStoreFromCur &&
@@ -113,7 +113,7 @@ const ResultsSolutions = props => {
 									src={BESTinLocation.image}
 									alt="Best option in current location"
 								/>
-								<div class="solution__details">
+								<div className="solution__details">
 									<p className="solution__advice">
 										This is the item with the best unit price from where you are shopping
 										now.{" "}
