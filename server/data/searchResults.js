@@ -216,231 +216,10 @@ var searchHistory = [
 		],
 	},
 
-	// nutella
-	{
-		time: 1599962532648,
-		currentlocation: "walmart",
-		search: "nutella",
-		searchResults: [
-			{
-				store: "Longo's",
-				productID: "00062020050526",
-				image:
-					"https://media.grocerygateway.com/medias/00062020050526-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wzNDE3OHxpbWFnZS9qcGVnfGltYWdlcy9oMDgvaDQ5Lzg4NTk3MzQ0MDkyNDYuanBnfGJiYTJmNjIzOTFmNTgyYWZhNWVmMmViNmVmM2JlZjAxOTFhNGZjYWFkMWZhOGM2MGRiZTg0YmY0OWYzMTNmMTc",
-				title: "NUTELLA TO GO",
-				price: "$1.69",
-				capacity: "52g",
-				value: 52,
-				quantity: 1,
-			},
-			{
-				store: "Longo's",
-				productID: "00062020000842",
-				image:
-					"https://media.grocerygateway.com/medias/00062020000842-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3w0NDMyfGltYWdlL2pwZWd8aW1hZ2VzL2g5Ni9oYjgvODgzODgyOTIxMTY3OC5qcGd8OGZhYTM0MTZlZDRkYjg1MGVkMzlkMTQ1MGFlNjE3Y2EwZTRlZWMzNTQzNGIyMjhhMDY3Y2E5MzE1ODhiMGZhYw",
-				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
-				price: "$4.99",
-				capacity: "725g",
-				value: 725,
-				quantity: 1,
-			},
-			{
-				store: "Longo's",
-				productID: "00062020003843",
-				image:
-					"https://media.grocerygateway.com/medias/00062020003843-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wyNzg2MHxpbWFnZS9qcGVnfGltYWdlcy9oODAvaDhjLzg4NTk3Mjg5Njk3NTguanBnfDlkYjExMmViMmY5YzZjODRkMzgzZDBjZDUyMDZkODM0ZjBlNWE4ZTZiMzUyNjZmYjA0YTJmODYyMGE2NTJmNGY",
-				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
-				price: "$10.99",
-				capacity: "1kg",
-				value: 1000,
-				quantity: 1,
-			},
-			{
-				store: "Longo's",
-				productID: "00062020050625",
-				image:
-					"https://media.grocerygateway.com/medias/00062020050625-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wzNjExOHxpbWFnZS9qcGVnfGltYWdlcy9oNGIvaDk3Lzg4NTk3MzE3ODc4MDYuanBnfGJjNDZhY2NjNWQxMjE0OGQzMjJmM2U1M2RjMzc4ZTcxMjZjNmU1NDY5ODk1YTQyZDcyM2Q2ZWQ4ZDY2OWYyNzg",
-				title: "NUTELLA & GO PRETZEL",
-				price: "$1.69",
-				capacity: "54g",
-				value: 54,
-				quantity: 1,
-			},
-			{
-				store: "Longo's",
-				productID: "00062020000743",
-				image:
-					"https://media.grocerygateway.com/medias/00062020000743-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3w1MDM2fGltYWdlL2pwZWd8aW1hZ2VzL2g0MS9oNDAvODgzODgyODI5NDE3NC5qcGd8MGFiMjE5OGQ2NTMwOTBkMmJiZWIwNDQ0MDg4Y2EzYjYyZGU0MTE1NDgxMzFmM2VhZTQ1ODgzMGU1YzZmNzRjZQ",
-				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
-				price: "$5.99",
-				capacity: "375g",
-				value: 375,
-				quantity: 1,
-			},
-			{
-				store: "Longo's",
-				productID: "00009800800049",
-				image:
-					"https://media.grocerygateway.com/medias/00009800800049-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wxODYxNXxpbWFnZS9qcGVnfGltYWdlcy9oMDUvaGM2Lzg4NjIxNDA1OTYyNTQuanBnfDQ2NDMwYTJhN2FhYWQzODQwODU2NDAzZjA5ZTM5YmZlMWE5NTBkZDNiOWYyOTg3YzkzYWJiMjc4NzkzYjhkYTc",
-				title: "NUTELLA AND GO MULTI PACK",
-				price: "$5.49",
-				capacity: "pkg of 4",
-				value: 52,
-				quantity: 4,
-			},
-		],
-	},
-	{
-		time: 1599962532648,
-		currentlocation: "walmart",
-		search: "nutella",
-		searchResults: [
-			{
-				store: "Walmart",
-				productID: "6000153706599",
-				image: "https://i5.walmartimages.ca/images/Thumbnails/956/598/956598.jpg",
-				title: "Ferrero Nutella Hazelnut Spread ",
-				price: "$5.97",
-				capacity: "725g",
-				value: 725,
-				quantity: 1,
-			},
-			{
-				store: "Walmart",
-				productID: "6000153706847",
-				image:
-					"https://i5.walmartimages.ca/images/Thumbnails/460/709/6000199460709.jpg",
-				title: "Ferrero Nutella Hazelnut Spread ",
-				price: "$10.97",
-				capacity: "725 g x 2",
-				value: 725,
-				quantity: 2,
-			},
-			{
-				store: "Walmart",
-				productID: "6000201597663",
-				image:
-					"https://i5.walmartimages.ca/images/Thumbnails/830/154/6000201830154.jpg",
-				title: "Ferrero Nutella Hazelnut Spread ",
-				price: "$3.97",
-				capacity: "400g",
-				value: 400,
-				quantity: 1,
-			},
-			{
-				store: "Walmart",
-				productID: "6000195930276",
-				image:
-					"https://i5.walmartimages.ca/images/Thumbnails/050/564/999999-62020050564.jpg",
-				title: "Ferrero Nutella & Go Breadsticks ",
-				price: "$4.97",
-				capacity: "52 g x 4",
-				value: 52,
-				quantity: 4,
-			},
-			{
-				store: "Walmart",
-				productID: "PRD4F3G5IY3DUQD",
-				image:
-					"https://i5.walmartimages.com/asr/ccc01eea-d7dd-4350-afaa-fdaf0dd32d9a.20ef53436e2574796d16ff3c1374cebb.png?odnHeight=180&odnWidth=180&odnBg=ffffff",
-				title: "NUTELLA, FAMILY BUCKET",
-				price: "$39.99",
-				capacity: "3kgs",
-				value: 3000,
-				quantity: 1,
-			},
-			{
-				store: "Walmart",
-				productID: "PRD7EK0S3UV19TS",
-				image:
-					"https://i5.walmartimages.com/asr/7c0ad812-b0ef-4d53-b997-4b3c1e9c0e4f.a83d3b618b8be8a22262e22587038d78.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
-				title: "Nutella Hazelnut Spread",
-				price: "$99.99",
-				capacity: "750g",
-				value: 750,
-				quantity: 1,
-			},
-		],
-	},
-	{
-		time: 1599962532648,
-		currentlocation: "walmart",
-		search: "nutella",
-		searchResults: [
-			{
-				store: "No Frills",
-				productID: "20436105",
-				image:
-					"https://assets.shop.loblaws.ca/products/20436105/b1/en/front/20436105_front_a01.png",
-				title: "Nutella Hazelnut Spread with Cocoa",
-				price: "$4.87",
-				capacity: "725 g",
-				value: 725,
-				quantity: 1,
-			},
-			{
-				store: "No Frills",
-				productID: "20435988",
-				image:
-					"https://assets.shop.loblaws.ca/products/20435988/b1/en/front/20435988_front_a01.png",
-				title: "Nutella Hazelnut Spread with Cocoa",
-				price: "$3.97",
-				capacity: "375 g",
-				value: 375,
-				quantity: 1,
-			},
-			{
-				store: "No Frills",
-				productID: "20574189",
-				image:
-					"https://assets.shop.loblaws.ca/products/20574189/b1/en/front/20574189_front_a01.png",
-				title: "Nutella Hazelnut Spread with Cocoa, Package of 2",
-				price: "$10.97",
-				capacity: "2x725g",
-				value: 725,
-				quantity: 2,
-			},
-			{
-				store: "No Frills",
-				productID: "20948689",
-				image:
-					"https://assets.shop.loblaws.ca/products/20948689/b1/en/front/20948689_front_a01.png",
-				title: "Nutella Nutella & Go Multipack",
-				price: "$5.47",
-				capacity: "52g",
-				value: 52,
-				quantity: 4,
-			},
-			{
-				store: "No Frills",
-				productID: "20910307",
-				image:
-					"https://assets.shop.loblaws.ca/products/20910307/b1/en/front/20910307_front_a01.png",
-				title: "Nutella Confection on the Go",
-				price: "$1.47",
-				capacity: "54 g",
-				value: 54,
-				quantity: 1,
-			},
-			{
-				store: "No Frills",
-				productID: "20798429",
-
-				image:
-					"https://assets.shop.loblaws.ca/products/20798429/b1/en/front/20798429_front_a01.png",
-				title: "Nutella Confection on the Go",
-				price: "$1.47",
-				capacity: "52 g",
-				value: 52,
-				quantity: 1,
-			},
-		],
-	},
-
 	// ginger ale
 	{
 		currentlocation: "walmart",
-		time: 1601560302534,
+		time: 1599962532648,
 		search: "ginger ale",
 		searchResults: [
 			{
@@ -508,7 +287,8 @@ var searchHistory = [
 	},
 	{
 		currentlocation: "walmart",
-		time: 1601560302534,
+		time: 1599962532648,
+
 		search: "ginger ale",
 		searchResults: [
 			{
@@ -581,7 +361,7 @@ var searchHistory = [
 	},
 	{
 		currentlocation: "walmart",
-		time: 1601560302534,
+		time: 1599962532648,
 		search: "ginger ale",
 		searchResults: [
 			{
@@ -649,6 +429,227 @@ var searchHistory = [
 				capacity: "6 x 710mL",
 				value: 710,
 				quantity: 6,
+			},
+		],
+	},
+
+	// nutella
+	{
+		time: 1601560302534,
+		currentlocation: "walmart",
+		search: "nutella",
+		searchResults: [
+			{
+				store: "Longo's",
+				productID: "00062020050526",
+				image:
+					"https://media.grocerygateway.com/medias/00062020050526-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wzNDE3OHxpbWFnZS9qcGVnfGltYWdlcy9oMDgvaDQ5Lzg4NTk3MzQ0MDkyNDYuanBnfGJiYTJmNjIzOTFmNTgyYWZhNWVmMmViNmVmM2JlZjAxOTFhNGZjYWFkMWZhOGM2MGRiZTg0YmY0OWYzMTNmMTc",
+				title: "NUTELLA TO GO",
+				price: "$1.69",
+				capacity: "52g",
+				value: 52,
+				quantity: 1,
+			},
+			{
+				store: "Longo's",
+				productID: "00062020000842",
+				image:
+					"https://media.grocerygateway.com/medias/00062020000842-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3w0NDMyfGltYWdlL2pwZWd8aW1hZ2VzL2g5Ni9oYjgvODgzODgyOTIxMTY3OC5qcGd8OGZhYTM0MTZlZDRkYjg1MGVkMzlkMTQ1MGFlNjE3Y2EwZTRlZWMzNTQzNGIyMjhhMDY3Y2E5MzE1ODhiMGZhYw",
+				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
+				price: "$4.99",
+				capacity: "725g",
+				value: 725,
+				quantity: 1,
+			},
+			{
+				store: "Longo's",
+				productID: "00062020003843",
+				image:
+					"https://media.grocerygateway.com/medias/00062020003843-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wyNzg2MHxpbWFnZS9qcGVnfGltYWdlcy9oODAvaDhjLzg4NTk3Mjg5Njk3NTguanBnfDlkYjExMmViMmY5YzZjODRkMzgzZDBjZDUyMDZkODM0ZjBlNWE4ZTZiMzUyNjZmYjA0YTJmODYyMGE2NTJmNGY",
+				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
+				price: "$10.99",
+				capacity: "1kg",
+				value: 1000,
+				quantity: 1,
+			},
+			{
+				store: "Longo's",
+				productID: "00062020050625",
+				image:
+					"https://media.grocerygateway.com/medias/00062020050625-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wzNjExOHxpbWFnZS9qcGVnfGltYWdlcy9oNGIvaDk3Lzg4NTk3MzE3ODc4MDYuanBnfGJjNDZhY2NjNWQxMjE0OGQzMjJmM2U1M2RjMzc4ZTcxMjZjNmU1NDY5ODk1YTQyZDcyM2Q2ZWQ4ZDY2OWYyNzg",
+				title: "NUTELLA & GO PRETZEL",
+				price: "$1.69",
+				capacity: "54g",
+				value: 54,
+				quantity: 1,
+			},
+			{
+				store: "Longo's",
+				productID: "00062020000743",
+				image:
+					"https://media.grocerygateway.com/medias/00062020000743-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3w1MDM2fGltYWdlL2pwZWd8aW1hZ2VzL2g0MS9oNDAvODgzODgyODI5NDE3NC5qcGd8MGFiMjE5OGQ2NTMwOTBkMmJiZWIwNDQ0MDg4Y2EzYjYyZGU0MTE1NDgxMzFmM2VhZTQ1ODgzMGU1YzZmNzRjZQ",
+				title: "NUTELLA CHOCOLATE HAZELNUT SPREAD",
+				price: "$5.99",
+				capacity: "375g",
+				value: 375,
+				quantity: 1,
+			},
+			{
+				store: "Longo's",
+				productID: "00009800800049",
+				image:
+					"https://media.grocerygateway.com/medias/00009800800049-1-base-conversionFormat-155-conversionFormat.jpg?context=bWFzdGVyfGltYWdlc3wxODYxNXxpbWFnZS9qcGVnfGltYWdlcy9oMDUvaGM2Lzg4NjIxNDA1OTYyNTQuanBnfDQ2NDMwYTJhN2FhYWQzODQwODU2NDAzZjA5ZTM5YmZlMWE5NTBkZDNiOWYyOTg3YzkzYWJiMjc4NzkzYjhkYTc",
+				title: "NUTELLA AND GO MULTI PACK",
+				price: "$5.49",
+				capacity: "pkg of 4",
+				value: 52,
+				quantity: 4,
+			},
+		],
+	},
+	{
+		time: 1601560302534,
+		currentlocation: "walmart",
+		search: "nutella",
+		searchResults: [
+			{
+				store: "Walmart",
+				productID: "6000153706599",
+				image: "https://i5.walmartimages.ca/images/Thumbnails/956/598/956598.jpg",
+				title: "Ferrero Nutella Hazelnut Spread ",
+				price: "$5.97",
+				capacity: "725g",
+				value: 725,
+				quantity: 1,
+			},
+			{
+				store: "Walmart",
+				productID: "6000153706847",
+				image:
+					"https://i5.walmartimages.ca/images/Thumbnails/460/709/6000199460709.jpg",
+				title: "Ferrero Nutella Hazelnut Spread ",
+				price: "$10.97",
+				capacity: "725 g x 2",
+				value: 725,
+				quantity: 2,
+			},
+			{
+				store: "Walmart",
+				productID: "6000201597663",
+				image:
+					"https://i5.walmartimages.ca/images/Thumbnails/830/154/6000201830154.jpg",
+				title: "Ferrero Nutella Hazelnut Spread ",
+				price: "$3.97",
+				capacity: "400g",
+				value: 400,
+				quantity: 1,
+			},
+			{
+				store: "Walmart",
+				productID: "6000195930276",
+				image:
+					"https://i5.walmartimages.ca/images/Thumbnails/050/564/999999-62020050564.jpg",
+				title: "Ferrero Nutella & Go Breadsticks ",
+				price: "$4.97",
+				capacity: "52 g x 4",
+				value: 52,
+				quantity: 4,
+			},
+			{
+				store: "Walmart",
+				productID: "PRD4F3G5IY3DUQD",
+				image:
+					"https://i5.walmartimages.com/asr/ccc01eea-d7dd-4350-afaa-fdaf0dd32d9a.20ef53436e2574796d16ff3c1374cebb.png?odnHeight=180&odnWidth=180&odnBg=ffffff",
+				title: "NUTELLA, FAMILY BUCKET",
+				price: "$39.99",
+				capacity: "3kgs",
+				value: 3000,
+				quantity: 1,
+			},
+			{
+				store: "Walmart",
+				productID: "PRD7EK0S3UV19TS",
+				image:
+					"https://i5.walmartimages.com/asr/7c0ad812-b0ef-4d53-b997-4b3c1e9c0e4f.a83d3b618b8be8a22262e22587038d78.jpeg?odnHeight=180&odnWidth=180&odnBg=ffffff",
+				title: "Nutella Hazelnut Spread",
+				price: "$99.99",
+				capacity: "750g",
+				value: 750,
+				quantity: 1,
+			},
+		],
+	},
+	{
+		time: 1601560302534,
+		currentlocation: "walmart",
+		search: "nutella",
+		searchResults: [
+			{
+				store: "No Frills",
+				productID: "20436105",
+				image:
+					"https://assets.shop.loblaws.ca/products/20436105/b1/en/front/20436105_front_a01.png",
+				title: "Nutella Hazelnut Spread with Cocoa",
+				price: "$4.87",
+				capacity: "725 g",
+				value: 725,
+				quantity: 1,
+			},
+			{
+				store: "No Frills",
+				productID: "20435988",
+				image:
+					"https://assets.shop.loblaws.ca/products/20435988/b1/en/front/20435988_front_a01.png",
+				title: "Nutella Hazelnut Spread with Cocoa",
+				price: "$3.97",
+				capacity: "375 g",
+				value: 375,
+				quantity: 1,
+			},
+			{
+				store: "No Frills",
+				productID: "20574189",
+				image:
+					"https://assets.shop.loblaws.ca/products/20574189/b1/en/front/20574189_front_a01.png",
+				title: "Nutella Hazelnut Spread with Cocoa, Package of 2",
+				price: "$10.97",
+				capacity: "2x725g",
+				value: 725,
+				quantity: 2,
+			},
+			{
+				store: "No Frills",
+				productID: "20948689",
+				image:
+					"https://assets.shop.loblaws.ca/products/20948689/b1/en/front/20948689_front_a01.png",
+				title: "Nutella Nutella & Go Multipack",
+				price: "$5.47",
+				capacity: "52g",
+				value: 52,
+				quantity: 4,
+			},
+			{
+				store: "No Frills",
+				productID: "20910307",
+				image:
+					"https://assets.shop.loblaws.ca/products/20910307/b1/en/front/20910307_front_a01.png",
+				title: "Nutella Confection on the Go",
+				price: "$1.47",
+				capacity: "54 g",
+				value: 54,
+				quantity: 1,
+			},
+			{
+				store: "No Frills",
+				productID: "20798429",
+
+				image:
+					"https://assets.shop.loblaws.ca/products/20798429/b1/en/front/20798429_front_a01.png",
+				title: "Nutella Confection on the Go",
+				price: "$1.47",
+				capacity: "52 g",
+				value: 52,
+				quantity: 1,
 			},
 		],
 	},
