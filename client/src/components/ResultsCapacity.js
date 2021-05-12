@@ -1,7 +1,7 @@
 import React from "react";
 import "./ResultsCapacity.scss";
 import deleteIcon from "../assets/images/delete.svg";
-import { Spring } from "react-spring/";
+import { useSpring, animated } from "react-spring";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
@@ -31,80 +31,78 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	};
 	capacityList();
 
+	const details = useSpring({
+		from: { opacity: 0, marginLeft: 500 },
+		to: { opacity: 1, marginLeft: 0 },
+	});
+	const details2 = useSpring({
+		from: { opacity: 0 },
+		to: { opacity: 1 },
+	});
+
 	return (
 		<>
 			<section className="capacity">
-				<Spring
-					from={{ opacity: 0, marginLeft: 500 }}
-					to={{ opacity: 1, marginLeft: 0 }}
-				>
-					{props => (
-						<div style={props}>
-							<div className="capacity__carousel">
-								{newList.map(category => {
-									return (
-										<>
-											<div className="capacity__box">
-												<div
-													className="capacity__size"
-													onClick={() => {
-														changeSelected(category);
-													}}
-												>
-													<img
-														className="capacity__image"
-														src={category.image}
-														alt={`The item with capacity: ${category.capacity}`}
-													/>
-												</div>
-												<h1 className="capacity__size-title">Size: {category.capacity}</h1>
-												<h2 className="capacity__optionsNum">
-													{category.storeList.length} Available{" "}
-													{category.storeList.length > 1 ? "Options" : "Option"}
-												</h2>
-											</div>
-										</>
-									);
-								})}
-							</div>
+				<animated.div style={details}>
+					<div className="capacity__carousel">
+						{newList.map(category => {
+							return (
+								<>
+									<div className="capacity__box">
+										<div
+											className="capacity__size"
+											onClick={() => {
+												changeSelected(category);
+											}}
+										>
+											<img
+												className="capacity__image"
+												src={category.image}
+												alt={`The item with capacity: ${category.capacity}`}
+											/>
+										</div>
+										<h1 className="capacity__size-title">Size: {category.capacity}</h1>
+										<h2 className="capacity__optionsNum">
+											{category.storeList.length} Available{" "}
+											{category.storeList.length > 1 ? "Options" : "Option"}
+										</h2>
+									</div>
+								</>
+							);
+						})}
+					</div>
 
-							<div className="capacity__selected">
-								{selected && (
-									<Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-										{props => (
-											<div style={props}>
-												{" "}
-												<div className="capacity__details">
-													<h2 className="capacity__title">{selected.capacity}</h2>
-													<img
-														src={deleteIcon}
-														alt="Click here to delete item"
-														onClick={e => {
-															deleteHandler("items", selected.value, selected.quantity);
-														}}
-													/>
-													<div className="capacity__optionsList">
-														{selected.storeList.map(m => {
-															return (
-																<>
-																	<p className="capacity__options">
-																		<em>{m.store}</em> - {m.price}
-																		{m.quantity > 1 ? " for pack of " + m.quantity : null} ({" "}
-																		{m.title} )
-																	</p>
-																</>
-															);
-														})}
-													</div>
-												</div>
-											</div>
-										)}
-									</Spring>
-								)}
-							</div>
-						</div>
-					)}
-				</Spring>
+					<div className="capacity__selected">
+						{selected && (
+							<animated.div style={details2}>
+								{" "}
+								<div className="capacity__details">
+									<h2 className="capacity__title">{selected.capacity}</h2>
+									<img
+										src={deleteIcon}
+										alt="Click here to delete item"
+										onClick={e => {
+											deleteHandler("items", selected.value, selected.quantity);
+										}}
+									/>
+									<div className="capacity__optionsList">
+										{selected.storeList.map(m => {
+											return (
+												<>
+													<p className="capacity__options">
+														<em>{m.store}</em> - {m.price}
+														{m.quantity > 1 ? " for pack of " + m.quantity : null} ( {m.title}{" "}
+														)
+													</p>
+												</>
+											);
+										})}
+									</div>
+								</div>
+							</animated.div>
+						)}
+					</div>
+				</animated.div>
 			</section>
 		</>
 	);
