@@ -40,7 +40,10 @@ router.get("/longos/:item/:time", (req, res) => {
 
 				res.status(200).json(newData);
 			})
-			.catch(err => console.log(err));
+			.catch(err => {
+				console.log(err);
+				res.status(400).json(`Could not complete Longos search for ${item}`);
+			});
 	}
 });
 
@@ -77,7 +80,10 @@ router.get("/walmart/:item/:time", (req, res) => {
 
 				res.status(200).json(data);
 			})
-			.catch(err => console.log(err));
+			.catch(err => {
+				console.log(err);
+				res.status(400).json(`Could not complete Walmart search for ${item}`);
+			});
 	}
 });
 
@@ -115,7 +121,10 @@ router.get("/nofrills/:item/:time", (req, res) => {
 
 				res.status(200).json(data);
 			})
-			.catch(err => console.log(err));
+			.catch(err => {
+				console.log(err);
+				res.status(400).json(`Could not complete No Frills search for ${item}`);
+			});
 	}
 });
 
