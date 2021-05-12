@@ -2,7 +2,7 @@
 @import "../styles/font.scss";
 @import "../styles/mixins.scss";
 
-nav {
+.menu-bar {
 	background-color: hsl(28, 80%, 74%);
 	position: fixed;
 	bottom: 0;
@@ -16,9 +16,9 @@ nav {
 	margin: 0 auto;
 	@include flex(row, space-evenly, center);
 	max-width: 900px;
+	padding: 0;
 	& li {
 		list-style-type: none;
-
 		@include flex(column, center, center);
 		width: 7rem;
 		height: 100%;
@@ -45,17 +45,16 @@ nav {
 	&-item--selected {
 		&::after {
 			content: "";
-			width: 100%;
+			width: 8rem;
 			height: 150rem;
 			position: absolute;
 			top: -1rem;
-			left: 0;
+			left: -0.5rem;
 			border-radius: 1rem;
 			background-color: hsl(28, 80%, 74%);
 			z-index: -1;
-
 			box-shadow: 0px 0px 5px 3px hsl(28, 39%, 58%);
-			animation: shiftUp ease-in-out 0.3s forwards;
+			animation: shiftUp ease-in-out 0.3s;
 		}
 	}
 }
