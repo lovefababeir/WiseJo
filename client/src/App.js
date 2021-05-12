@@ -1,5 +1,5 @@
 import "./App.scss";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -11,29 +11,52 @@ import MenuBar from "./components/MenuBar";
 import Results from "./pages/Results";
 import RecordReceipt from "./pages/RecordReceipt";
 import ReceiptsList from "./pages/ReceiptList";
+import { useState, useEffect } from "react";
+
+const usePageViews = () => {
+	const location = useLocation();
+	return location;
+};
 
 function App() {
+	const [viewMenu, setViewMenu] = useState(false);
+
+	const onPage = usePageViews().pathname;
+	useEffect(() => {
+		let mounted = true;
+
+		if (
+			(onPage === "/shop" ||
+				onPage === "/compare" ||
+				onPage === "/snap" ||
+				onPage === "/track") &&
+			mounted === true
+		) {
+			setViewMenu(true);
+		} else {
+			setViewMenu(false);
+		}
+		return () => {
+			mounted = false;
+		};
+	}, [onPage]);
+
 	return (
 		<div className="App">
 			<main className="main">
-				<Router>
-					<AuthProvider>
-						<Switch>
-							<Route path="/login" component={SignIn} />
-							<Route path="/signup" component={SignUp} />
-							<Route path="/forgot-password" component={ForgotPassword} />
-							<PrivateRoute exact path="/" component={Dashboard} />
-							<PrivateRoute path="/shop" component={Search} />
-							<PrivateRoute path="/compare" component={Results} />
-							<PrivateRoute path="/snap" component={RecordReceipt} />
-							<PrivateRoute path="/track" component={ReceiptsList} />
-						</Switch>
-					</AuthProvider>
-					{(window.location.pathname === "/shop" ||
-						"/results" ||
-						"/record" ||
-						"/log") && <MenuBar />}
-				</Router>
+				<AuthProvider>
+					<Switch>
+						<Route path="/login" component={SignIn} />
+						<Route path="/signup" component={SignUp} />
+						<Route path="/forgot-password" component={ForgotPassword} />
+						<PrivateRoute exact path="/" component={Dashboard} />
+						<PrivateRoute path="/shop" component={Search} />
+						<PrivateRoute path="/compare" component={Results} />
+						<PrivateRoute path="/snap" component={RecordReceipt} />
+						<PrivateRoute path="/track" component={ReceiptsList} />
+					</Switch>
+				</AuthProvider>
+				{viewMenu && <MenuBar />}
 			</main>
 		</div>
 	);
