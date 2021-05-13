@@ -24,26 +24,20 @@ const store = async function (searchWords) {
 		let topResults = [];
 
 		for (var i = 1; i < 7; i++) {
-			const productID = document
-				.querySelector(
-					`ul[class="products-gallery js-quickview-wrapper"]> :nth-child(${i})`,
-				)
-				.getAttribute("data-sku");
-			const image = document
-				.querySelector(
-					`ul[class="products-gallery js-quickview-wrapper"]> :nth-child(${i}) img`,
-				)
-				.getAttribute("src");
+			const path = `ul[class="products-gallery js-quickview-wrapper"] > li:nth-child(${i})`;
+			if (!document.querySelector(path)) {
+				break;
+			}
+			const productID = document.querySelector(`${path}`).getAttribute("data-sku");
+			const image = document.querySelector(`${path} img`).getAttribute("src");
 
-			const title = document.querySelector(
-				`ul[class="products-gallery js-quickview-wrapper"]> :nth-child(${i}) a[class="product-card__name ellipsis"]>strong`,
-			).innerText;
-			const price = document.querySelector(
-				`ul[class="products-gallery js-quickview-wrapper"]> :nth-child(${i}) span[class="cart_reader"]`,
-			).innerText;
+			const title = document.querySelector(`${path}  > div > div > a > strong`)
+				.innerText;
+			const price = document.querySelector(`${path} span[class="cart_reader"]`)
+				.innerText;
 
 			const m = document.querySelector(
-				`ul[class="products-gallery js-quickview-wrapper"] > li:nth-child(${i}) > div > div > div.product-card__bottom-content > span.product-card__price + span`,
+				`${path} > div > div > div.product-card__bottom-content > span.product-card__price + span`,
 			).innerText;
 
 			const capacity = m.substr(m.indexOf("/") + 2);
@@ -97,8 +91,8 @@ const store = async function (searchWords) {
 					capacity.includes("pack") ||
 					capacity.includes("cup") ||
 					capacity.includes("cans") ||
-					capacity.includes("count") ||
-					capacity.includes("ea")
+					capacity.includes("count")
+					// capacity.includes("ea")
 				) {
 					qty = capacity.match(/\d+/g).map(Number)[0];
 				} else {
@@ -108,7 +102,6 @@ const store = async function (searchWords) {
 			};
 
 			const quantity = qty(capacity);
-
 			const value = val(capacity);
 
 			topResults.push({
