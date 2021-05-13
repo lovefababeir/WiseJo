@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const grocery = require("../webScrapingFunctions/groceryFunctions");
+const nofrills = require("../webScrapingFunctions/nofrills");
 const searchHistory = require("../data/searchResults");
 
 router.get("/longos/:item/:time", (req, res) => {
@@ -8,13 +9,13 @@ router.get("/longos/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const found = searchHistory.filter(record => {
+	const alreadySearched = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "Longo's"
 		);
 	});
-	const prevSearch = found ? found.pop() : "";
+	const prevSearch = alreadySearched ? alreadySearched.pop() : "";
 
 	if (prevSearch) {
 		const newSearch = {
@@ -43,7 +44,7 @@ router.get("/longos/:item/:time", (req, res) => {
 				res.status(200).json(newData);
 			})
 			.catch(err => {
-				console.log(err);
+				console.log(`Could not complete Longos search for ${item}: ${err}`);
 				res.status(400).json(`Could not complete Longos search for ${item}`);
 			});
 	}
@@ -54,13 +55,13 @@ router.get("/walmart/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const found = searchHistory.filter(record => {
+	const alreadySearched = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "Walmart"
 		);
 	});
-	const prevSearch = found ? found.pop() : "";
+	const prevSearch = alreadySearched ? alreadySearched.pop() : "";
 
 	if (prevSearch) {
 		const newSearch = { ...prevSearch, ...moreInfo, time: time };
@@ -84,7 +85,7 @@ router.get("/walmart/:item/:time", (req, res) => {
 				res.status(200).json(newData);
 			})
 			.catch(err => {
-				console.log(err);
+				console.log(`Could not complete Walmart search for ${item}: ${err}`);
 				res.status(400).json(`Could not complete Walmart search for ${item}`);
 			});
 	}
@@ -95,13 +96,13 @@ router.get("/nofrills/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const found = searchHistory.filter(record => {
+	const alreadySearched = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "No Frills"
 		);
 	});
-	const prevSearch = found ? found.pop() : "";
+	const prevSearch = alreadySearched ? alreadySearched.pop() : "";
 
 	if (prevSearch) {
 		const newSearch = { ...prevSearch, ...moreInfo, time: time };
@@ -109,8 +110,8 @@ router.get("/nofrills/:item/:time", (req, res) => {
 		searchHistory.push(newSearch);
 		res.status(200).json(newSearch);
 	} else {
-		grocery
-			.nofrills(item)
+		nofrills
+			.store(item)
 			.then(result => {
 				const newData = {
 					...moreInfo,
@@ -122,11 +123,10 @@ router.get("/nofrills/:item/:time", (req, res) => {
 				// const data = searchHistory.find(record => {
 				// 	return record.time === time;
 				// });
-
 				res.status(200).json(newData);
 			})
 			.catch(err => {
-				console.log(err);
+				console.log(`Could not complete No Frills search for ${item}: ${err}`);
 				res.status(400).json(`Could not complete No Frills search for ${item}`);
 			});
 	}
