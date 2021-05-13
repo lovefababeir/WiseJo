@@ -265,9 +265,10 @@ const nofrills = async function (searchWords) {
 	await page.setDefaultTimeout(60000);
 	await page.setViewport({ height: 1200, width: 960 });
 
-	await page.goto(`https://www.nofrills.ca/`, {
-		waitUntil: "networkidle2",
-	});
+	await page.goto(`https://www.nofrills.ca/`);
+	await page.waitForSelector(
+		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(7) > button",
+	);
 	await page.click(
 		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(7) > button",
 	);
@@ -281,6 +282,10 @@ const nofrills = async function (searchWords) {
 		for (var n = 1; n < 7; n++) {
 			let path = `#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n})`;
 
+			if (!document.querySelector(path)) {
+				break;
+			}
+
 			const productID = document
 				.querySelector(`${path} > div`)
 				.getAttribute("data-track-article-number");
@@ -291,22 +296,23 @@ const nofrills = async function (searchWords) {
 				)
 				.getAttribute("src");
 
-			const title =
-				document.querySelector(
-					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--brand`,
-				).innerText +
-				" " +
-				document.querySelector(
-					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
-				).innerText;
+			var title1 = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span:nth-child(1)`,
+			).innerText;
+			var title2 = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span:nth-child(2)`,
+			);
+			title2 = title2 ? title2.innerText : "";
+			const title = title1 + " " + title2;
 
 			const price = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(1) > li:nth-child(1) > span > span:nth-child(1)`,
 			).innerHTML;
 
-			const capacity = document.querySelector(
+			var size = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
-			).innerText;
+			);
+			size = size ? size.innerText : "est. each";
 
 			//function to get the capacity of each item as a number
 			const val = C => {
@@ -365,8 +371,32 @@ const nofrills = async function (searchWords) {
 				return qty;
 			};
 
-			const quantity = qty(capacity);
-			const value = val(capacity);
+			const unitCost = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
+			)
+				? document.querySelector(
+						`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
+				  ).innerText
+				: "";
+			const unitMass = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
+			)
+				? document
+						.querySelector(
+							`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
+						)
+						.innerText.split("/ ")[1]
+				: "";
+
+			var quantity = "";
+			var value = "";
+			if (size === "est. each") {
+				quantity = 1;
+				value = 1;
+			} else {
+				quantity = qty(size);
+				value = val(size);
+			}
 
 			topResults.push({
 				store: "No Frills",
@@ -374,9 +404,10 @@ const nofrills = async function (searchWords) {
 				image: image || "n/a",
 				title: title || "n/a",
 				price: price || "n/a",
-				capacity: capacity || "n/a",
+				capacity: size || "n/a",
 				value: value,
 				quantity: quantity,
+				unitPrice: { cost: unitCost, mass: unitMass },
 			});
 		}
 		return topResults;
