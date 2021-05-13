@@ -7,7 +7,6 @@ import scale from "../assets/images/scale.svg";
 import store from "../assets/images/store.svg";
 import sun from "../assets/images/WiseJo.png";
 import axios from "axios";
-// import { Spring } from "react-spring";
 
 const Results = () => {
 	const [values, setValues] = useState({
@@ -49,7 +48,6 @@ const Results = () => {
 	const changePageHandler = page => {
 		setValues({ ...values, view: page });
 	};
-
 	const deleteHandler = (del, detail1, detail2) => {
 		const url = "http://localhost:5000/itemSearch/";
 		//detail1 = item id for when del = "item"
@@ -94,9 +92,6 @@ const Results = () => {
 
 	return (
 		<>
-			{/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-				{props => (
-					<div style={props}> */}
 			<div
 				className={`results__container ${"results__container--" + values.view}`}
 			>
@@ -159,9 +154,6 @@ const Results = () => {
 					)}
 				</div>
 			</div>
-			{/* </div>
-				)}
-			</Spring> */}
 		</>
 	);
 };
