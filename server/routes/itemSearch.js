@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const grocery = require("../webScrapingFunctions/groceryFunctions");
 const nofrills = require("../webScrapingFunctions/nofrills");
+const longos = require("../webScrapingFunctions/gateway");
 const searchHistory = require("../data/searchResults");
 
 router.get("/longos/:item/:time", (req, res) => {
@@ -27,9 +28,16 @@ router.get("/longos/:item/:time", (req, res) => {
 
 		res.status(200).json(newSearch);
 	} else {
-		grocery
-			.gateway(item)
+		longos
+			.store(item)
 			.then(result => {
+				if (!result.length) {
+					res
+						.status(400)
+						.send(
+							"No results found. Please check that the spelling of the item is correct or try again later.",
+						);
+				}
 				const newData = {
 					...moreInfo,
 					time: time,
@@ -71,6 +79,13 @@ router.get("/walmart/:item/:time", (req, res) => {
 		grocery
 			.walmart(item)
 			.then(result => {
+				if (!result.length) {
+					res
+						.status(400)
+						.send(
+							"No results found. Please check that the spelling of the item is correct or try again later.",
+						);
+				}
 				const newData = {
 					...moreInfo,
 					time: time,
@@ -113,6 +128,13 @@ router.get("/nofrills/:item/:time", (req, res) => {
 		nofrills
 			.store(item)
 			.then(result => {
+				if (!result.length) {
+					res
+						.status(400)
+						.send(
+							"No results found. Please check that the spelling of the item is correct or try again later.",
+						);
+				}
 				const newData = {
 					...moreInfo,
 					time: time,
