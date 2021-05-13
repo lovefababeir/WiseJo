@@ -4,6 +4,7 @@ const gateway = async function (searchWords) {
 	const options = { headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
+	await page.setDefaultTimeout(60000);
 	await page.setViewport({ height: 1200, width: 960 });
 	await page.goto("https://www.grocerygateway.com/store/", {
 		waitUntil: "networkidle2",
@@ -129,10 +130,16 @@ const gateway = async function (searchWords) {
 };
 
 const walmart = async function (searchWords) {
-	const options = { headless: false };
+	const options = { headless: true };
+
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
+	await page.setDefaultTimeout(60000);
 	await page.setViewport({ height: 1200, width: 960 });
+
+	await page.setUserAgent(
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36",
+	);
 
 	await page.goto(`https://www.walmart.ca/search?q=${searchWords}`, {
 		waitUntil: "networkidle2",
@@ -255,7 +262,15 @@ const nofrills = async function (searchWords) {
 	const options = { headless: false };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
+	await page.setDefaultTimeout(60000);
 	await page.setViewport({ height: 1200, width: 960 });
+
+	await page.goto(`https://www.nofrills.ca/`, {
+		waitUntil: "networkidle2",
+	});
+	await page.click(
+		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(7) > button",
+	);
 	await page.goto(`https://www.nofrills.ca/search?search-bar=${searchWords}`, {
 		waitUntil: "networkidle2",
 	});
@@ -264,33 +279,33 @@ const nofrills = async function (searchWords) {
 		let topResults = [];
 
 		for (var n = 1; n < 7; n++) {
+			let path = `#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n})`;
+
 			const productID = document
-				.querySelector(
-					`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div`,
-				)
+				.querySelector(`${path} > div`)
 				.getAttribute("data-track-article-number");
 
 			const image = document
 				.querySelector(
-					`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div > div > div.product-tile__thumbnail > div.product-tile__thumbnail__image > img`,
+					`${path} > div > div > div.product-tile__thumbnail > div.product-tile__thumbnail__image > img`,
 				)
 				.getAttribute("src");
 
 			const title =
 				document.querySelector(
-					`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--brand`,
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--brand`,
 				).innerText +
 				" " +
 				document.querySelector(
-					`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
 				).innerText;
 
 			const price = document.querySelector(
-				`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div > div > div.product-tile__details > div.product-prices.product-prices--product-tile.product-prices--product-tile > ul > li:nth-child(1) > span > span.price__value.selling-price-list__item__price.selling-price-list__item__price--now-price__value`,
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(1) > li:nth-child(1) > span > span:nth-child(1)`,
 			).innerHTML;
 
 			const capacity = document.querySelector(
-				`#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n}) > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
 			).innerText;
 
 			//function to get the capacity of each item as a number
@@ -364,7 +379,6 @@ const nofrills = async function (searchWords) {
 				quantity: quantity,
 			});
 		}
-
 		return topResults;
 	});
 
