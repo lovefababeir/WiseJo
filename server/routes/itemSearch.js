@@ -8,12 +8,14 @@ router.get("/longos/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const prevSearch = searchHistory.find(record => {
+	const found = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "Longo's"
 		);
 	});
+	const prevSearch = found ? found.pop() : "";
+
 	if (prevSearch) {
 		const newSearch = {
 			...prevSearch,
@@ -34,9 +36,9 @@ router.get("/longos/:item/:time", (req, res) => {
 					searchResults: result,
 				};
 				searchHistory.push(newData);
-				const data = searchHistory.find(record => {
-					return record.time === time;
-				});
+				// const data = searchHistory.find(record => {
+				// 	return record.time === time;
+				// });
 
 				res.status(200).json(newData);
 			})
@@ -52,12 +54,13 @@ router.get("/walmart/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const prevSearch = searchHistory.find(record => {
+	const found = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "Walmart"
 		);
 	});
+	const prevSearch = found ? found.pop() : "";
 
 	if (prevSearch) {
 		const newSearch = { ...prevSearch, ...moreInfo, time: time };
@@ -74,11 +77,11 @@ router.get("/walmart/:item/:time", (req, res) => {
 					searchResults: result,
 				};
 				searchHistory.push(newData);
-				const data = searchHistory.find(record => {
-					return record.time === time;
-				});
+				// const data = searchHistory.find(record => {
+				// 	return record.time === time;
+				// });
 
-				res.status(200).json(data);
+				res.status(200).json(newData);
 			})
 			.catch(err => {
 				console.log(err);
@@ -92,12 +95,13 @@ router.get("/nofrills/:item/:time", (req, res) => {
 	const time = parseInt(req.params.time);
 	const moreInfo = req.query;
 
-	const prevSearch = searchHistory.find(record => {
+	const found = searchHistory.filter(record => {
 		return (
 			record.search.toLowerCase() == item.toLowerCase() &&
 			record.searchResults[0].store === "No Frills"
 		);
 	});
+	const prevSearch = found ? found.pop() : "";
 
 	if (prevSearch) {
 		const newSearch = { ...prevSearch, ...moreInfo, time: time };
@@ -115,11 +119,11 @@ router.get("/nofrills/:item/:time", (req, res) => {
 					searchResults: result,
 				};
 				searchHistory.push(newData);
-				const data = searchHistory.find(record => {
-					return record.time === time;
-				});
+				// const data = searchHistory.find(record => {
+				// 	return record.time === time;
+				// });
 
-				res.status(200).json(data);
+				res.status(200).json(newData);
 			})
 			.catch(err => {
 				console.log(err);
