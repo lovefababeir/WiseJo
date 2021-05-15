@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
-	const capacityList = () => {
+	const capacityList = resultsList => {
 		//value refers to the capacity as a number
-		list.sort((a, b) => {
+		resultsList.sort((a, b) => {
 			return a.value * a.quantity - b.value * a.quantity;
 		});
-		list.forEach(item => {
+		resultsList.forEach(item => {
 			if (
 				!newList.find(i => item.value === i.value && i.quantity === item.quantity)
 			) {
@@ -22,7 +22,7 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 					quantity: item.quantity,
 					capacity: item.capacity,
 					title: item.title,
-					storeList: list.filter(n => {
+					storeList: resultsList.filter(n => {
 						return n.value === item.value && n.quantity === item.quantity;
 					}),
 				};
@@ -31,7 +31,7 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 			}
 		});
 	};
-	capacityList();
+	capacityList(list);
 
 	const animationStyle = useSpring({
 		from: { opacity: 0, marginLeft: 500 },
