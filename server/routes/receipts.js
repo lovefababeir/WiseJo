@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const grocery = require("../webScrapingFunctions/groceryFunctions");
+const grocery = require("../receiptFunctions/groceryFunctions");
 const receiptsCollection = require("../data/receiptsCollection");
 const multer = require("multer");
 const fs = require("fs");
@@ -40,10 +40,10 @@ router.post("/upload", upload.single("receipt"), (req, res) => {
 
 			const purchaseData =
 				store === "walmart"
-					? grocery.walmartStore(results)
+					? grocery.walmartReceipt(results)
 					: store === "longo's"
-					? grocery.longosStore(results)
-					: grocery.nofrillsStore(results);
+					? grocery.longosReceipt(results)
+					: grocery.nofrillsReceipt(results);
 
 			const receiptData = {
 				time: time,
