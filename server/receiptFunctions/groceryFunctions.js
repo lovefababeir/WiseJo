@@ -1,4 +1,4 @@
-const walmartStore = receiptResults => {
+const walmartReceipt = receiptResults => {
 	//To get store ID
 	const storeIDindex = receiptResults.findIndex(text => {
 		return text.includes("STORE");
@@ -51,7 +51,7 @@ const walmartStore = receiptResults => {
 };
 
 //still need to write code based on receipts
-const longosStore = receiptResults => {
+const longosReceipt = receiptResults => {
 	// const storeIDindex = receiptResults.findIndex(text => {
 	// 	return text.includes("STORE");
 	// });
@@ -69,7 +69,7 @@ const longosStore = receiptResults => {
 };
 
 //still need to write code based on receipts
-const nofrillsStore = receiptResults => {
+const nofrillsReceipt = receiptResults => {
 	// const storeIDindex = receiptResults.findIndex(text => {
 	// 	return text.includes("STORE");
 	// });
@@ -87,7 +87,7 @@ const nofrillsStore = receiptResults => {
 };
 
 module.exports = {
-	walmartStore,
-	longosStore,
-	nofrillsStore,
+	walmartReceipt,
+	longosReceipt,
+	nofrillsReceipt,
 };
