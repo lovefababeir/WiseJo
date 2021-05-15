@@ -1,6 +1,7 @@
 import React from "react";
 import { useSpring, animated } from "react-spring";
 import deleteIcon from "../assets/images/delete.svg";
+import ResultsCapacitySelectedStoreDetails from "./ResultsCapacitySelectedStoreDetails";
 
 const ResultsCapacitySelected = ({
 	capacity,
@@ -27,12 +28,12 @@ const ResultsCapacitySelected = ({
 				<div className="capacity__optionsList">
 					{storeList.map(m => {
 						return (
-							<>
-								<p className="capacity__options">
-									<em>{m.store}</em> - {m.price}
-									{m.quantity > 1 ? " for pack of " + m.quantity : null} ( {m.title} )
-								</p>
-							</>
+							<ResultsCapacitySelectedStoreDetails
+								store={m.store}
+								price={m.price}
+								quantity={m.quantity}
+								title={m.title}
+							/>
 						);
 					})}
 				</div>
