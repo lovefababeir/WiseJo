@@ -4,7 +4,7 @@ import ResultsAllItemCard from "./ResultsAllItemCard";
 
 const ResultsAllGrocerySection = ({ store, listOfItems, deleteHandler }) => {
 	return (
-		<div key={uuidv4()}>
+		<div>
 			<div
 				className={`store__logo store__logo--${
 					store === "Walmart" ? "0" : store === "Longo's" ? "1" : "2"
@@ -25,6 +25,7 @@ const ResultsAllGrocerySection = ({ store, listOfItems, deleteHandler }) => {
 								title={item.title}
 								productID={item.productID}
 								deleteHandler={deleteHandler}
+								key={uuidv4()}
 							/>
 						);
 					})}
