@@ -3,6 +3,7 @@ import "./ResultsCapacity.scss";
 import deleteIcon from "../assets/images/delete.svg";
 import { useSpring, animated } from "react-spring";
 import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
+import ResultsCapacitySelected from "./ResultsCapacitySelected";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
@@ -61,31 +62,13 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 
 					<div className="capacity__selected">
 						{selected && (
-							<animated.div style={details2}>
-								<div className="capacity__details">
-									<h2 className="capacity__title">{selected.capacity}</h2>
-									<img
-										src={deleteIcon}
-										alt="Click here to delete item"
-										onClick={e => {
-											deleteHandler("items", selected.value, selected.quantity);
-										}}
-									/>
-									<div className="capacity__optionsList">
-										{selected.storeList.map(m => {
-											return (
-												<>
-													<p className="capacity__options">
-														<em>{m.store}</em> - {m.price}
-														{m.quantity > 1 ? " for pack of " + m.quantity : null} ( {m.title}{" "}
-														)
-													</p>
-												</>
-											);
-										})}
-									</div>
-								</div>
-							</animated.div>
+							<ResultsCapacitySelected
+								capacity={selected.capacity}
+								value={selected.value}
+								quantity={selected.quantity}
+								storeList={selected.storeList}
+								deleteHandler={deleteHandler}
+							/>
 						)}
 					</div>
 				</animated.div>
