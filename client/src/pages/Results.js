@@ -3,10 +3,8 @@ import "./Results.scss";
 import ResultsAll from "../components/ResultsAll";
 import ResultsCapacity from "../components/ResultsCapacity";
 import ResultsSolutions from "../components/ResultsSolutions";
-import scale from "../assets/images/scale.svg";
-import store from "../assets/images/store.svg";
-import sun from "../assets/images/WiseJo.png";
 import axios from "axios";
+import ResultsSubMenu from "./ResultsSubMenu";
 
 const Results = () => {
 	const [values, setValues] = useState({
@@ -90,50 +88,14 @@ const Results = () => {
 		setValues({ ...values, selected: category });
 	};
 
+	console.log(values);
 	return (
 		<>
 			<div
 				className={`results__container ${"results__container--" + values.view}`}
 			>
 				<h1 className="results__title ">SHOP & COMPARE</h1>
-				<nav className="results__nav">
-					<ul className="results__menu">
-						<li
-							className={`${
-								values.view === "All"
-									? "results__menu-item--selected"
-									: "results__menu-item"
-							}`}
-							onClick={() => changePageHandler("All")}
-						>
-							<img src={store} className="results__store" alt="view by store"></img>
-						</li>
-						<li
-							className={`${
-								values.view === "Capacity"
-									? "results__menu-item--selected"
-									: "results__menu-item"
-							}`}
-							onClick={() => changePageHandler("Capacity")}
-						>
-							<img src={scale} className="results__store" alt="view by capacity"></img>
-						</li>
-						<li
-							className={`${
-								values.view === "Solutions"
-									? "results__menu-item--selected"
-									: "results__menu-item"
-							}`}
-							onClick={() => changePageHandler("Solutions")}
-						>
-							<img
-								src={sun}
-								className="results__store"
-								alt="view WiseJo's advice"
-							></img>
-						</li>
-					</ul>
-				</nav>
+				<ResultsSubMenu view={values.view} changePageHandler={changePageHandler} />
 				<div className="results__view">
 					{values.view === "All" && (
 						<ResultsAll list={values.results} deleteHandler={deleteHandler} />
