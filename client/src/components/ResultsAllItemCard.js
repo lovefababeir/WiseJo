@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import deleteIcon from "../assets/images/delete.svg";
 
 const ResultsAllItemCard = ({
@@ -12,7 +11,7 @@ const ResultsAllItemCard = ({
 	deleteHandler,
 }) => {
 	return (
-		<div className="item" key={uuidv4()}>
+		<div className="item">
 			<img
 				className="item__image"
 				src={image}
