@@ -2,6 +2,7 @@ import React from "react";
 import "./ResultsCapacity.scss";
 import deleteIcon from "../assets/images/delete.svg";
 import { useSpring, animated } from "react-spring";
+import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
@@ -47,27 +48,13 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 					<div className="capacity__carousel">
 						{newList.map(category => {
 							return (
-								<>
-									<div className="capacity__box">
-										<div
-											className="capacity__size"
-											onClick={() => {
-												changeSelected(category);
-											}}
-										>
-											<img
-												className="capacity__image"
-												src={category.image}
-												alt={`The item with capacity: ${category.capacity}`}
-											/>
-										</div>
-										<h1 className="capacity__size-title">Size: {category.capacity}</h1>
-										<h2 className="capacity__optionsNum">
-											{category.storeList.length} Available{" "}
-											{category.storeList.length > 1 ? "Options" : "Option"}
-										</h2>
-									</div>
-								</>
+								<ResultsCapacityItemCard
+									image={category.image}
+									capacity={category.capacity}
+									storeList={category.storeList}
+									changeSelected={changeSelected}
+									category={category}
+								/>
 							);
 						})}
 					</div>
@@ -75,7 +62,6 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 					<div className="capacity__selected">
 						{selected && (
 							<animated.div style={details2}>
-								{" "}
 								<div className="capacity__details">
 									<h2 className="capacity__title">{selected.capacity}</h2>
 									<img
