@@ -1,9 +1,9 @@
 import React from "react";
 import "./ResultsCapacity.scss";
-import deleteIcon from "../assets/images/delete.svg";
 import { useSpring, animated } from "react-spring";
 import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
 import ResultsCapacitySelected from "./ResultsCapacitySelected";
+import { v4 as uuidv4 } from "uuid";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
@@ -33,19 +33,15 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	};
 	capacityList();
 
-	const details = useSpring({
+	const animationStyle = useSpring({
 		from: { opacity: 0, marginLeft: 500 },
 		to: { opacity: 1, marginLeft: 0 },
-	});
-	const details2 = useSpring({
-		from: { opacity: 0 },
-		to: { opacity: 1 },
 	});
 
 	return (
 		<>
 			<section className="capacity">
-				<animated.div style={details}>
+				<animated.div style={animationStyle}>
 					<div className="capacity__carousel">
 						{newList.map(category => {
 							return (
@@ -55,6 +51,7 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 									storeList={category.storeList}
 									changeSelected={changeSelected}
 									category={category}
+									key={uuidv4()}
 								/>
 							);
 						})}

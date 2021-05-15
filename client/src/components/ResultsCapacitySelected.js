@@ -2,6 +2,7 @@ import React from "react";
 import { useSpring, animated } from "react-spring";
 import deleteIcon from "../assets/images/delete.svg";
 import ResultsCapacitySelectedStoreDetails from "./ResultsCapacitySelectedStoreDetails";
+import { v4 as uuidv4 } from "uuid";
 
 const ResultsCapacitySelected = ({
 	capacity,
@@ -33,6 +34,7 @@ const ResultsCapacitySelected = ({
 								price={m.price}
 								quantity={m.quantity}
 								title={m.title}
+								key={uuidv4()}
 							/>
 						);
 					})}
