@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./ReceiptList.scss";
 import axios from "axios";
-// import { Spring } from "react-spring/renderprops";
 import { v4 as uuidv4 } from "uuid";
 
 class ReceiptsList extends Component {
@@ -80,9 +79,6 @@ class ReceiptsList extends Component {
 	render() {
 		return (
 			<>
-				{/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-					{props => (
-						<div style={props}> */}
 				<div className="receiptsList">
 					<h1 className="results__title results__title--receiptsList">
 						SNAP & TRACK
@@ -113,25 +109,22 @@ class ReceiptsList extends Component {
 							})}
 						<h3 className="receiptsList__dayTotal">
 							Today you spent:{" "}
-							<h3 className="receiptsList__dayTotal--Num">
+							<span className="receiptsList__dayTotal--Num">
 								{this.state.receiptsList &&
 									`$
 							${this.totalExpenses(this.state.receiptsList, "day").toFixed(2)}`}
-							</h3>
+							</span>
 						</h3>
 						<h3 className="receiptsList__weekTotal">
 							This week you spent:{" "}
-							<h3 className="receiptsList__weekTotal--Num">
+							<span className="receiptsList__weekTotal--Num">
 								{this.state.receiptsList &&
 									`$
 							${this.totalExpenses(this.state.receiptsList, "week").toFixed(2)}`}
-							</h3>
+							</span>
 						</h3>
 					</div>
 					{this.state.receiptSelected && (
-						// <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-						// 	{props => (
-						// <div style={props}>
 						<div className="receipts-selected">
 							<div className="receipts-selected__storeDetails">
 								<p className="receipts-selected__store">
@@ -159,14 +152,8 @@ class ReceiptsList extends Component {
 								</p>
 							</div>
 						</div>
-						// </div>
-						// 	)}
-						// </Spring>
 					)}
 				</div>
-				{/* </div>
-					)}
-				</Spring> */}
 			</>
 		);
 	}
