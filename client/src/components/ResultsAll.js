@@ -1,9 +1,7 @@
 import React from "react";
 import "./ResultsAll.scss";
-import deleteIcon from "../assets/images/delete.svg";
 import { useSpring, animated } from "react-spring";
-import { v4 as uuidv4 } from "uuid";
-import ResultsAllItemCard from "./ResultsAllItemCard";
+import ResultsAllGrocerySection from "./ResultsAllGrocerySection";
 
 const ResultsAll = ({ list, deleteHandler }) => {
 	var listOfStores = [];
@@ -35,32 +33,11 @@ const ResultsAll = ({ list, deleteHandler }) => {
 			<section className="store">
 				{listOfStores.map((store, i) => {
 					return (
-						<div key={uuidv4()}>
-							<div
-								className={`store__logo store__logo--${
-									store.store === "Walmart" ? "0" : store.store === "Longo's" ? "1" : "2"
-								}`}
-							></div>
-							<div className={`store__box store__box--${store.store}`}>
-								{store.listOfItems
-									.sort((a, b) => {
-										return a.value * a.quantity - b.value * b.quantity;
-									})
-									.map(item => {
-										return (
-											<ResultsAllItemCard
-												image={item.image}
-												store={item.store}
-												capacity={item.capacity}
-												price={item.price}
-												title={item.title}
-												productID={item.productID}
-												deleteHandler={deleteHandler}
-											/>
-										);
-									})}
-							</div>
-						</div>
+						<ResultsAllGrocerySection
+							store={store.store}
+							listOfItems={store.listOfItems}
+							deleteHandler={deleteHandler}
+						/>
 					);
 				})}
 			</section>
