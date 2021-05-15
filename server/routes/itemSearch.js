@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const grocery = require("../webScrapingFunctions/groceryFunctions");
-const nofrills = require("../webScrapingFunctions/nofrills");
 const longos = require("../webScrapingFunctions/gateway");
+const walmart = require("../webScrapingFunctions/walmart");
+const nofrills = require("../webScrapingFunctions/nofrills");
 const searchHistory = require("../data/searchResults");
 
 router.get("/longos/:item/:time", (req, res) => {
@@ -76,8 +76,8 @@ router.get("/walmart/:item/:time", (req, res) => {
 		searchHistory.push(newSearch);
 		res.status(200).json(newSearch);
 	} else {
-		grocery
-			.walmart(item)
+		walmart
+			.store(item)
 			.then(result => {
 				if (!result.length) {
 					res
