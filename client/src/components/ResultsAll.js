@@ -3,6 +3,7 @@ import "./ResultsAll.scss";
 import deleteIcon from "../assets/images/delete.svg";
 import { useSpring, animated } from "react-spring";
 import { v4 as uuidv4 } from "uuid";
+import ResultsAllItemCard from "./ResultsAllItemCard";
 
 const ResultsAll = ({ list, deleteHandler }) => {
 	var listOfStores = [];
@@ -47,28 +48,15 @@ const ResultsAll = ({ list, deleteHandler }) => {
 									})
 									.map(item => {
 										return (
-											<div className="item" key={uuidv4()}>
-												<img
-													className="item__image"
-													src={item.image}
-													alt={`The item with capacity: (${item.capacity}) at ${item.store}`}
-												/>
-												<p className="item__title">{item.title}</p>
-												<div className="item__details">
-													<div>
-														<p className="item__price">{item.price}</p>
-														<p className="item__capacity">{item.capacity}</p>
-													</div>
-													<img
-														src={deleteIcon}
-														alt="Click here to delete item"
-														onClick={e => {
-															deleteHandler("item", item.productID);
-														}}
-														className="item__delete"
-													/>
-												</div>
-											</div>
+											<ResultsAllItemCard
+												image={item.image}
+												store={item.store}
+												capacity={item.capacity}
+												price={item.price}
+												title={item.title}
+												productID={item.productID}
+												deleteHandler={deleteHandler}
+											/>
 										);
 									})}
 							</div>
@@ -76,7 +64,6 @@ const ResultsAll = ({ list, deleteHandler }) => {
 					);
 				})}
 			</section>
-			//{" "}
 		</animated.div>
 	);
 };
