@@ -2,6 +2,7 @@ import React from "react";
 import "./ResultsAll.scss";
 import { useSpring, animated } from "react-spring";
 import ResultsAllGrocerySection from "./ResultsAllGrocerySection";
+import { v4 as uuidv4 } from "uuid";
 
 const ResultsAll = ({ list, deleteHandler }) => {
 	var listOfStores = [];
@@ -37,6 +38,7 @@ const ResultsAll = ({ list, deleteHandler }) => {
 							store={store.store}
 							listOfItems={store.listOfItems}
 							deleteHandler={deleteHandler}
+							key={uuidv4()}
 						/>
 					);
 				})}
