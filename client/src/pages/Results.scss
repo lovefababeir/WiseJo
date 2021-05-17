@@ -26,7 +26,10 @@
 	&__menu {
 		@include flex(row, space-between);
 		list-style: none;
-
+		min-width: 18rem;
+		max-width: 40rem;
+		padding-left: 0;
+		margin: 0 auto;
 		&-item {
 			font-weight: bold;
 			border-radius: 2.5rem;
