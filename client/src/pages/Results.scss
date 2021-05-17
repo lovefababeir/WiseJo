@@ -8,8 +8,6 @@
 		overflow: hidden;
 		padding: 0.1rem 1rem;
 		background-color: white;
-		// margin-bottom: 9rem;
-		border: solid 1px red;
 	}
 	&__title {
 		font-size: 3rem;
@@ -46,7 +44,7 @@
 	}
 
 	&__view {
-		height: 95%;
+		height: calc(100vh - #{$menuBar} - 10.6rem - 9rem);
 		overflow-y: scroll;
 		@include flex(row, space-around);
 	}
