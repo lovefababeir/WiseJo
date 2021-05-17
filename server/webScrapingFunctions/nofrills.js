@@ -67,15 +67,8 @@ const store = async function (searchWords) {
 					});
 				}
 
-				if (capacity.includes("kg")) {
-					value = capacity.match(/\d+/g).map(Number)[0] * 1000;
-				} else if (capacity.includes("g") || capacity.includes("ml")) {
-					value = capacity.match(/\d+/g).map(Number)[0];
-					return value;
-				} else if (capacity.includes("l")) {
-					value = capacity.match(/\d+/g).map(Number)[0] * 1000;
-				} else if (
-					capacity.includes("pkg ") ||
+				if (
+					capacity.includes("pkg") ||
 					capacity.includes("pack") ||
 					capacity.includes("cup") ||
 					capacity.includes("cans") ||
@@ -83,11 +76,19 @@ const store = async function (searchWords) {
 					capacity.includes("ea")
 				) {
 					value = 1;
+				} else if (capacity.includes("kg")) {
+					value = parseFloat(capacity) * 1000;
+				} else if (capacity.includes("g") || capacity.includes("ml")) {
+					value = parseFloat(capacity);
+					return value;
+				} else if (capacity.includes("l")) {
+					value = parseFloat(capacity) * 1000;
 				} else {
 					value = 1;
 				}
 				return value;
 			};
+
 			//function to get the quantity in item
 			const qty = C => {
 				var capacity = C.toLowerCase();
