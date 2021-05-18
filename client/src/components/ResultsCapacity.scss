@@ -5,13 +5,13 @@
 .capacity {
 	&__carousel {
 		display: flex;
-		// justify-content: left;
 		align-items: flex-start;
 		height: 100%;
-		width: 90vw;
+		width: 100vw;
 		overflow-x: scroll;
 		margin: 3rem auto;
 		padding: 1.5rem 0;
+		padding-left: 2rem;
 	}
 	&__box {
 		@include flex(column, center, center);
@@ -54,6 +54,7 @@
 	&__details {
 		font-size: 1.3rem;
 		@include flex(row, space-between);
+		max-width: 60rem;
 	}
 	&__optionsNum {
 		font-size: 1.3rem;
@@ -63,9 +64,26 @@
 	&__title {
 		width: 90%;
 		font-size: 1.6rem;
+		&--selected {
+			font-size: 1.8rem;
+			font-weight: bold;
+		}
 	}
+
 	&__options {
 		font-size: 1.6rem;
 		text-transform: capitalize;
+		display: flex;
+		& > p:first-child {
+			margin-right: 0.6rem;
+			white-space: nowrap;
+			flex-basis: fit-content;
+			color: $orange;
+			font-weight: 600;
+			font-size: 1.8rem;
+		}
+		& > p:nth-child(2) {
+			margin-left: 0.6rem;
+		}
 	}
 }
