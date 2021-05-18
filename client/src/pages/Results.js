@@ -4,7 +4,7 @@ import ResultsAll from "../components/ResultsAll";
 import ResultsCapacity from "../components/ResultsCapacity";
 import ResultsSolutions from "../components/ResultsSolutions";
 import axios from "axios";
-import ResultsSubMenu from "./ResultsSubMenu";
+import ResultsSubMenu from "../components/ResultsSubMenu";
 
 const Results = () => {
 	const [values, setValues] = useState({
