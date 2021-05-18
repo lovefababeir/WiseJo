@@ -135,7 +135,7 @@ const ResultsSolutions = props => {
 				)}
 			</animated.div>
 
-			<animated.div style={details3}>
+			<animated.div style={details3} className="last-solution">
 				{curLocationOptions[1] && (
 					<div className="solution">
 						<img
