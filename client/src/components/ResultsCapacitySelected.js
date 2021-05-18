@@ -18,7 +18,9 @@ const ResultsCapacitySelected = ({
 	return (
 		<animated.div style={animationStyle}>
 			<div className="capacity__details">
-				<h2 className="capacity__title">{capacity}</h2>
+				<h2 className="capacity__title capacity__title--selected">
+					Your options for {capacity}:
+				</h2>
 				<img
 					src={deleteIcon}
 					alt="Click here to delete item"
