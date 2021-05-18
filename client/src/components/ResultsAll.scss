@@ -9,7 +9,7 @@
 	&__box {
 		display: flex;
 		margin-right: 2rem;
-		width: 96vw;
+		width: 100vw;
 		overflow-x: scroll;
 		padding-left: 0.5rem;
 	}
@@ -34,11 +34,13 @@
 
 .item {
 	width: 40%;
+	min-width: 15rem;
+	max-width: 18rem;
 	border-radius: 2rem;
 	margin: 2rem 1rem;
 	background-color: rgba(256, 256, 256, 0.7);
-
 	position: relative;
+	@include flex(column, space-between, flex-start);
 	&__details {
 		padding: 1rem;
 		@include flex(row, space-between, flex-end, nowrap);
@@ -58,16 +60,20 @@
 		width: 15rem;
 		background-color: white;
 		box-shadow: 0px 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.15);
+		margin-bottom: 1rem;
 	}
+
 	&__store {
 		font-size: 1.5rem;
 	}
 	&__price {
 		font-size: 1.4rem;
 		font-weight: bold;
+		margin: 0;
 	}
 	&__capacity {
 		font-size: 1.4rem;
+		margin: 0;
 	}
 	&__delete {
 		height: 2.5rem;
