@@ -63,3 +63,34 @@
 		margin-bottom: 1.6rem;
 	}
 }
+
+//BREAKPOINTS FOR RESPONSIVE DESIGN:
+@mixin mobile {
+	@media screen and (min-width: $mobile) {
+		@content;
+	}
+}
+
+@mixin surface {
+	@media screen and (min-width: $surface) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media screen and (min-width: $tablet) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@media screen and (min-width: $desktop) {
+		@content;
+	}
+}
+
+@mixin breakpoint($width) {
+	@media screen and (min-width: $width) {
+		@content;
+	}
+}
