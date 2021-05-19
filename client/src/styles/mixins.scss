@@ -65,8 +65,18 @@
 }
 
 //BREAKPOINTS FOR RESPONSIVE DESIGN:
-@mixin mobile {
-	@media screen and (min-width: $mobile) {
+@mixin mobileS {
+	@media screen and (min-width: $mobileS) {
+		@content;
+	}
+}
+@mixin mobileM {
+	@media screen and (min-width: $mobileM) {
+		@content;
+	}
+}
+@mixin mobileL {
+	@media screen and (min-width: $mobileL) {
 		@content;
 	}
 }
