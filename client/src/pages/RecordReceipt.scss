@@ -2,14 +2,6 @@
 @import "../styles/font.scss";
 @import "../styles/mixins.scss";
 
-.receipts {
-	height: 100vh;
-	margin: 0rem;
-	padding: 0.1rem 1rem;
-	border-radius: 2rem;
-	padding-bottom: 1rem;
-}
-
 .receipt-form {
 	&__storeSelect {
 		@include inputBox;
@@ -33,5 +25,9 @@
 }
 
 .form__label--receipts {
-	margin-top: 5rem;
+	margin-top: 2rem;
+	font-size: 1.2rem;
+	@include surface {
+		font-size: 1.8rem;
+	}
 }
