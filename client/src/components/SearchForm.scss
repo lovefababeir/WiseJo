@@ -3,6 +3,7 @@
 @import "../styles/mixins.scss";
 
 .form {
+	padding-top: 0.1rem;
 	&__title {
 		@include pageTitle;
 		color: white;
