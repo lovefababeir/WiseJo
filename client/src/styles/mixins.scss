@@ -66,6 +66,7 @@
 }
 
 @mixin pageTitle {
+	color: #aabfb2;
 	font-size: 2.4rem;
 	margin: 7rem auto 3rem auto;
 	text-align: center;
@@ -108,5 +109,16 @@
 	@include surface {
 		font-size: 2rem;
 		height: 4rem;
+	}
+}
+
+@mixin label {
+	text-transform: uppercase;
+	font-size: 1.4rem;
+	margin-bottom: 0;
+	color: #88a593;
+	font-weight: bold;
+	@include surface {
+		font-size: 1.6rem;
 	}
 }
