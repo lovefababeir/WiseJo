@@ -67,53 +67,46 @@ const RecordReceipt = () => {
 			{/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 					{props => (
 						<div style={props}> */}
-			<div className="receipts">
-				<div className="receipt-form">
-					<form onSubmit={e => onFormSubmit(e)}>
-						<h1 className="form__title">SNAP & TRACK</h1>
+			<div className="receipt-form">
+				<h1 className="form__title">SNAP & TRACK</h1>
+				<form onSubmit={e => onFormSubmit(e)}>
+					<div className="form__box">
+						<label className="form__label form__label--receipts">
+							Take a picture of your receipt and upload it here
+						</label>
+						<input
+							className="receipt-form__fileUpload"
+							accept="image/*"
+							type="file"
+							name="receipt"
+							onChange={e => {
+								onFormChange(e);
+							}}
+						/>
 
-						<div className="form__box">
-							<label className="form__label">
-								Take a picture of your receipt and upload it here
-							</label>
-							<input
-								className="receipt-form__fileUpload"
-								accept="image/*"
-								type="file"
-								name="receipt"
-								onChange={e => {
-									onFormChange(e);
-								}}
-							/>
+						<label className="form__label form__label--receipts">
+							Select the store from where you made your purchase
+						</label>
+						<select
+							className="receipt-form__storeSelect"
+							name="receiptStore"
+							id="receiptStore"
+						>
+							<option value="Longo's">Longo's</option>
+							<option value="No Frills">No Frills</option>
+							<option value="Walmart">Walmart</option>
+						</select>
 
-							<label className="form__label form__label--receipts">
-								Select the store from where you made your purchase
-							</label>
-							<select
-								className="receipt-form__storeSelect"
-								name="receiptStore"
-								id="receiptStore"
-							>
-								<option value="Longo's">Longo's</option>
-								<option value="No Frills">No Frills</option>
-								<option value="Walmart">Walmart</option>
-							</select>
+						<button className="receipt-form__submitBtn" type="submit">
+							Track
+						</button>
+					</div>
 
-							<button className="receipt-form__submitBtn" type="submit">
-								Track
-							</button>
-						</div>
-
-						<p className={values.errMsg ? "receipt-form__errMsg" : ""}>
-							{values.errMsg}
-						</p>
-					</form>
-					{values.loading && <LoadingSpinner />}
-				</div>
-
-				{/* {values.view === "receiptslist" && (
-						<ReceiptsList update={values.update} />
-					)} */}
+					<p className={values.errMsg ? "receipt-form__errMsg" : ""}>
+						{values.errMsg}
+					</p>
+				</form>
+				{values.loading && <LoadingSpinner />}
 			</div>
 			{/* </div>
 					)}
