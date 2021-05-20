@@ -1,3 +1,5 @@
+@import "./styles/variables.scss";
+
 *,
 *:before,
 *:after {
@@ -37,4 +39,13 @@ body {
 		rgba(148, 166, 161, 0) 42%,
 		rgba(148, 166, 161, 1) 96%
 	);
+}
+
+main {
+	height: 100vh;
+}
+
+.main-page {
+	width: 100vw;
+	height: calc(100vh - #{$menuBar});
 }
