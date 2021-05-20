@@ -41,7 +41,7 @@
 		padding: 1rem 0;
 		font-size: 1.2rem;
 		width: 100%;
-		max-width: 80rem;
+		max-width: 60rem;
 		margin: 0 auto;
 		@include mobileM {
 			font-size: 1.4rem;
@@ -60,7 +60,7 @@
 }
 
 .receipts-selected {
-	max-width: 60rem;
+	max-width: 50rem;
 	margin: 0 auto;
 	&__store {
 		font-size: 1.8rem;
