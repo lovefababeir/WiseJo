@@ -107,22 +107,24 @@ class ReceiptsList extends Component {
 									</div>
 								);
 							})}
-						<h3 className="receiptsList__dayTotal">
-							Today you spent:{" "}
-							<span className="receiptsList__dayTotal--Num">
-								{this.state.receiptsList &&
-									`$
-							${this.totalExpenses(this.state.receiptsList, "day").toFixed(2)}`}
-							</span>
-						</h3>
-						<h3 className="receiptsList__weekTotal">
-							This week you spent:{" "}
-							<span className="receiptsList__weekTotal--Num">
-								{this.state.receiptsList &&
-									`$
-							${this.totalExpenses(this.state.receiptsList, "week").toFixed(2)}`}
-							</span>
-						</h3>
+						<div className="receipt__record">
+							<h3 className="receiptsList__dayTotal">
+								Today you spent:{" "}
+								<span className="receiptsList__dayTotal--Num">
+									{this.state.receiptsList &&
+										`$
+									${this.totalExpenses(this.state.receiptsList, "day").toFixed(2)}`}
+								</span>
+							</h3>
+							<h3 className="receiptsList__weekTotal">
+								This week you spent:{" "}
+								<span className="receiptsList__weekTotal--Num">
+									{this.state.receiptsList &&
+										`$
+									${this.totalExpenses(this.state.receiptsList, "week").toFixed(2)}`}
+								</span>
+							</h3>
+						</div>
 					</div>
 					{this.state.receiptSelected && (
 						<div className="receipts-selected">
