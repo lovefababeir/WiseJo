@@ -4,12 +4,8 @@
 
 .form {
 	&__title {
-		font-size: 3rem;
+		@include pageTitle;
 		color: white;
-		font-weight: bold;
-		margin: 7rem auto 3rem auto;
-		padding: 0 5rem;
-		text-align: center;
 	}
 	&__box {
 		width: 23rem;
