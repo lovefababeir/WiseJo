@@ -67,7 +67,7 @@ const RecordReceipt = () => {
 			{/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
 					{props => (
 						<div style={props}> */}
-			<section className="receipts">
+			<div className="receipts">
 				<div className="receipt-form">
 					<form onSubmit={e => onFormSubmit(e)}>
 						<h1 className="form__title">SNAP & TRACK</h1>
@@ -114,7 +114,7 @@ const RecordReceipt = () => {
 				{/* {values.view === "receiptslist" && (
 						<ReceiptsList update={values.update} />
 					)} */}
-			</section>
+			</div>
 			{/* </div>
 					)}
 				</Spring> */}
