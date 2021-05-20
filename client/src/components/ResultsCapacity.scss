@@ -32,9 +32,12 @@
 			background-color: rgba(191, 107, 107, 0.6);
 		}
 		&-title {
-			font-size: 1.8rem;
+			font-size: 1.3rem;
 			text-align: center;
 			margin-top: 2rem;
+			@include mobileM {
+				font-size: 1.8rem;
+			}
 		}
 	}
 	&__image {
@@ -61,9 +64,12 @@
 		max-width: 60rem;
 	}
 	&__optionsNum {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
 		color: #a66658;
 		font-style: italic;
+		@include mobileM {
+			font-size: 1.3rem;
+		}
 	}
 	&__title {
 		width: 90%;
