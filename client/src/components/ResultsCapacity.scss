@@ -65,7 +65,7 @@
 	}
 	&__optionsNum {
 		font-size: 1.2rem;
-		color: #a66658;
+		color: $orange;
 		font-style: italic;
 		@include mobileM {
 			font-size: 1.3rem;
