@@ -20,12 +20,23 @@
 		margin-left: 1rem;
 	}
 	&__advice {
-		font-size: 1.6rem;
+		font-size: 1.2rem;
 		margin-bottom: 1.5rem;
-		color: #a66658;
+		color: $orange;
 		font-weight: bold;
+		@include mobileM {
+			font-size: 1.6rem;
+		}
 	}
 	&__detail {
 		font-size: 1.3rem;
+		&--price,
+		&--capacity,
+		&--solution {
+			font-size: 1.2rem;
+			@include mobileM {
+				font-size: 1.3rem;
+			}
+		}
 	}
 }
