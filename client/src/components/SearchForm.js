@@ -6,8 +6,8 @@ const SearchForm = ({ submitHandler, loading }) => {
 	const inputRef = React.createRef();
 	return (
 		<>
+			<h1 className="form__title">SHOP & COMPARE</h1>
 			<form className="form" action="submit" onSubmit={submitHandler}>
-				<h1 className="form__title">SHOP & COMPARE</h1>
 				<div className="form__box">
 					<label className="form__label">Select a grocery store</label>
 					<select name="groceryStore" id="storeList">
