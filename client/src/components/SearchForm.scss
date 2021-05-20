@@ -11,6 +11,9 @@
 	&__box {
 		width: 23rem;
 		margin: 0 auto;
+		@include surface {
+			width: 32rem;
+		}
 	}
 
 	&__label {
@@ -35,32 +38,12 @@
 }
 
 #storeList {
-	width: 23rem;
-	height: 4rem;
-	border-radius: 2rem;
-	display: block;
-	margin: 0.5rem auto 3rem auto;
-	padding-left: 2rem;
-	border: solid 1px #d3d3d3;
-	background-color: white;
-	outline: none;
-	font-size: 1.5rem;
+	@include inputBox;
 }
 
 #search {
-	@extend #storeList;
-	border-radius: 2rem;
-	margin-left: 0;
+	@include inputBox;
 }
 #submitBtn {
-	@extend #search;
-	background-color: #88a593;
-	border: #83a08e solid 1px;
-	padding: 0;
-	width: 15rem;
-	color: white;
-	text-transform: uppercase;
-	font-size: 1.6rem;
-	box-shadow: 1px 2px 4px 1px #838383;
-	margin: 0 auto;
+	@include button;
 }
