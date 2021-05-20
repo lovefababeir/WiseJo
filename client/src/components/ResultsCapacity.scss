@@ -38,14 +38,18 @@
 		}
 	}
 	&__image {
-		width: 10rem;
-		height: 17rem;
+		width: 8rem;
+		height: 13.6rem;
 		border-radius: 2rem;
 		object-fit: cover;
 		object-position: left;
 		margin: 0.6rem;
 		box-shadow: 0px -3px 6px 4px rgba(0, 0, 0, 0.15);
 		background-color: white;
+		@include mobileM {
+			width: 10rem;
+			height: 17rem;
+		}
 	}
 	&__selected {
 		width: 90%;
