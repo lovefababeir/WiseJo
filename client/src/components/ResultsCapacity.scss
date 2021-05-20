@@ -75,13 +75,16 @@
 		width: 90%;
 		font-size: 1.6rem;
 		&--selected {
-			font-size: 1.8rem;
+			font-size: 1.5rem;
 			font-weight: bold;
+			@include mobileM {
+				font-size: 1.8rem;
+			}
 		}
 	}
 
 	&__options {
-		font-size: 1.6rem;
+		font-size: 1.3rem;
 		text-transform: capitalize;
 		display: flex;
 		& > p:first-child {
@@ -90,10 +93,16 @@
 			flex-basis: fit-content;
 			color: $orange;
 			font-weight: 600;
-			font-size: 1.8rem;
+			font-size: 1.4rem;
+			@include mobileM {
+				font-size: 1.8rem;
+			}
 		}
 		& > p:nth-child(2) {
 			margin-left: 0.6rem;
+			@include mobileM {
+				font-size: 1.6rem;
+			}
 		}
 	}
 }
