@@ -9,6 +9,7 @@
 	background-color: white;
 	margin-bottom: 10rem;
 	overflow-y: scroll;
+	padding-bottom: 2rem;
 	&__title {
 		font-size: 2rem;
 		color: #f2b988;
@@ -28,6 +29,7 @@
 		font-size: 1.4rem;
 		&--Num {
 			color: #f2b988;
+			font-weight: bold;
 		}
 	}
 }
@@ -58,6 +60,8 @@
 }
 
 .receipts-selected {
+	max-width: 60rem;
+	margin: 0 auto;
 	&__store {
 		font-size: 1.8rem;
 		font-weight: bold;
