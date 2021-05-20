@@ -5,8 +5,8 @@ import LoadingSpinner from "./LoadingSpinner";
 const SearchForm = ({ submitHandler, loading }) => {
 	const inputRef = React.createRef();
 	return (
-		<section className="search">
-			<form action="submit" onSubmit={submitHandler}>
+		<>
+			<form className="form" action="submit" onSubmit={submitHandler}>
 				<h1 className="form__title">SHOP & COMPARE</h1>
 				<div className="form__box">
 					<label className="form__label">Select a grocery store</label>
@@ -23,7 +23,7 @@ const SearchForm = ({ submitHandler, loading }) => {
 				</div>
 			</form>
 			{loading && <LoadingSpinner />}
-		</section>
+		</>
 	);
 };
 export default SearchForm;
