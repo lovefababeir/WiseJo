@@ -104,3 +104,13 @@
 		@content;
 	}
 }
+
+@mixin pageTitle {
+	font-size: 2.4rem;
+	margin: 7rem auto 3rem auto;
+	text-align: center;
+	font-weight: bold;
+	@include mobileM {
+		font-size: 3rem;
+	}
+}
