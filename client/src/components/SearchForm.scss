@@ -17,23 +17,7 @@
 	}
 
 	&__label {
-		text-transform: uppercase;
-		font-size: 1.4rem;
-		margin-bottom: 0;
-		color: #88a593;
-		font-weight: bold;
-		@include surface {
-			font-size: 1.6rem;
-		}
-	}
-	&__question-1 {
-		@extend .form__title;
-		margin-top: 0;
-		font-weight: normal;
-	}
-	&__question-2 {
-		@extend .form__question-1;
-		margin-top: 5rem;
+		@include label;
 	}
 }
 
