@@ -19,7 +19,7 @@
 		margin: 1rem -1rem;
 		padding: 1rem 2rem;
 		width: 100vw;
-		@include flex(row, space-between, center);
+		@include flex(column, space-between, center);
 	}
 
 	&__dayTotal,
@@ -37,8 +37,16 @@
 		@include flex(row, space-between);
 		border-bottom: #f2f2f2 solid 1px;
 		padding: 1rem 0;
-		font-size: 1.4rem;
+		font-size: 1.2rem;
 		width: 100%;
+		max-width: 80rem;
+		margin: 0 auto;
+		@include mobileM {
+			font-size: 1.4rem;
+		}
+		&:last-child {
+			border-bottom: none;
+		}
 	}
 	&__summary {
 		text-transform: capitalize;
@@ -46,7 +54,7 @@
 }
 .table-headings {
 	font-weight: bold;
-	font-size: 1.6;
+	font-size: 1.6rem;
 }
 
 .receipts-selected {
@@ -54,7 +62,7 @@
 		font-size: 1.8rem;
 		font-weight: bold;
 		text-transform: capitalize;
-		color: #a66658;
+		color: $orange;
 	}
 	&__storeDetails {
 		border: #f2f2f2 solid 3px;
