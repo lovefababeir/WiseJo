@@ -17,44 +17,75 @@ const RecordReceipt = () => {
 	});
 
 	const onFormSubmit = e => {
+		const time = Date.now();
 		e.preventDefault();
 		const store = e.target.receiptStore.value;
 		if (store && values.file) {
 			const formData = new FormData();
 			formData.append("receipt", values.file);
+			setValues({ ...values, errMsg: "", loading: true });
+
+			// //=======================
 			const config = {
 				headers: {
-					"content-type": "multipart/form-data",
+					"content-type": "application/json",
+					"Ocp-Apim-Subscription-Key": "df71a3e3f51344aab74af20393af370b",
 				},
 			};
-			setValues({ ...values, errMsg: "", loading: true });
-			console.log(e);
 			axios
 				.post(
-					`http://localhost:5000/receipts/upload?store=${store}`,
+					`https://wisejoocr.cognitiveservices.azure.com/vision/v3.2/ocr`,
 					formData,
 					config,
 				)
-				.then(response => {
-					console.log(response);
-					history.push("/track");
-					// setValues({ ...values, update: true, view: "receiptslist" });
-					// window.location.replace("/receiptslist");
+				.then(res => {
+					console.log(res.data.regions);
+					axios
+						.post(
+							`http://localhost:8080/receipts/convertImage?store=${store}&date=${time}`,
+							res,
+						)
+						.then(result => {
+							console.log("result from conversion", result);
+						})
+						.catch(err => {
+							"could not convert";
+						});
 				})
-				.catch(err => {
-					console.log(err);
-					setValues({
-						...values,
-						errMsg:
-							"Submission failed. Please check to you that you've attached the correct image and that it is in jpeg or png format ",
-					});
-				});
-		} else {
-			setValues({
-				...values,
-				errMsg:
-					"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPEG or PNG form",
-			});
+				.catch(err => console.log(err.response));
+			// //=======================
+			// const config = {
+			// 	headers: {
+			// 		"content-type": "multipart/form-data",
+			// 	},
+			// };
+
+			// 	axios
+			// 		.post(
+			// 			`http://localhost:8080/receipts/upload?store=${store}&name=${name}`,
+			// 			formData,
+			// 			config,
+			// 		)
+			// 		.then(response => {
+			// 			console.log(response.data);
+			// 			history.push("/track");
+			// 			// setValues({ ...values, update: true, view: "receiptslist" });
+			// 			// window.location.replace("/receiptslist");
+			// 		})
+			// 		.catch(err => {
+			// 			console.log(err);
+			// 			setValues({
+			// 				...values,
+			// 				errMsg:
+			// 					"Submission failed. Please check to you that you've attached the correct image and that it is in jpeg or png format ",
+			// 			});
+			// 		});
+			// } else {
+			// 	setValues({
+			// 		...values,
+			// 		errMsg:
+			// 			"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPEG or PNG form",
+			// 	});
 		}
 	};
 	const onFormChange = e => {
