@@ -33,19 +33,23 @@ const RecordReceipt = () => {
 				},
 			};
 			axios
-				.post(`${REACT_APP_OCR_ENDPOINT}vision/v3.2/ocr`, formData, config)
+				.post(
+					`${process.env.REACT_APP_OCR_ENDPOINT}vision/v3.2/ocr`,
+					formData,
+					config,
+				)
 				.then(res => {
 					console.log(res.data.regions);
 					axios
 						.post(
-							`http://localhost:8080/receipts/convertImage?store=${store}&date=${time}`,
+							`http://localhost:8080/receipts/convertImage?store=${store}&time=${time}`,
 							res,
 						)
 						.then(result => {
 							console.log("result from conversion", result);
 						})
 						.catch(err => {
-							"could not convert";
+							console.log("could not convert");
 						});
 				})
 				.catch(err => console.log(err.response));
