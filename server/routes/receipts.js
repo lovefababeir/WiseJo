@@ -52,6 +52,7 @@ router.get("/history", (req, res) => {
 
 //====================================
 //receipt OCR API for when storing the image
+//CURRENTLY NOT IN USE=====================//
 var Storage = multer.diskStorage({
 	destination: function (req, file, callback) {
 		callback(null, "uploads/");
@@ -103,5 +104,6 @@ router.post("/upload", upload.single("receipt"), (req, res) => {
 	// }
 	// readText(image);
 });
+//CURRENTLY NOT IN USE=====================//
 
 module.exports = router;
