@@ -29,15 +29,11 @@ const RecordReceipt = () => {
 			const config = {
 				headers: {
 					"content-type": "application/json",
-					"Ocp-Apim-Subscription-Key": "df71a3e3f51344aab74af20393af370b",
+					"Ocp-Apim-Subscription-Key": process.env.REACT_APP_OCR_API_KEY_1,
 				},
 			};
 			axios
-				.post(
-					`https://wisejoocr.cognitiveservices.azure.com/vision/v3.2/ocr`,
-					formData,
-					config,
-				)
+				.post(`${REACT_APP_OCR_ENDPOINT}vision/v3.2/ocr`, formData, config)
 				.then(res => {
 					console.log(res.data.regions);
 					axios
