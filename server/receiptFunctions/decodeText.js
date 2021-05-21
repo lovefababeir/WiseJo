@@ -46,3 +46,5 @@ const decodeText = result => {
 
 	return combined(sorted);
 };
+
+module.exports = { decodeText };
