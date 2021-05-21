@@ -5,6 +5,10 @@ const receiptsCollection = require("../data/receiptsCollection");
 const multer = require("multer");
 const fs = require("fs");
 var Tesseract = require("tesseract.js");
+const vision = require("@google-cloud/vision");
+const client = new vision.ImageAnnotatorClient({
+	keyFilename: "wisejo-ea0d54e05e6c.json",
+});
 
 var Storage = multer.diskStorage({
 	destination: function (req, file, callback) {
@@ -30,6 +34,19 @@ router.post("/upload", upload.single("receipt"), (req, res) => {
 	console.log(name);
 	const store = req.query.store.toLowerCase();
 	console.log("store", store);
+	// const fileName = "/uploads/1621555926078.jpg";
+	var image = fs.readFileSync(req.file.path, {
+		encoding: null,
+	});
+
+	async function readText(pic) {
+		const [result] = await client.textDetection(pic);
+		const detections = result.textAnnotations;
+		console.log("Text:");
+		// detections.forEach(text => console.log(text));
+		console.log(detections[0].description);
+	}
+	readText(image);
 });
 
 router.get("/history", (req, res) => {
