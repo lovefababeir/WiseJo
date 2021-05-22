@@ -13,17 +13,27 @@ const receipt = receiptResults => {
 		" " +
 		receiptResults[storeIDindex + 3];
 
+	//To get the number
+	const contact = receiptResults[storeIDindex + 4];
+
 	//To index of where List of items starts
 	const afterAddress = receiptResults.slice(storeIDindex + 4);
 	const itemsIndex =
 		afterAddress.findIndex(text => {
-			return text.includes("ST");
-		}) + 1;
+			return text.includes("-");
+		}) > -1
+			? afterAddress.findIndex(text => {
+					return text.includes("-");
+			  }) + 2
+			: afterAddress.findIndex(text => {
+					return text.includes("$");
+			  });
 
 	//SUBTOTAL
 	const subtotalIndex = afterAddress.findIndex(text => {
 		return text.includes("SUBTOTAL") || text.includes("SUB");
 	});
+
 	const subtotalStr = afterAddress[subtotalIndex];
 	const subtotal = Number(subtotalStr.replace(/[^0-9.-]+/g, ""));
 
@@ -42,6 +52,7 @@ const receipt = receiptResults => {
 	const storeData = {
 		storeID: storeID,
 		address: address,
+		contact: contact,
 		purchases: purchases,
 		subtotal: subtotal,
 		total: total,
