@@ -39,9 +39,11 @@ const RecordReceipt = () => {
 					config,
 				)
 				.then(res => {
+					const dataRes = res.data.regions;
+					console.log(JSON.stringify(dataRes));
 					axios
 						.post(
-							`http://localhost:8080/receipts/convertImage?store=${store}&time=${time}`,
+							`${process.env.REACT_APP_BASE_URL}receipts/convertImage?store=${store}&time=${time}`,
 							res,
 						)
 						.then(result => {
@@ -62,7 +64,7 @@ const RecordReceipt = () => {
 
 			// 	axios
 			// 		.post(
-			// 			`http://localhost:8080/receipts/upload?store=${store}&name=${name}`,
+			// 			`${process.env.REACT_APP_BASE_URL}receipts/upload?store=${store}&name=${name}`,
 			// 			formData,
 			// 			config,
 			// 		)
