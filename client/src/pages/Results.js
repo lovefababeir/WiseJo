@@ -14,11 +14,10 @@ const Results = () => {
 		currentLocation: "Walmart",
 		show: false,
 	});
-
 	useEffect(() => {
 		let mounted = true;
 		axios
-			.get("http://localhost:5000/itemSearch/history")
+			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/history`)
 			.then(result => {
 				if (mounted) {
 					const lastIndex = result.data.length - 1;
@@ -47,7 +46,7 @@ const Results = () => {
 		setValues({ ...values, view: page });
 	};
 	const deleteHandler = (del, detail1, detail2) => {
-		const url = "http://localhost:5000/itemSearch/";
+		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/`;
 		//detail1 = item id for when del = "item"
 		if (del === "item") {
 			axios
