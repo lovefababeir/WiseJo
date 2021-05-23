@@ -587,7 +587,7 @@ const longosReceiptData = receiptResults => {
 	});
 
 	//store details
-	const storeDetails = receiptResults.splice(0, storeDetailsIndex + 1);
+	const storeDetails = receiptResults.slice(0, storeDetailsIndex + 1);
 
 	let contact;
 	let storeLocation;
