@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const walmart = require("../receiptFunctions/walmartReceipt");
+const longos = require("../receiptFunctions/longosReceipt");
 const receiptsCollection = require("../data/receiptsCollection");
 const multer = require("multer");
 const fs = require("fs");
@@ -12,12 +13,12 @@ router.post("/convertImage", (req, res) => {
 	const store = req.query.store.toLowerCase();
 	const time = parseInt(req.query.time);
 	const convertedText = fcn.decodeText(req.body.data.regions);
+	console.log(convertedText);
 	let purchaseData;
 	if (store === "walmart") {
 		purchaseData = walmart.receipt(convertedText);
 	} else if (store === "longo's") {
-		purchaseData =
-			"Sorry, algorithm for reading Longos receipts is currently not working";
+		purchaseData = longos.receipt(convertedText);
 	} else if (store === "no frills") {
 		purchaseData =
 			"Sorry, algorithm for reading No Frills receipts is currently not working";
