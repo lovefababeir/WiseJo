@@ -39,7 +39,6 @@ const RecordReceipt = () => {
 					config,
 				)
 				.then(res => {
-					console.log(res.data.regions);
 					axios
 						.post(
 							`http://localhost:8080/receipts/convertImage?store=${store}&time=${time}`,
@@ -47,6 +46,7 @@ const RecordReceipt = () => {
 						)
 						.then(result => {
 							console.log("result from conversion", result);
+							history.push("/track");
 						})
 						.catch(err => {
 							console.log("could not convert");
