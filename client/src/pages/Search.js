@@ -20,7 +20,7 @@ const Search = () => {
 
 			axios
 				.get(
-					`http://localhost:5000/itemSearch/walmart/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
 					console.log(result);
@@ -37,7 +37,7 @@ const Search = () => {
 
 			axios
 				.get(
-					`http://localhost:5000/itemSearch/nofrills/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
 					console.log(result);
@@ -54,7 +54,7 @@ const Search = () => {
 
 			axios
 				.get(
-					`http://localhost:5000/itemSearch/longos/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
 					console.log(result);
