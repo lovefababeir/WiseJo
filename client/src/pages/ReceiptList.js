@@ -89,7 +89,6 @@ const ReceiptList = () => {
 					<h2 className="receiptsList__title">Record of Expenses</h2>
 					<div className="receipt__record table-headings">
 						<p className="receipt__summary">Store:</p>
-
 						<p className="receipt__summary">Date Logged:</p>
 						<p className="receipt__summary">Total:</p>
 					</div>
@@ -133,12 +132,27 @@ const ReceiptList = () => {
 						<div className="receipts-selected__storeDetails">
 							<p className="receipts-selected__store">{receiptSelected.store}</p>
 							<p className="receipts-selected__receipt">
-								Store ID:
-								{receiptSelected.purchaseData.storeID}
+								Store Location: {receiptSelected.purchaseData.storeID}
+							</p>
+							<p className="receipts-selected__receipt">
+								{receiptSelected.purchaseData.contact && (
+									<span>Contact: {receiptSelected.purchaseData.contact}</span>
+								)}
 							</p>
 							<p className="receipts-selected__receipt">
 								{receiptSelected.purchaseData.address}
 							</p>
+
+							{receiptSelected.purchaseData.manager && (
+								<p className="receipts-selected__receipt">
+									Manager: {receiptSelected.purchaseData.manager}
+								</p>
+							)}
+							{receiptSelected.purchaseData.cashier && (
+								<p className="receipts-selected__receipt">
+									Cashier: {receiptSelected.purchaseData.cashier}
+								</p>
+							)}
 						</div>
 						<div className="receipts-selected__itemsList">
 							<p className="receipts-selected__item-title">Items Purchased:</p>
