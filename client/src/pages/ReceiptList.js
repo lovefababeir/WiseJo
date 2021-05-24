@@ -25,32 +25,6 @@ const ReceiptList = () => {
 		};
 	}, []);
 
-	const convertDate = timestamp => {
-		let currentTime = Date.now();
-		let timeLapsed = currentTime - timestamp;
-		let dateSubmitted = new Date(timestamp);
-		let secs = timeLapsed / 1000;
-		let mins = secs / 60;
-		let hrs = mins / 60;
-		let days = hrs / 24;
-
-		if (secs < 1) {
-			return `now`;
-		} else if (secs < 60) {
-			return `${Math.floor(secs)} seconds ago`;
-		} else if (mins < 60) {
-			return `${Math.floor(mins)} minutes ago`;
-		} else if (hrs < 24) {
-			return `${Math.floor(hrs)} hours ago`;
-		} else if (days < 7) {
-			return `${Math.floor(days)} days ago`;
-		} else {
-			return `${
-				dateSubmitted.getMonth() + 1
-			}/${dateSubmitted.getUTCDate()}/${dateSubmitted.getFullYear()}`;
-		}
-	};
-
 	const selectReceiptHandler = (e, ID) => {
 		e.preventDefault();
 		// const selectedItemID = e.target.value;
@@ -103,7 +77,9 @@ const ReceiptList = () => {
 								>
 									<p className="receipt__summary">{receipt.store}</p>
 
-									<p className="receipt__summary">{convertDate(receipt.time)}</p>
+									<p className="receipt__summary">
+										{receipt.date.month}/{receipt.date.day}/{receipt.date.year}
+									</p>
 									<p className="receipt__summary">${receipt.purchaseData.total}</p>
 								</div>
 							);
