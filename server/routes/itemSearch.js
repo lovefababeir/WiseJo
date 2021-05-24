@@ -37,19 +37,16 @@ router.get("/longos/:item/:time", (req, res) => {
 						.send(
 							"No results found. Please check that the spelling of the item is correct or try again later.",
 						);
+				} else {
+					const newData = {
+						...moreInfo,
+						time: time,
+						search: item,
+						searchResults: result,
+					};
+					searchHistory.push(newData);
+					res.status(200).json(newData);
 				}
-				const newData = {
-					...moreInfo,
-					time: time,
-					search: item,
-					searchResults: result,
-				};
-				searchHistory.push(newData);
-				// const data = searchHistory.find(record => {
-				// 	return record.time === time;
-				// });
-
-				res.status(200).json(newData);
 			})
 			.catch(err => {
 				console.log(`Could not complete Longos search for ${item}: ${err}`);
@@ -85,24 +82,22 @@ router.get("/walmart/:item/:time", (req, res) => {
 						.send(
 							"No results found. Please check that the spelling of the item is correct or try again later.",
 						);
+				} else {
+					const newData = {
+						...moreInfo,
+						time: time,
+						search: item,
+						searchResults: result,
+					};
+					searchHistory.push(newData);
+					res.status(200).json(newData);
 				}
-				const newData = {
-					...moreInfo,
-					time: time,
-					search: item,
-					searchResults: result,
-				};
-				searchHistory.push(newData);
-				// const data = searchHistory.find(record => {
-				// 	return record.time === time;
-				// });
-
-				res.status(200).json(newData);
 			})
 			.catch(err => {
 				console.log(`Could not complete Walmart search for ${item}: ${err}`);
 				res.status(400).json(`Could not complete Walmart search for ${item}`);
 			});
+		// res.status(200).send("Not available at the moment. Please try again later");
 	}
 });
 
@@ -134,18 +129,16 @@ router.get("/nofrills/:item/:time", (req, res) => {
 						.send(
 							"No results found. Please check that the spelling of the item is correct or try again later.",
 						);
+				} else {
+					const newData = {
+						...moreInfo,
+						time: time,
+						search: item,
+						searchResults: result,
+					};
+					searchHistory.push(newData);
+					res.status(200).json(newData);
 				}
-				const newData = {
-					...moreInfo,
-					time: time,
-					search: item,
-					searchResults: result,
-				};
-				searchHistory.push(newData);
-				// const data = searchHistory.find(record => {
-				// 	return record.time === time;
-				// });
-				res.status(200).json(newData);
 			})
 			.catch(err => {
 				console.log(`Could not complete No Frills search for ${item}: ${err}`);
