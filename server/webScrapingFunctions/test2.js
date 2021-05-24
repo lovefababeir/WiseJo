@@ -1,258 +1,383 @@
 const { text } = require("express");
 
-const receiptResults = [
-	"STORE 1080",
-	"5995 STEELES AVENUE ERST",
-	"SCRRBOROUGH, ON",
-	"HIV 5P7",
-	"416-298-1210",
-	"01080 002593 25 09219",
-	"BPH GRMT VP 005580013275  $14.78 J",
-	"BPM CHPD VP 005580024358  $14,78 J",
-	"BPM CHOP VP 005580023579  $14.78 J",
-	"MURINEERRDRO 067811273625  $6.97 J",
-	"SUBTOTAL  $51 .31",
-	"HST 13b 0000%  $6.67",
-	"TOTAL  $57.98",
-	"DEBIT TEND  $57 98",
-	"CHANGE DUE",
-];
-
-const walmartreceipt = receiptResults => {
-	//To get store ID
-	const storeIDindex = receiptResults.findIndex(text => {
-		return text.includes("STORE");
-	});
-	const storeID = receiptResults[storeIDindex].split(" ")[1];
-
-	//To get address
-	const address =
-		receiptResults[storeIDindex + 1] +
-		" " +
-		receiptResults[storeIDindex + 2] +
-		" " +
-		receiptResults[storeIDindex + 3];
-
-	//To get the number
-	const contact = receiptResults[storeIDindex + 4];
-	//To index of where List of items starts
-	const afterAddress = receiptResults.slice(storeIDindex + 4);
-	const itemsIndex =
-		afterAddress.findIndex(text => {
-			return text.includes("-");
-		}) > -1
-			? afterAddress.findIndex(text => {
-					return text.includes("-");
-			  }) + 2
-			: afterAddress.findIndex(text => {
-					return text.includes("$");
-			  });
-
-	//SUBTOTAL
-	const subtotalIndex = afterAddress.findIndex(text => {
-		return text.includes("SUBTOTAL") || text.includes("SUB");
-	});
-
-	const subtotalStr = afterAddress[subtotalIndex];
-	const subtotal = Number(subtotalStr.replace(/[^0-9.-]+/g, ""));
-
-	//LIST OF ITEMS PURCHASED
-	const purchases = afterAddress.slice(itemsIndex, subtotalIndex);
-
-	//TOTAL
-	const withTotal = afterAddress.slice(subtotalIndex + 1);
-	const totalIndex = withTotal.findIndex(text => {
-		return text.includes("TOTAL") || text.includes("TAL");
-	});
-
-	// const totalStr = withTotal[totalIndex];
-	const total = Number(withTotal[totalIndex].replace(/[^0-9.-]+/g, ""));
-
-	const storeData = {
-		storeID: storeID,
-		address: address,
-		contact: contact,
-		purchases: purchases,
-		subtotal: subtotal,
-		total: total,
-	};
-
-	return storeData;
-};
-
 // console.log(receipt(receiptResults));
 
 //======================================
-const result = [
+const resultWalmart = [
 	{
-		boundingBox: "104,816,1865,1163",
+		boundingBox: "115,44,983,1733",
 		lines: [
 			{
-				boundingBox: "106,816,1794,121",
+				boundingBox: "475,44,256,43",
 				words: [
-					{ boundingBox: "106,817,204,113", text: "BPH" },
-					{ boundingBox: "391,816,280,114", text: "GRMT" },
-					{ boundingBox: "755,818,135,114", text: "VP" },
-					{ boundingBox: "1046,821,854,116", text: "005580013275" },
+					{ boundingBox: "475,46,125,41", text: "STOFE" },
+					{ boundingBox: "629,44,102,38", text: "3186" },
 				],
 			},
 			{
-				boundingBox: "106,947,1793,118",
+				boundingBox: "294,83,514,46",
 				words: [
-					{ boundingBox: "106,948,203,111", text: "BPM" },
-					{ boundingBox: "390,947,282,112", text: "CHPD" },
-					{ boundingBox: "755,950,136,110", text: "VP" },
-					{ boundingBox: "1046,951,853,114", text: "005580024358" },
+					{ boundingBox: "294,83,100,42", text: "1899" },
+					{ boundingBox: "423,88,126,41", text: "BROCK" },
+					{ boundingBox: "577,86,102,41", text: "ROAD" },
+					{ boundingBox: "707,85,101,42", text: "UNIT" },
 				],
 			},
 			{
-				boundingBox: "105,1078,1792,115",
+				boundingBox: "422,128,335,43",
 				words: [
-					{ boundingBox: "105,1078,204,108", text: "BPM" },
-					{ boundingBox: "389,1079,282,108", text: "CHOP" },
-					{ boundingBox: "755,1080,135,109", text: "VP" },
-					{ boundingBox: "1045,1081,852,112", text: "005580023579" },
+					{ boundingBox: "422,128,249,43", text: "PICKEFING," },
+					{ boundingBox: "708,128,49,42", text: "ON" },
 				],
 			},
 			{
-				boundingBox: "104,1206,1792,116",
+				boundingBox: "500,169,180,45",
 				words: [
-					{ boundingBox: "104,1206,858,116", text: "MURINEERRDRO" },
-					{ boundingBox: "1044,1209,852,113", text: "067811273625" },
+					{ boundingBox: "500,172,76,42", text: "LIV" },
+					{ boundingBox: "604,169,76,43", text: "4H7" },
 				],
 			},
 			{
-				boundingBox: "1403,1341,564,114",
-				words: [{ boundingBox: "1403,1341,564,114", text: "SUBTOTAL" }],
+				boundingBox: "580,214,176,43",
+				words: [{ boundingBox: "580,214,176,43", text: "19-9588" }],
 			},
 			{
-				boundingBox: "1113,1470,855,113",
+				boundingBox: "219,256,853,43",
 				words: [
-					{ boundingBox: "1113,1470,207,113", text: "HST" },
-					{ boundingBox: "1408,1471,178,112", text: "13b" },
-					{ boundingBox: "1618,1472,350,111", text: "0000%" },
+					{ boundingBox: "219,256,125,40", text: "03186" },
+					{ boundingBox: "474,258,154,40", text: "009C53" },
+					{ boundingBox: "759,258,50,40", text: "53" },
+					{ boundingBox: "943,258,129,41", text: "06985" },
 				],
 			},
 			{
-				boundingBox: "1617,1601,352,114",
-				words: [{ boundingBox: "1617,1601,352,114", text: "TOTAL" }],
-			},
-			{
-				boundingBox: "1184,1729,784,119",
+				boundingBox: "116,299,641,45",
 				words: [
-					{ boundingBox: "1184,1729,350,114", text: "DEBIT" },
-					{ boundingBox: "1689,1731,279,117", text: "TEND" },
+					{ boundingBox: "116,299,50,39", text: "GV" },
+					{ boundingBox: "194,300,202,40", text: "24XSOOHL" },
+					{ boundingBox: "449,301,308,43", text: "060538887928" },
 				],
 			},
 			{
-				boundingBox: "1255,1862,713,117",
+				boundingBox: "917,302,181,42",
 				words: [
-					{ boundingBox: "1255,1862,424,116", text: "CHANGE" },
-					{ boundingBox: "1761,1864,207,115", text: "DUE" },
+					{ boundingBox: "917,302,41,42", text: "$1" },
+					{ boundingBox: "977,303,68,41", text: ".57" },
+					{ boundingBox: "1074,304,24,40", text: "D" },
+				],
+			},
+			{
+				boundingBox: "194,342,562,47",
+				words: [
+					{ boundingBox: "194,342,204,43", text: "24X500HL" },
+					{ boundingBox: "450,344,306,45", text: "060538887928" },
+				],
+			},
+			{
+				boundingBox: "917,348,180,41",
+				words: [
+					{ boundingBox: "917,348,41,41", text: "$1" },
+					{ boundingBox: "977,348,68,41", text: ".97" },
+					{ boundingBox: "1073,348,24,41", text: "D" },
+				],
+			},
+			{
+				boundingBox: "115,384,642,50",
+				words: [
+					{ boundingBox: "115,384,50,40", text: "GU" },
+					{ boundingBox: "194,385,206,45", text: "24X500ML" },
+					{ boundingBox: "449,389,308,45", text: "060538887928" },
+				],
+			},
+			{
+				boundingBox: "917,393,41,41",
+				words: [{ boundingBox: "917,393,41,41", text: "$1" }],
+			},
+			{
+				boundingBox: "195,430,562,45",
+				words: [
+					{ boundingBox: "195,430,205,43", text: "24XSOOML" },
+					{ boundingBox: "428,433,329,42", text: "1060538887928" },
+				],
+			},
+			{
+				boundingBox: "917,437,178,41",
+				words: [
+					{ boundingBox: "917,437,126,40", text: "$1.97" },
+					{ boundingBox: "1072,438,23,40", text: "D" },
+				],
+			},
+			{
+				boundingBox: "117,471,283,45",
+				words: [
+					{ boundingBox: "117,471,52,40", text: "GU" },
+					{ boundingBox: "197,472,203,44", text: "24X500HL" },
+				],
+			},
+			{
+				boundingBox: "896,1178,153,40",
+				words: [{ boundingBox: "896,1178,153,40", text: "$48.22" }],
+			},
+			{
+				boundingBox: "923,1740,126,37",
+				words: [{ boundingBox: "923,1740,126,37", text: "$0.00" }],
+			},
+		],
+	},
+	{
+		boundingBox: "120,515,205,171",
+		lines: [
+			{
+				boundingBox: "120,515,151,42",
+				words: [{ boundingBox: "120,515,151,42", text: "SPRITE" }],
+			},
+			{
+				boundingBox: "121,559,202,42",
+				words: [
+					{ boundingBox: "121,559,126,41", text: "HJLTI" },
+					{ boundingBox: "276,560,47,41", text: "18" },
+				],
+			},
+			{
+				boundingBox: "121,602,153,41",
+				words: [{ boundingBox: "121,602,153,41", text: "SPRITE" }],
+			},
+			{
+				boundingBox: "120,643,205,43",
+				words: [
+					{ boundingBox: "120,643,127,42", text: "MULTI" },
+					{ boundingBox: "279,646,46,40", text: "18" },
 				],
 			},
 		],
 	},
 	{
-		boundingBox: "391,37,2456,1555",
+		boundingBox: "453,523,330,127",
 		lines: [
 			{
-				boundingBox: "1120,37,715,107",
-				words: [
-					{ boundingBox: "1120,37,352,107", text: "STORE" },
-					{ boundingBox: "1560,37,275,106", text: "1080" },
-				],
+				boundingBox: "657,523,125,41",
+				words: [{ boundingBox: "657,523,125,41", text: "0485L" }],
 			},
 			{
-				boundingBox: "618,164,1726,116",
-				words: [
-					{ boundingBox: "618,169,275,108", text: "5995" },
-					{ boundingBox: "974,165,497,110", text: "STEELES" },
-					{ boundingBox: "1553,164,428,113", text: "AVENUE" },
-					{ boundingBox: "2063,167,281,113", text: "ERST" },
-				],
-			},
-			{
-				boundingBox: "901,296,1079,114",
-				words: [
-					{ boundingBox: "901,296,837,114", text: "SCRRBOROUGH," },
-					{ boundingBox: "1843,296,137,112", text: "ON" },
-				],
-			},
-			{
-				boundingBox: "1190,425,497,117",
-				words: [
-					{ boundingBox: "1190,425,208,117", text: "HIV" },
-					{ boundingBox: "1479,426,208,115", text: "5P7" },
-				],
-			},
-			{
-				boundingBox: "1046,559,857,116",
-				words: [{ boundingBox: "1046,559,857,116", text: "416-298-1210" }],
-			},
-			{
-				boundingBox: "391,686,2383,121",
-				words: [
-					{ boundingBox: "391,686,353,111", text: "01080" },
-					{ boundingBox: "1118,690,422,114", text: "002593" },
-					{ boundingBox: "1911,691,137,113", text: "25" },
-					{ boundingBox: "2424,693,350,114", text: "09219" },
-				],
-			},
-			{
-				boundingBox: "2276,823,571,116",
-				words: [
-					{ boundingBox: "2276,823,427,116", text: "$14.78" },
-					{ boundingBox: "2784,828,63,108", text: "J" },
-				],
-			},
-			{
-				boundingBox: "2275,956,571,113",
-				words: [
-					{ boundingBox: "2275,956,427,113", text: "$14,78" },
-					{ boundingBox: "2784,958,62,109", text: "J" },
-				],
-			},
-			{
-				boundingBox: "2274,1087,572,113",
-				words: [
-					{ boundingBox: "2274,1087,425,113", text: "$14.78" },
-					{ boundingBox: "2783,1088,63,109", text: "J" },
-				],
-			},
-			{
-				boundingBox: "2345,1479,356,113",
-				words: [{ boundingBox: "2345,1479,356,113", text: "$6.67" }],
+				boundingBox: "453,607,330,43",
+				words: [{ boundingBox: "453,607,330,43", text: "0067C0010485L" }],
 			},
 		],
 	},
 	{
-		boundingBox: "2271,1217,575,639",
+		boundingBox: "120,688,670,529",
 		lines: [
 			{
-				boundingBox: "2347,1217,499,114",
+				boundingBox: "198,688,559,46",
 				words: [
-					{ boundingBox: "2347,1217,355,114", text: "$6.97" },
-					{ boundingBox: "2784,1218,62,110", text: "J" },
+					{ boundingBox: "198,688,52,40", text: "HN" },
+					{ boundingBox: "277,689,49,39", text: "VP" },
+					{ boundingBox: "352,690,75,39", text: "283" },
+					{ boundingBox: "454,692,303,42", text: "068113154893" },
 				],
 			},
 			{
-				boundingBox: "2272,1349,407,115",
+				boundingBox: "120,729,637,48",
 				words: [
-					{ boundingBox: "2272,1349,189,115", text: "$51" },
-					{ boundingBox: "2515,1351,164,111", text: ".31" },
+					{ boundingBox: "120,729,50,41", text: "OR" },
+					{ boundingBox: "198,730,52,42", text: "HN" },
+					{ boundingBox: "277,732,50,40", text: "VP" },
+					{ boundingBox: "354,733,73,41", text: "283" },
+					{ boundingBox: "455,734,302,43", text: "068113154893" },
 				],
 			},
 			{
-				boundingBox: "2272,1610,425,113",
-				words: [{ boundingBox: "2272,1610,425,113", text: "$57.98" }],
+				boundingBox: "583,779,201,42",
+				words: [{ boundingBox: "583,779,201,42", text: "SUBTOTAL" }],
 			},
 			{
-				boundingBox: "2271,1739,425,117",
+				boundingBox: "481,820,303,42",
 				words: [
-					{ boundingBox: "2271,1739,211,117", text: "$57" },
-					{ boundingBox: "2563,1742,133,112", text: "98" },
+					{ boundingBox: "481,820,74,40", text: "HST" },
+					{ boundingBox: "584,821,200,41", text: "13.0000%" },
 				],
+			},
+			{
+				boundingBox: "660,864,125,42",
+				words: [{ boundingBox: "660,864,125,42", text: "TOTAL" }],
+			},
+			{
+				boundingBox: "430,950,241,41",
+				words: [
+					{ boundingBox: "430,950,122,40", text: "MULTI" },
+					{ boundingBox: "584,952,87,39", text: "DISI" },
+				],
+			},
+			{
+				boundingBox: "124,1032,458,51",
+				words: [
+					{ boundingBox: "124,1032,248,46", text: "Coke-Pepsi" },
+					{ boundingBox: "404,1038,145,45", text: "2for$1" },
+					{ boundingBox: "558,1040,24,40", text: "C" },
+				],
+			},
+			{
+				boundingBox: "687,1041,101,42",
+				words: [{ boundingBox: "687,1041,101,42", text: "018L" }],
+			},
+			{
+				boundingBox: "585,1129,204,44",
+				words: [{ boundingBox: "585,1129,204,44", text: "SUBTOTAL" }],
+			},
+			{
+				boundingBox: "689,1173,101,44",
+				words: [{ boundingBox: "689,1173,101,44", text: "TEND" }],
+			},
+		],
+	},
+	{
+		boundingBox: "888,525,214,651",
+		lines: [
+			{
+				boundingBox: "915,525,50,40",
+				words: [{ boundingBox: "915,525,50,40", text: "$5" }],
+			},
+			{
+				boundingBox: "914,613,50,38",
+				words: [{ boundingBox: "914,613,50,38", text: "$5" }],
+			},
+			{
+				boundingBox: "888,697,68,40",
+				words: [{ boundingBox: "888,697,68,40", text: "$11" }],
+			},
+			{
+				boundingBox: "975,698,67,40",
+				words: [
+					{ boundingBox: "975,727,6,10", text: "c" },
+					{ boundingBox: "992,698,50,40", text: "98" },
+				],
+			},
+			{
+				boundingBox: "889,740,67,40",
+				words: [{ boundingBox: "889,740,67,40", text: "$11" }],
+			},
+			{
+				boundingBox: "993,741,49,41",
+				words: [{ boundingBox: "993,741,49,41", text: "98" }],
+			},
+			{
+				boundingBox: "889,783,146,42",
+				words: [{ boundingBox: "889,783,146,42", text: "$43.81" }],
+			},
+			{
+				boundingBox: "891,868,153,42",
+				words: [
+					{ boundingBox: "891,868,75,41", text: "$48" },
+					{ boundingBox: "994,869,50,41", text: "22" },
+				],
+			},
+			{
+				boundingBox: "921,1046,181,42",
+				words: [{ boundingBox: "921,1046,181,42", text: "$0.94—J" }],
+			},
+			{
+				boundingBox: "895,1134,146,42",
+				words: [
+					{ boundingBox: "895,1134,76,41", text: "$43" },
+					{ boundingBox: "1000,1136,41,40", text: "81" },
+				],
+			},
+		],
+	},
+	{
+		boundingBox: "122,1251,850,605",
+		lines: [
+			{
+				boundingBox: "123,1251,849,57",
+				words: [
+					{ boundingBox: "123,1251,179,43", text: "CAPITAL" },
+					{ boundingBox: "329,1253,76,40", text: "ONE" },
+					{ boundingBox: "871,1266,101,42", text: "3060" },
+				],
+			},
+			{
+				boundingBox: "122,1295,436,45",
+				words: [
+					{ boundingBox: "122,1295,205,41", text: "APPROVAL" },
+					{ boundingBox: "355,1297,24,41", text: "#" },
+					{ boundingBox: "407,1297,151,43", text: "02142E" },
+				],
+			},
+			{
+				boundingBox: "227,1339,358,46",
+				words: [
+					{ boundingBox: "227,1339,24,37", text: "#" },
+					{ boundingBox: "281,1339,304,46", text: "111400595576" },
+				],
+			},
+			{
+				boundingBox: "124,1368,487,60",
+				words: [
+					{ boundingBox: "124,1368,177,54", text: "PÄYMENT" },
+					{ boundingBox: "330,1383,178,42", text: "SERVICE" },
+					{ boundingBox: "537,1402,23,9", text: "-" },
+					{ boundingBox: "588,1389,23,39", text: "a" },
+				],
+			},
+			{
+				boundingBox: "126,1421,75,40",
+				words: [{ boundingBox: "126,1421,75,40", text: "RID" }],
+			},
+			{
+				boundingBox: "203,1464,409,50",
+				words: [{ boundingBox: "203,1464,409,50", text: "fiCFE943DB8248CCF" }],
+			},
+			{
+				boundingBox: "154,1505,534,57",
+				words: [
+					{ boundingBox: "154,1505,174,47", text: "ERHINAL" },
+					{ boundingBox: "408,1515,280,47", text: "UMTKP012846" },
+				],
+			},
+			{
+				boundingBox: "230,1552,458,52",
+				words: [
+					{ boundingBox: "230,1552,227,46", text: "SIGNATURE" },
+					{ boundingBox: "485,1559,203,45", text: "REQUIRED" },
+				],
+			},
+			{
+				boundingBox: "331,1643,197,43",
+				words: [{ boundingBox: "331,1643,197,43", text: "04/24/21" }],
+			},
+			{
+				boundingBox: "539,1730,253,43",
+				words: [
+					{ boundingBox: "539,1730,150,41", text: "CHANGE" },
+					{ boundingBox: "717,1735,75,38", text: "DUE" },
+				],
+			},
+			{
+				boundingBox: "129,1766,629,49",
+				words: [
+					{ boundingBox: "129,1766,176,44", text: "GST/HST" },
+					{ boundingBox: "335,1773,227,42", text: "137466199" },
+					{ boundingBox: "589,1770,48,41", text: "RT" },
+					{ boundingBox: "666,1774,92,39", text: "0001" },
+				],
+			},
+			{
+				boundingBox: "129,1809,553,47",
+				words: [
+					{ boundingBox: "129,1809,73,41", text: "QST" },
+					{ boundingBox: "233,1812,252,44", text: "1016661356" },
+					{ boundingBox: "515,1815,48,41", text: "TQ" },
+					{ boundingBox: "590,1814,92,42", text: "0001" },
+				],
+			},
+		],
+	},
+	{
+		boundingBox: "1080,1267,13,41",
+		lines: [
+			{
+				boundingBox: "1080,1267,13,41",
+				words: [{ boundingBox: "1080,1267,13,41", text: "1" }],
 			},
 		],
 	},
@@ -510,12 +635,13 @@ const decodeText = result => {
 	const sorted = converted.sort((a, b) => {
 		return a.position[1] - b.position[1];
 	});
+	console.log(sorted);
 
 	//==========================
 	const organized = list => {
 		const lastItem = list.length - 1;
 		const lastItemPositionY = Math.floor(list[lastItem].position[1] / 100);
-
+		const heightY = lastItemPositionY > 15 ? 30 : 50;
 		//FINAL ORDERED LIST
 		const orderedList = [];
 
@@ -533,7 +659,7 @@ const decodeText = result => {
 				//index of the item that is the first of line 2
 				const indexLine2 = ithRow.findIndex((item, k, ithRow) => {
 					if (ithRow[k - 1]) {
-						return ithRow[k].position[1] - ithRow[k - 1].position[1] > 50;
+						return ithRow[k].position[1] - ithRow[k - 1].position[1] > heightY;
 					}
 					return false;
 				});
@@ -577,8 +703,6 @@ const decodeText = result => {
 	};
 	return organized(sorted);
 };
-
-const longosReceipt = decodeText(resultLongos);
 
 const longosReceiptData = receiptResults => {
 	//To get store details ID
@@ -657,6 +781,25 @@ const longosReceiptData = receiptResults => {
 		itemsList = receiptResults.slice(firstItemsIndex, lastItemIndex);
 	}
 
+	const testAmount = amount => {
+		const digits = amount.split("");
+		const numDigits = amount.length;
+		const decimalIndex = digits.indexOf(".");
+		if (decimalIndex + 1 > 0) {
+			if (numDigits - decimalIndex === 3) {
+				return digits.join("");
+			} else {
+				digits.push("0", "0");
+
+				digits.splice(decimalIndex + 3);
+				return digits.join("");
+			}
+		} else {
+			digits.splice(numDigits - 2, 0, ".");
+			return digits.join("");
+		}
+	};
+
 	//SUBTOTAL
 	let subtotal;
 	const subtotalLine = receiptResults
@@ -667,7 +810,7 @@ const longosReceiptData = receiptResults => {
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = Number(subtotalStr.replace(/[^0-9.-]+/g, ""));
+		subtotal = Number(testAmount(subtotalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
 	//TOTAL
@@ -681,7 +824,7 @@ const longosReceiptData = receiptResults => {
 		const totalStr = totalLine.pop();
 
 		// const totalStr = withTotal[totalIndex];
-		total = Number(totalStr.replace(/[^0-9.-]+/g, ""));
+		total = Number(testAmount(totalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
 	const storeData = {
@@ -697,4 +840,88 @@ const longosReceiptData = receiptResults => {
 	return storeData;
 };
 
-console.log(longosReceiptData(longosReceipt));
+const walmartReceiptData = receiptResults => {
+	//To get store ID
+	const storeIDindex = receiptResults.findIndex(text => {
+		return text.includes("STORE") || text.includes("STO") || text.includes("ORE");
+	});
+
+	const storeID = receiptResults[storeIDindex].split(" ").pop();
+
+	//To get address
+	const address = git;
+	receiptResults[storeIDindex + 1] +
+		" " +
+		receiptResults[storeIDindex + 2] +
+		" " +
+		receiptResults[storeIDindex + 3];
+
+	//To get the number
+	const contact = receiptResults[storeIDindex + 4];
+	//To index of where List of items starts
+	const itemsIndex =
+		receiptResults.findIndex(text => {
+			return text.includes("-");
+		}) > -1
+			? receiptResults.findIndex(text => {
+					return text.includes("-");
+			  }) + 2
+			: receiptResults.findIndex(text => {
+					return text.includes("$");
+			  });
+
+	const testAmount = amount => {
+		const digits = amount.split("");
+		const numDigits = amount.length;
+		const decimalIndex = digits.indexOf(".");
+		if (decimalIndex + 1 > 0) {
+			if (numDigits - decimalIndex === 3) {
+				return digits.join("");
+			} else {
+				digits.push("0", "0");
+
+				digits.splice(decimalIndex + 3);
+				return digits.join("");
+			}
+		} else {
+			digits.splice(numDigits - 2, 0, ".");
+			return digits.join("");
+		}
+	};
+	//SUBTOTAL
+	const subtotalIndex = receiptResults.findIndex(line => {
+		return line.includes("SUBTOTAL") || line.includes("SUB");
+	});
+
+	const subtotalStr = receiptResults[subtotalIndex];
+	const subtotal = Number(testAmount(subtotalStr.replace(/[^0-9.-]+/g, "")));
+
+	//LIST OF ITEMS PURCHASED
+	const purchases = receiptResults.slice(itemsIndex, subtotalIndex);
+
+	//TOTAL
+	const withTotal = receiptResults.slice(subtotalIndex + 1);
+	const totalIndex = withTotal.findIndex(text => {
+		return text.includes("TOTAL") || text.includes("TAL");
+	});
+
+	// const totalStr = withTotal[totalIndex];
+	const total = Number(
+		testAmount(withTotal[totalIndex]).replace(/[^0-9.-]+/g, ""),
+	);
+
+	const storeData = {
+		storeID: storeID,
+		address: address,
+		contact: contact,
+		purchases: purchases,
+		subtotal: subtotal,
+		total: total,
+	};
+
+	return storeData;
+};
+// console.log(decodeText(resultWalmart));
+// console.log(decodeText(resultLongos));
+// console.log(longosReceiptData(decodeText(resultLongos)));
+// console.log(walmartReceiptData(decodeText(resultWalmart)));
