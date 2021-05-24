@@ -75,6 +75,25 @@ const receipt = receiptResults => {
 		itemsList = receiptResults.slice(firstItemsIndex, lastItemIndex);
 	}
 
+	const testAmount = amount => {
+		const digits = amount.split("");
+		const numDigits = amount.length;
+		const decimalIndex = digits.indexOf(".");
+		if (decimalIndex + 1 > 0) {
+			if (numDigits - decimalIndex === 3) {
+				return digits.join("");
+			} else {
+				digits.push("0", "0");
+
+				digits.splice(decimalIndex + 3);
+				return digits.join("");
+			}
+		} else {
+			digits.splice(numDigits - 2, 0, ".");
+			return digits.join("");
+		}
+	};
+
 	//SUBTOTAL
 	let subtotal;
 	const subtotalLine = receiptResults
@@ -85,7 +104,7 @@ const receipt = receiptResults => {
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = Number(subtotalStr.replace(/[^0-9.-]+/g, ""));
+		subtotal = Number(testAmount(subtotalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
 	//TOTAL
@@ -99,7 +118,7 @@ const receipt = receiptResults => {
 		const totalStr = totalLine.pop();
 
 		// const totalStr = withTotal[totalIndex];
-		total = Number(totalStr.replace(/[^0-9.-]+/g, ""));
+		total = Number(testAmount(totalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
 	const storeData = {
