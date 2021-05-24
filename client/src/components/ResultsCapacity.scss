@@ -61,7 +61,7 @@
 	&__details {
 		font-size: 1.3rem;
 		@include flex(row, space-between);
-		max-width: 60rem;
+		max-width: 50rem;
 	}
 	&__optionsNum {
 		font-size: 1.2rem;
