@@ -27,6 +27,7 @@ const decodeText = result => {
 	const organized = list => {
 		const lastItem = list.length - 1;
 		const lastItemPositionY = Math.floor(list[lastItem].position[1] / 100);
+		const heightY = lastItemPositionY > 15 ? 30 : 50;
 
 		//FINAL ORDERED LIST
 		const orderedList = [];
@@ -45,7 +46,7 @@ const decodeText = result => {
 				//index of the item that is the first of line 2
 				const indexLine2 = ithRow.findIndex((item, k, ithRow) => {
 					if (ithRow[k - 1]) {
-						return ithRow[k].position[1] - ithRow[k - 1].position[1] > 50;
+						return ithRow[k].position[1] - ithRow[k - 1].position[1] > heightY;
 					}
 					return false;
 				});
@@ -87,6 +88,7 @@ const decodeText = result => {
 		}
 		return orderedList;
 	};
+	console.log(organized(sorted));
 	return organized(sorted);
 };
 
