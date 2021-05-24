@@ -1,9 +1,10 @@
 const receipt = receiptResults => {
 	//To get store ID
 	const storeIDindex = receiptResults.findIndex(text => {
-		return text.includes("STORE");
+		return text.includes("STORE") || text.includes("STO") || text.includes("ORE");
 	});
-	const storeID = receiptResults[storeIDindex].split(" ")[1];
+
+	const storeID = receiptResults[storeIDindex].split(" ").pop();
 
 	//To get address
 	const address =
@@ -15,39 +16,57 @@ const receipt = receiptResults => {
 
 	//To get the number
 	const contact = receiptResults[storeIDindex + 4];
-
 	//To index of where List of items starts
-	const afterAddress = receiptResults.slice(storeIDindex + 4);
 	const itemsIndex =
-		afterAddress.findIndex(text => {
+		receiptResults.findIndex(text => {
 			return text.includes("-");
 		}) > -1
-			? afterAddress.findIndex(text => {
+			? receiptResults.findIndex(text => {
 					return text.includes("-");
 			  }) + 2
-			: afterAddress.findIndex(text => {
+			: receiptResults.findIndex(text => {
 					return text.includes("$");
 			  });
 
+	const testAmount = amount => {
+		const digits = amount.split("");
+		const numDigits = amount.length;
+		const decimalIndex = digits.indexOf(".");
+		if (decimalIndex + 1 > 0) {
+			if (numDigits - decimalIndex === 3) {
+				return digits.join("");
+			} else {
+				digits.push("0", "0");
+
+				digits.splice(decimalIndex + 3);
+				return digits.join("");
+			}
+		} else {
+			digits.splice(numDigits - 2, 0, ".");
+			return digits.join("");
+		}
+	};
 	//SUBTOTAL
-	const subtotalIndex = afterAddress.findIndex(text => {
-		return text.includes("SUBTOTAL") || text.includes("SUB");
+	const subtotalIndex = receiptResults.findIndex(line => {
+		return line.includes("SUBTOTAL") || line.includes("SUB");
 	});
 
-	const subtotalStr = afterAddress[subtotalIndex];
-	const subtotal = Number(subtotalStr.replace(/[^0-9.-]+/g, ""));
+	const subtotalStr = receiptResults[subtotalIndex];
+	const subtotal = Number(testAmount(subtotalStr.replace(/[^0-9.-]+/g, "")));
 
 	//LIST OF ITEMS PURCHASED
-	const purchases = afterAddress.slice(itemsIndex, subtotalIndex);
+	const purchases = receiptResults.slice(itemsIndex, subtotalIndex);
 
 	//TOTAL
-	const withTotal = afterAddress.slice(subtotalIndex + 1);
+	const withTotal = receiptResults.slice(subtotalIndex + 1);
 	const totalIndex = withTotal.findIndex(text => {
 		return text.includes("TOTAL") || text.includes("TAL");
 	});
 
 	// const totalStr = withTotal[totalIndex];
-	const total = Number(withTotal[totalIndex].replace(/[^0-9.-]+/g, ""));
+	const total = Number(
+		testAmount(withTotal[totalIndex]).replace(/[^0-9.-]+/g, ""),
+	);
 
 	const storeData = {
 		storeID: storeID,
