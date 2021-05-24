@@ -11,14 +11,15 @@ const Results = () => {
 		results: [],
 		view: "All",
 		selected: "",
-		currentLocation: "Walmart",
-		show: false,
+		currentLocation: "",
 	});
 	useEffect(() => {
 		let mounted = true;
+
 		axios
 			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/history`)
 			.then(result => {
+				console.log("Made a request");
 				if (mounted) {
 					const lastIndex = result.data.length - 1;
 					const lastSearch = result.data.filter(item => {
@@ -27,6 +28,7 @@ const Results = () => {
 					const lastSearchResults = lastSearch.map(record => {
 						return record.searchResults;
 					});
+
 					setValues({
 						...values,
 						results: [].concat.apply([], lastSearchResults),
