@@ -13,7 +13,6 @@ router.post("/convertImage", (req, res) => {
 	const store = req.query.store.toLowerCase();
 	const time = parseInt(req.query.time);
 	const convertedText = fcn.decodeText(req.body.data.regions);
-	console.log(convertedText);
 	let purchaseData;
 	if (store === "walmart") {
 		purchaseData = walmart.receipt(convertedText);
@@ -26,16 +25,27 @@ router.post("/convertImage", (req, res) => {
 		purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
 	}
 
+	convertDate = timestamp => {
+		let dateSubmitted = new Date(timestamp);
+		return {
+			month: dateSubmitted.getMonth() + 1,
+			day: dateSubmitted.getUTCDate(),
+			year: dateSubmitted.getFullYear(),
+		};
+	};
+
 	const receiptData = {
 		time: time,
+		id: time,
+		date: convertDate(time),
 		store: store,
 		purchaseData: purchaseData,
 		results: convertedText,
 	};
 
-	console.log("receiptData", receiptData, "purchase data:", purchaseData);
 	receiptsCollection.push(receiptData);
-	res.status(200).json(receiptsCollection);
+	console.log(receiptsCollection);
+	setTimeout(() => res.status(200).json(receiptsCollection), 2000);
 });
 
 router.get("/history", (req, res) => {
