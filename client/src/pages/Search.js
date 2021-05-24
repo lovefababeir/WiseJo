@@ -72,17 +72,18 @@ const Search = () => {
 	};
 
 	useEffect(() => {
+		console.log(loaded);
 		let mounted = true;
 		if (loaded === 3 && mounted) {
 			console.log("DONEEEEEE");
 			history.push("/compare");
 			setLoading(false);
+			setLoaded(0);
 		} else {
 			console.log("load:", loaded);
 		}
 		return () => (mounted = false);
-	}, [loaded]);
-	console.log(loaded);
+	}, [loaded, history]);
 	return (
 		<>
 			<SearchForm submitHandler={submitHandler} loading={loading} />
