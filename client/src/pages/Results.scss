@@ -48,6 +48,7 @@
 	&__view {
 		height: calc(100vh - #{$menuBar} - 10.6rem - 9rem);
 		overflow-y: scroll;
+		box-shadow: 2px 2px 10px 2px rgb(0 0 0 / 15%);
 		@include flex(column, flex-start, flex-start, nowrap);
 	}
 	&__subMenu-icon {
