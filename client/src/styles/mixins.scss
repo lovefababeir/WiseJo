@@ -73,6 +73,12 @@
 	font-weight: bold;
 	@include surface {
 		font-size: 3rem;
+		@include tablet {
+			font-size: 4rem;
+			@include desktop {
+				font-size: 5rem;
+			}
+		}
 	}
 }
 
