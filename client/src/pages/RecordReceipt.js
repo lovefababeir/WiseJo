@@ -54,40 +54,20 @@ const RecordReceipt = () => {
 							console.log("could not convert");
 						});
 				})
-				.catch(err => console.log(err.response));
-			// //=======================
-			// const config = {
-			// 	headers: {
-			// 		"content-type": "multipart/form-data",
-			// 	},
-			// };
-
-			// 	axios
-			// 		.post(
-			// 			`${process.env.REACT_APP_BASE_URL}receipts/upload?store=${store}&name=${name}`,
-			// 			formData,
-			// 			config,
-			// 		)
-			// 		.then(response => {
-			// 			console.log(response.data);
-			// 			history.push("/track");
-			// 			// setValues({ ...values, update: true, view: "receiptslist" });
-			// 			// window.location.replace("/receiptslist");
-			// 		})
-			// 		.catch(err => {
-			// 			console.log(err);
-			// 			setValues({
-			// 				...values,
-			// 				errMsg:
-			// 					"Submission failed. Please check to you that you've attached the correct image and that it is in jpeg or png format ",
-			// 			});
-			// 		});
-			// } else {
-			// 	setValues({
-			// 		...values,
-			// 		errMsg:
-			// 			"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPEG or PNG form",
-			// 	});
+				.catch(err => {
+					console.log(err.response);
+					setValues({
+						...values,
+						errMsg:
+							"Sorry, the OCR had trouble reading your image. Try to increase the contrast and make the image black and white.",
+					});
+				});
+		} else {
+			setValues({
+				...values,
+				errMsg:
+					"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPEG or PNG form",
+			});
 		}
 	};
 	const onFormChange = e => {
