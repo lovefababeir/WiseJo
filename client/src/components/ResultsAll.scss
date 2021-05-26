@@ -94,44 +94,45 @@
 	}
 }
 
-.store__logo--0 {
-	width: 18rem;
-	height: 4rem;
-	background-image: url("../assets/images/walmart.png");
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-	margin: 3rem 0 0 1rem;
-	@include mobileM {
-		width: 22rem;
-		height: 5rem;
-	}
-}
-
-.store__logo--1 {
-	width: 16rem;
-	height: 5.6rem;
-	background-image: url("../assets/images/longos.png");
+.store__logo {
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
 	margin: 3rem 0 0 1rem;
-	@include mobileM {
-		width: 22rem;
-		height: 7rem;
+	&--0 {
+		width: 18rem;
+		height: 4rem;
+		background-image: url("../assets/images/walmart.png");
+		@include mobileM {
+			width: 22rem;
+			height: 5rem;
+		}
 	}
-}
-
-.store__logo--2 {
-	width: 17.6rem;
-	height: 7.2rem;
-	background-image: url("../assets/images/nofrills.png");
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
-	margin: 3rem 0 0 1rem;
-	@include mobileM {
-		width: 22rem;
-		height: 9rem;
+	&--1 {
+		width: 16rem;
+		height: 5.6rem;
+		background-image: url("../assets/images/longos.png");
+		@include mobileM {
+			width: 22rem;
+			height: 7rem;
+		}
+	}
+	&--2 {
+		width: 17.6rem;
+		height: 7.2rem;
+		background-image: url("../assets/images/nofrills.png");
+		@include mobileM {
+			width: 22rem;
+			height: 9rem;
+		}
+	}
+	&--3 {
+		width: 17.6rem;
+		height: 7.2rem;
+		background-image: url("../assets/images/sobeys.png");
+		@include mobileM {
+			width: 22rem;
+			height: 9rem;
+		}
 	}
 }
