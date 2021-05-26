@@ -7,10 +7,10 @@ import { v4 as uuidv4 } from "uuid";
 const ResultsAll = ({ list, deleteHandler }) => {
 	var listOfStores = [];
 	const storeList = () => {
-		list.sort((a, b) => {
-			return a.store - b.store;
+		const orderedList = list.sort((a, b) => {
+			return a.store < b.store ? -1 : 1;
 		});
-		list.forEach(item => {
+		orderedList.forEach(item => {
 			if (!listOfStores.find(i => item.store === i.store)) {
 				const details = {
 					store: item.store,
