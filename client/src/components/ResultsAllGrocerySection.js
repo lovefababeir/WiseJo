@@ -7,7 +7,15 @@ const ResultsAllGrocerySection = ({ store, listOfItems, deleteHandler }) => {
 		<div>
 			<div
 				className={`store__logo store__logo--${
-					store === "Walmart" ? "0" : store === "Longo's" ? "1" : "2"
+					store === "Walmart"
+						? "0"
+						: store === "Longo's"
+						? "1"
+						: store === "No Frills"
+						? "2"
+						: store === "Sobeys"
+						? "3"
+						: "4"
 				}`}
 			></div>
 			<div className={`store__box store__box--${store}`}>
