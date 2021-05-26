@@ -100,8 +100,8 @@ router.get("/sobeys/:item/:time", (req, res) => {
 				}
 			})
 			.catch(err => {
-				console.log(`Could not complete Longos search for ${item}: ${err}`);
-				res.status(400).json(`Could not complete Longos search for ${item}`);
+				console.log(`Could not complete Sobeys search for ${item}: ${err}`);
+				res.status(400).json(`Could not complete Sobeys search for ${item}`);
 			});
 	}
 });
