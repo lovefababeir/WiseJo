@@ -13,13 +13,6 @@ const store = async function (searchWords) {
 		},
 	);
 
-	// const searchGateway = "#js-site-search-input";
-	// await page.type(searchGateway, searchWords, {
-	// 	delay: 100,
-	// });
-	// await page.keyboard.press("Enter");
-	// await page.reload();
-
 	let result = await page.evaluate(async () => {
 		let topResults = [];
 
@@ -31,10 +24,13 @@ const store = async function (searchWords) {
 			const productID = document.querySelector(`${path}`).getAttribute("data-sku");
 			const image = document.querySelector(`${path} img`).getAttribute("src");
 
-			const title = document.querySelector(`${path}  > div > div > a > strong`)
-				.innerText;
-			const price = document.querySelector(`${path} span[class="cart_reader"]`)
-				.innerText;
+			const title = document.querySelector(
+				`${path}  > div > div > a > strong`,
+			).innerText;
+
+			const price = document.querySelector(
+				`${path} span[class="cart_reader"]`,
+			).innerText;
 
 			const m = document.querySelector(
 				`${path} > div > div > div.product-card__bottom-content > span.product-card__price + span`,
@@ -48,9 +44,8 @@ const store = async function (searchWords) {
 				var value;
 
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x").find(str => {
-						return str.includes("l") || str.includes("g");
-					});
+					capacity = capacity.split("x")[1];
+					return capacity.match(/\d+/g).map(Number)[0];
 				}
 
 				if (
@@ -79,11 +74,7 @@ const store = async function (searchWords) {
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x").find(str => {
-						return (
-							!str.toLowerCase().includes("l") && !str.toLowerCase().includes("g")
-						);
-					});
+					capacity = capacity.split("x")[0];
 					return capacity.match(/\d+/g).map(Number)[0];
 				}
 				if (
