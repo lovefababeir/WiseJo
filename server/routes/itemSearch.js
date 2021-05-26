@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const longos = require("../webScrapingFunctions/gateway");
+const sobeys = require("../webScrapingFunctions/sobeys");
 const walmart = require("../webScrapingFunctions/walmart");
 const nofrills = require("../webScrapingFunctions/nofrills");
 const searchHistory = require("../data/searchResults");
@@ -29,6 +30,56 @@ router.get("/longos/:item/:time", (req, res) => {
 		res.status(200).json(newSearch);
 	} else {
 		longos
+			.store(item)
+			.then(result => {
+				if (!result.length) {
+					res
+						.status(400)
+						.send(
+							"No results found. Please check that the spelling of the item is correct or try again later.",
+						);
+				} else {
+					const newData = {
+						...moreInfo,
+						time: time,
+						search: item,
+						searchResults: result,
+					};
+					searchHistory.push(newData);
+					res.status(200).json(newData);
+				}
+			})
+			.catch(err => {
+				console.log(`Could not complete Longos search for ${item}: ${err}`);
+				res.status(400).json(`Could not complete Longos search for ${item}`);
+			});
+	}
+});
+
+router.get("/sobeys/:item/:time", (req, res) => {
+	const item = req.params.item;
+	const time = parseInt(req.params.time);
+	const moreInfo = req.query;
+
+	const alreadySearched = searchHistory.filter(record => {
+		return (
+			record.search.toLowerCase() == item.toLowerCase() &&
+			record.searchResults[0].store === "Sobeys"
+		);
+	});
+	const prevSearch = alreadySearched ? alreadySearched.pop() : "";
+
+	if (prevSearch) {
+		const newSearch = {
+			...prevSearch,
+			...moreInfo,
+			time: time,
+		};
+		searchHistory.push(newSearch);
+
+		res.status(200).json(newSearch);
+	} else {
+		sobeys
 			.store(item)
 			.then(result => {
 				if (!result.length) {
