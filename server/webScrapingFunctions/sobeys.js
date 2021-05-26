@@ -19,7 +19,13 @@ const store = async function (searchWords) {
 			if (!document.querySelector(path)) {
 				break;
 			}
-			// const productID = document.querySelector(`${path}`).getAttribute("data-sku");
+			const productID = document
+				.querySelector(
+					`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > h3 > a`,
+				)
+				.getAttribute("href")
+				.split("/")[2];
+
 			const image = document
 				.querySelector(
 					`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.base__Header-sc-7vdzdx-12.KaBIU > div > a > img`,
@@ -122,7 +128,7 @@ const store = async function (searchWords) {
 
 			topResults.push({
 				store: "Sobeys",
-				// productID: productID,
+				productID: productID,
 				image: image,
 				title: title,
 				price: price,
