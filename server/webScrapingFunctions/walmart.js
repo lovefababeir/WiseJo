@@ -1,7 +1,11 @@
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const request = require("request-promise");
 const poll = require("promise-poller").default;
 require("dotenv").config();
+// puppeteer.use(StealthPlugin().enabledEvasions.delete("iframe.contentWindow"));
+
 const siteDetails = {
 	sitekey: "6LdC-hIaAAAAALLCgO92mcNONQ-7MGIxmJd82kw5",
 	pageurl: "https://www.walmart.ca/",
@@ -10,8 +14,8 @@ const siteDetails = {
 const store = async function (searchWords) {
 	const options = {
 		headless: false,
-		executablePath:
-			"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+		// executablePath:
+		// 	"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
 		sloMo: 10,
 	};
 
@@ -32,8 +36,6 @@ const store = async function (searchWords) {
 	const response = await pollForRequestResults(process.env.API_KEY, requestId);
 	console.log("got response: ", response);
 
-	//-----------------------------------------------
-	// currently not working unless done manually in the terminal
 	await page.evaluate(
 		`document.getElementById("g-recaptcha-response").innerHTML="${response}";`,
 	);
@@ -41,7 +43,6 @@ const store = async function (searchWords) {
 		console.log("inside arrow function");
 		handleCaptcha(token);
 	}, response);
-	//-----------------------------------------------
 
 	await page.waitForSelector("#product-results > div:nth-child(1)");
 
@@ -59,20 +60,19 @@ const store = async function (searchWords) {
 				.getAttribute("src");
 
 			const grocItem = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p`,
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > p`,
 			).innerText;
 
 			// const title = grocItem.substr(0, grocItem.indexOf("|"));
 
 			const price = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div > span > span`,
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div > span > span`,
 			).innerText;
 
 			// const capacity = grocItem.substr(grocItem.indexOf("|") + 2);
 			const capacity = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > p`,
+				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p`,
 			).innerText;
-
 			//function to get the capacity of each item as a number
 			const val = C => {
 				var capacity = C.toLowerCase();
@@ -149,11 +149,10 @@ const store = async function (searchWords) {
 		}
 		return topResults;
 	});
-	return result;
 
-	await page.waitFor(2000);
 	await page.close();
 	await browser.close();
+	return result;
 };
 
 async function initiateCaptchaRequest(apiKey) {

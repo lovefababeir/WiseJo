@@ -110,10 +110,9 @@ const store = async function (searchWords) {
 		return topResults;
 	});
 
-	return result;
-	await page.waitFor(2000);
 	await page.close();
 	await browser.close();
+	return result;
 };
 
 module.exports = { store };

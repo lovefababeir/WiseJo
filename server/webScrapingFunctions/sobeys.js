@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
-	const options = { headless: false };
+	const options = { headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
 	await page.setDefaultTimeout(120000);
@@ -146,10 +146,9 @@ const store = async function (searchWords) {
 		return topResults;
 	});
 
-	return result;
-	await page.waitFor(2000);
 	await page.close();
 	await browser.close();
+	return result;
 };
 
 module.exports = { store };
