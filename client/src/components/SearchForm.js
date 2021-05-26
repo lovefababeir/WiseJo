@@ -13,6 +13,7 @@ const SearchForm = ({ submitHandler, loading }) => {
 					<select name="groceryStore" id="storeList">
 						<option value="Longo's">Longo's</option>
 						<option value="No Frills">No Frills</option>
+						<option value="Sobeys">Sobey</option>
 						<option value="Walmart">Walmart</option>
 					</select>
 					<label className="form__label">Search an item</label>
