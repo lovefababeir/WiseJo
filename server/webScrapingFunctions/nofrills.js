@@ -141,6 +141,11 @@ const store = async function (searchWords) {
 				value = val(size);
 			}
 
+			const findUnit = str => {
+				let newStr = str.replace(/[0-9]/g, "");
+				return newStr;
+			};
+
 			topResults.push({
 				store: "No Frills",
 				productID: productID || "n/a",
@@ -150,7 +155,11 @@ const store = async function (searchWords) {
 				capacity: size || "n/a",
 				value: value,
 				quantity: quantity,
-				unitPrice: { cost: unitCost, mass: unitMass },
+				unitPrice: {
+					cost: parseFloat(unitCost),
+					mass: parseFloat(unitMass),
+					units: findUnit(unitMass),
+				},
 			});
 		}
 		return topResults;
