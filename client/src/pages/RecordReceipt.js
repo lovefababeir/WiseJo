@@ -59,14 +59,14 @@ const RecordReceipt = () => {
 					setValues({
 						...values,
 						errMsg:
-							"Sorry, the OCR had trouble reading your image. Try to increase the contrast and make the image black and white.",
+							"Sorry, the OCR had trouble reading your image. Try increasing the contrast and brightness and to make the image as black and white as possible.",
 					});
 				});
 		} else {
 			setValues({
 				...values,
 				errMsg:
-					"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPEG or PNG form",
+					"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPG, JPEG or PNG form",
 			});
 		}
 	};
