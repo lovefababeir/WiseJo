@@ -119,11 +119,28 @@ const store = async function (searchWords) {
 				}
 			};
 
+			let titleCaseFCN = str => {
+				const newString = [];
+				let space = true;
+				let char;
+				str.split("");
+				for (let i = 0; i < str.length; i++) {
+					char = str[i];
+					if (space) {
+						newString.push(char);
+					} else {
+						newString.push(char.toLowerCase());
+					}
+					space = char === " " ? true : false;
+				}
+				return newString.join("");
+			};
+
 			topResults.push({
 				store: "Longo's",
 				productID: productID,
 				image: image,
-				title: title,
+				title: titelCase(title),
 				price: price,
 				capacity: capacity,
 				value: value,
