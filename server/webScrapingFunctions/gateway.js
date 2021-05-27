@@ -95,6 +95,30 @@ const store = async function (searchWords) {
 			const quantity = qty(capacity);
 			const value = val(capacity);
 
+			const unitMass = value * quantity > 100 ? 100 : 1;
+			const unitCost = (
+				parseFloat(price.slice(1)) /
+				((value * quantity) / unitMass)
+			).toFixed(2);
+
+			const findUnit = str => {
+				// const unitString = str.split("x")[1];
+				// let newStr = unitString.replace(/[0-9]/g, "");
+				// return newStr;
+				if (
+					str.includes("ml") ||
+					str.includes("mL") ||
+					str.includes("L") ||
+					str.includes("l")
+				) {
+					return "ml";
+				} else if (str.includes("kg") || str.includes("g")) {
+					return "g";
+				} else {
+					return "each";
+				}
+			};
+
 			topResults.push({
 				store: "Longo's",
 				productID: productID,
@@ -104,6 +128,11 @@ const store = async function (searchWords) {
 				capacity: capacity,
 				value: value,
 				quantity: quantity,
+				unitPrice: {
+					cost: unitCost,
+					mass: unitMass,
+					units: findUnit(capacity),
+				},
 			});
 		}
 
