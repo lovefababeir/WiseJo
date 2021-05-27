@@ -7,54 +7,69 @@ const ResultsSolutions = props => {
 
 	//RETURNS AN ALTERED LIST: adds unit rates for all stores
 	const unitRates = list
-		.map(item => {
-			const cost = Number(item.price.replace(/[^0-9.-]+/g, ""));
-			const perUnit = item.value < 20 ? 1 : 100;
-			const ans = (cost / ((item.value * item.quantity) / perUnit)).toFixed(2);
-			return {
-				...item,
-				cost: cost,
-				unitRate: ans,
-				perUnit: perUnit,
-				totalCapacity: item.value * item.quantity,
-			};
+		.slice(0)
+		.sort((a, b) => {
+			return a.store.toLowerCase() === currentLocation.toLowerCase() ? -1 : 1;
 		})
 		.sort((a, b) => {
-			return a.unitRate - b.unitRate;
+			return a.unitPrice.cost - b.unitPrice.cost;
 		});
 
 	//RETURNS STORE'S OPTIONS BEST TO WORST: gets all the options in store passed
 	const optionsInStore = store => {
 		if (store) {
-			return unitRates
-				.filter(item => {
-					return item.store.toLowerCase() === store;
-				})
-				.sort((a, b) => {
-					return a.unitRate - b.unitRate;
-				});
+			return unitRates.filter(item => {
+				return item.store.toLowerCase() === store.toLowerCase();
+			});
 		}
 	};
-
+	console.log(optionsInStore(currentLocation));
 	//////DATA FOR RENDERING PAGE:
 	//CHECK TO SEE IF THE BEST IN THE STORE IS NOT TIED WITH BEST OVERALL
-	const curLocationOptions = optionsInStore(currentLocation);
-	const BESTinLocation = curLocationOptions[0];
-	const BEST =
-		BESTinLocation.cost === unitRates[0] ? BESTinLocation : unitRates[0];
 
-	const savings = (
-		curLocationOptions.find(option => {
-			return option.value === BEST.value && option.quantity === BEST.quantity;
-		}).cost - BEST.cost
-	).toFixed(2);
+	const BEST = unitRates[0];
+	let bestinStore;
+	let savings;
+	let BESTinLocation;
+	let capacityDiff;
+	let curLocationOptions;
+	let inStoreResults = optionsInStore(currentLocation).length > 0 ? true : false;
 
-	const diffStoreFromCur = currentLocation !== BEST.store.toLowerCase();
+	console.log("optionsInStore", optionsInStore(currentLocation));
+	if (inStoreResults) {
+		BESTinLocation = optionsInStore(currentLocation).reduce((best, item) => {
+			if (best.unitPrice.cost > item.unitPrice.cost) {
+				return item;
+			} else {
+				return best;
+			}
+		});
 
-	const capacityDiff =
-		BESTinLocation.totalCapacity > curLocationOptions[1].totalCapacity
-			? BESTinLocation.totalCapacity - curLocationOptions[1].totalCapacity
-			: "";
+		curLocationOptions = optionsInStore(currentLocation);
+
+		if (currentLocation !== BEST.store) {
+			let sameItem = curLocationOptions.find(option => {
+				console.log(option.value, BEST.value, option.quantity, BEST.quantity);
+				return option.value === BEST.value && option.quantity === BEST.quantity;
+			});
+			console.log(sameItem);
+			savings = (
+				sameItem
+					? parseFloat(sameItem.price.slice(1)) - parseFloat(BEST.price.slice(1))
+					: 0
+			).toFixed(2);
+		}
+
+		bestinStore = currentLocation === BEST.store.toLowerCase();
+
+		//This is the capacity difference between the two best options inStore
+		capacityDiff =
+			BESTinLocation.value * BESTinLocation.quantity >
+			curLocationOptions[1].value * curLocationOptions[1].quantity
+				? BESTinLocation.value * BESTinLocation.quantity -
+				  curLocationOptions[1].value * curLocationOptions[1].quantity
+				: "";
+	}
 
 	const details = useSpring({
 		from: { opacity: 0, marginLeft: 500 },
@@ -83,13 +98,17 @@ const ResultsSolutions = props => {
 					/>
 					<div className="solution__details">
 						<p className="solution__advice">
-							Great news! We found the option that will get you more for your money{" "}
-							{!diffStoreFromCur &&
-								"and you don't have to go to another store to get it!"}
+							Great news! We found the option that will get you more for your money
+							{optionsInStore(currentLocation) &&
+								bestinStore &&
+								" and you don't have to go to another store to get it!"}
 							.
-							{diffStoreFromCur &&
+							{!bestinStore &&
 								savings > 0 &&
 								` You would save $${savings} if you buy this item from ${BEST.store} instead of ${BESTinLocation.store}. However it may take you another 15mins to drive there and make the purchase`}
+							{!optionsInStore(currentLocation) &&
+								!bestinStore &&
+								` Unfortunatey its not there at ${currentLocation}.`}
 						</p>
 						<h2 className="solution__detail solution__detail--store">{BEST.store}</h2>
 						<h2 className="solution__detail solution__detail--price">{BEST.price}</h2>
@@ -97,14 +116,15 @@ const ResultsSolutions = props => {
 							for {BEST.capacity}
 						</h2>
 						<h2 className="solution__detail solution__detail--solution">
-							Unit Rate: ${BEST.unitRate}/100g
+							Unit Rate: ${BEST.unitPrice.cost.toFixed(2)}/{BEST.unitPrice.mass}
+							{BEST.unitPrice.units}
 						</h2>
 					</div>
 				</div>
 			</animated.div>
 
-			<animated.div style={details2}>
-				{currentLocation && diffStoreFromCur && (
+			{currentLocation && inStoreResults && !bestinStore && (
+				<animated.div style={details2}>
 					<div className="solution">
 						<img
 							className="solution__picture"
@@ -128,15 +148,17 @@ const ResultsSolutions = props => {
 								{BESTinLocation.capacity}
 							</h2>
 							<h2 className="solution__detail solution__detail--unitRate">
-								Unit Rate: ${BESTinLocation.unitRate}/100g
+								Unit Rate: ${BESTinLocation.unitPrice.cost.toFixed(2)}/
+								{BESTinLocation.unitPrice.mass}
+								{BESTinLocation.unitPrice.units}
 							</h2>
 						</div>
 					</div>
-				)}
-			</animated.div>
+				</animated.div>
+			)}
 
-			<animated.div style={details3} className="last-solution">
-				{curLocationOptions[1] && (
+			{inStoreResults && curLocationOptions[1] && (
+				<animated.div style={details3} className="last-solution">
 					<div className="solution">
 						<img
 							className="solution__picture"
@@ -158,12 +180,42 @@ const ResultsSolutions = props => {
 								{curLocationOptions[1].capacity}
 							</h2>
 							<h2 className="solution__detail solution__detail--unitRate">
-								Unit Rate: ${curLocationOptions[1].unitRate}/100g
+								Unit Rate: ${curLocationOptions[1].unitPrice.cost.toFixed(2)}/
+								{curLocationOptions[1].unitPrice.mass}
+								{curLocationOptions[1].unitPrice.units}
 							</h2>
 						</div>
 					</div>
-				)}
-			</animated.div>
+				</animated.div>
+			)}
+			{!inStoreResults && (
+				<animated.div style={details3} className="last-solution">
+					<div className="solution">
+						<img
+							className="solution__picture"
+							src={unitRates[1].image}
+							alt="Second best option in current lcoation"
+						/>
+						<div className="solution__details">
+							<p className="solution__advice">This is the second best option.</p>
+							<h2 className="solution__detail solution__detail--store">
+								{unitRates[1].store}
+							</h2>
+							<h2 className="solution__detail solution__detail--price">
+								{unitRates[1].price}
+							</h2>
+							<h2 className="solution__detail solution__detail--capacity">
+								{unitRates[1].capacity}
+							</h2>
+							<h2 className="solution__detail solution__detail--unitRate">
+								Unit Rate: ${unitRates[1].unitPrice.cost.toFixed(2)}/
+								{unitRates[1].unitPrice.mass}
+								{unitRates[1].unitPrice.units}
+							</h2>
+						</div>
+					</div>
+				</animated.div>
+			)}
 		</>
 	);
 };
