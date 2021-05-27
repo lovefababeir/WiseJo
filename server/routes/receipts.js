@@ -25,19 +25,24 @@ router.post("/convertImage", (req, res) => {
 		purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
 	}
 
+	const timeEST = time - 3600000 * 4;
 	convertDate = timestamp => {
 		let dateSubmitted = new Date(timestamp);
 		return {
-			month: dateSubmitted.getMonth() + 1,
+			timeZone: "EST",
+			timeStamp: dateSubmitted,
+			mins: dateSubmitted.getUTCMinutes(),
+			hour: dateSubmitted.getUTCHours(),
 			day: dateSubmitted.getUTCDate(),
+			month: dateSubmitted.getMonth() + 1,
 			year: dateSubmitted.getFullYear(),
 		};
 	};
 
 	const receiptData = {
-		time: time,
+		time: timeEST,
 		id: time,
-		date: convertDate(time),
+		date: convertDate(timeEST),
 		store: store,
 		purchaseData: purchaseData,
 		results: convertedText,
