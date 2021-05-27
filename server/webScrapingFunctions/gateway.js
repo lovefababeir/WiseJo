@@ -119,7 +119,7 @@ const store = async function (searchWords) {
 				}
 			};
 
-			let titleCaseFCN = str => {
+			let titleCase = str => {
 				const newString = [];
 				let space = true;
 				let char;
@@ -140,13 +140,13 @@ const store = async function (searchWords) {
 				store: "Longo's",
 				productID: productID,
 				image: image,
-				title: titelCase(title),
+				title: titleCase(title),
 				price: price,
 				capacity: capacity,
 				value: value,
 				quantity: quantity,
 				unitPrice: {
-					cost: unitCost,
+					cost: parseFloat(unitCost),
 					mass: unitMass,
 					units: findUnit(capacity),
 				},
