@@ -156,7 +156,7 @@ const store = async function (searchWords) {
 				value: value,
 				quantity: quantity,
 				unitPrice: {
-					cost: parseFloat(unitCost),
+					cost: parseFloat(unitCost.slice(1)).toFixed(2),
 					mass: parseFloat(unitMass),
 					units: findUnit(unitMass),
 				},
