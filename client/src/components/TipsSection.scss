@@ -1,0 +1,14 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.tips {
+	width: 90%;
+	margin: 4rem auto;
+	background-color: rgba(83, 139, 110, 0.4);
+	border: rgba(83, 139, 110, 0.5) solid 3px;
+	padding: 1rem 2rem;
+	&__title {
+		font-size: 2rem;
+	}
+}
