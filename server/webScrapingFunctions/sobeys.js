@@ -126,6 +126,35 @@ const store = async function (searchWords) {
 				return newStr.join("");
 			};
 
+			//Function is used to correct check the values given which is sometimes different from whats in the title on this website.
+			const checkLitre = (itemTitle, valueGiven) => {
+				const wordsInTitle = itemTitle.slice(0).split(" ");
+				if (
+					wordsInTitle.find(word => {
+						return word === "x";
+					})
+				) {
+					return valueGiven;
+				}
+
+				const valueinTitleIndex = parseFloat(
+					wordsInTitle.findIndex(x => {
+						return parseFloat(x);
+					}),
+				);
+				const unitsinTitle = wordsInTitle[valueinTitleIndex + 1];
+
+				const valueinTitle = wordsInTitle[valueinTitleIndex];
+
+				return !valueinTitle &&
+					valueinTitle === valueGiven &&
+					valueinTitle * 1000 === valueGiven
+					? valueGiven
+					: unitsinTitle.includes("kg") || !unitsinTitle.includes("ml")
+					? valueinTitle * 1000
+					: valueinTitle;
+			};
+
 			topResults.push({
 				store: "Sobeys",
 				productID: productID,
@@ -133,7 +162,7 @@ const store = async function (searchWords) {
 				title: title,
 				price: price,
 				capacity: capacity,
-				value: value,
+				value: checkLitre(title, value),
 				quantity: quantity,
 				unitPrice: {
 					cost: parseFloat(unitCost.slice(2)),
