@@ -1,6 +1,7 @@
 import React from "react";
 import "./ResultsSolutions.scss";
 import { useSpring, animated } from "react-spring";
+import TipsSection from "./TipsSection";
 
 const ResultsSolutions = props => {
 	const { list, currentLocation } = props;
@@ -216,6 +217,7 @@ const ResultsSolutions = props => {
 					</div>
 				</animated.div>
 			)}
+			<TipsSection page={"solutions"} />
 		</>
 	);
 };
