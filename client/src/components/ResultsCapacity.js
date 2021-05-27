@@ -4,6 +4,7 @@ import { useSpring, animated } from "react-spring";
 import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
 import ResultsCapacitySelected from "./ResultsCapacitySelected";
 import { v4 as uuidv4 } from "uuid";
+import TipsSection from "./TipsSection";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
@@ -70,6 +71,7 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 					</div>
 				</animated.div>
 			</section>
+			<TipsSection page={"capacity"} />
 		</>
 	);
 };
