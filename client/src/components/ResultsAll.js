@@ -3,6 +3,7 @@ import "./ResultsAll.scss";
 import { useSpring, animated } from "react-spring";
 import ResultsAllGrocerySection from "./ResultsAllGrocerySection";
 import { v4 as uuidv4 } from "uuid";
+import TipsSection from "./TipsSection";
 
 const ResultsAll = ({ list, deleteHandler }) => {
 	var listOfStores = [];
@@ -29,6 +30,7 @@ const ResultsAll = ({ list, deleteHandler }) => {
 		to: { opacity: 1, marginTop: 0 },
 		config: { delay: 1000, duration: 2000 },
 	});
+
 	return (
 		<animated.div style={details}>
 			<section className="store">
@@ -43,6 +45,7 @@ const ResultsAll = ({ list, deleteHandler }) => {
 					);
 				})}
 			</section>
+			<TipsSection page={"all"} />
 		</animated.div>
 	);
 };
