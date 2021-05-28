@@ -1,48 +1,108 @@
-// const puppeteer = require("puppeteer");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const request = require("request-promise");
-const poll = require("promise-poller").default;
 require("dotenv").config();
-// puppeteer.use(StealthPlugin().enabledEvasions.delete("iframe.contentWindow"));
+puppeteer.use(StealthPlugin());
+const Client = require("@infosimples/node_two_captcha");
 
-const siteDetails = {
-	sitekey: "6LdC-hIaAAAAALLCgO92mcNONQ-7MGIxmJd82kw5",
-	pageurl: "https://www.walmart.ca/",
-};
+client = new Client(process.env.API_KEY, {
+	timeout: 120000,
+	polling: 5000,
+	throwErrors: false,
+});
 
 const store = async function (searchWords) {
 	const options = {
 		headless: false,
-		// executablePath:
-		// 	"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-		sloMo: 10,
+		slowMo: 40,
+		defaultViewport: {
+			width: 1200,
+			height: 1200,
+		},
+		devtools: true,
 	};
 
 	var browser = await puppeteer.launch(options);
-	var page = await browser.newPage();
-	await page.setDefaultTimeout(120000);
-	await page.setViewport({ height: 1200, width: 960 });
+	const [page] = await browser.pages();
+	const cdp = await page.target().createCDPSession();
 
-	await page.setUserAgent(
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36",
-	);
+	try {
+		await page.goto(
+			"https://www.walmart.ca/blocked?url=L3NlYXJjaD9xPU5lc3RlYQ==&uuid=79958650-b793-11eb-bb7a-871342c18e88&vid=&g=a",
+		);
+	} catch (e) {
+		console.log(e);
+	}
+
+	const captchaParams = await page.evaluate(() => {
+		const findRecaptchaClients = () => {
+			// eslint-disable-next-line camelcase
+			if (typeof ___grecaptcha_cfg !== "undefined") {
+				// eslint-disable-next-line camelcase, no-undef
+				return Object.entries(___grecaptcha_cfg.clients).map(([cid, client]) => {
+					const data = { id: cid, version: cid >= 10000 ? "V3" : "V2" };
+					const objects = Object.entries(client).filter(
+						([_, value]) => value && typeof value === "object",
+					);
+
+					objects.forEach(([toplevelKey, toplevel]) => {
+						const found = Object.entries(toplevel).find(
+							([_, value]) =>
+								value &&
+								typeof value === "object" &&
+								"sitekey" in value &&
+								"size" in value,
+						);
+
+						if (
+							typeof toplevel === "object" &&
+							toplevel instanceof HTMLElement &&
+							toplevel["tagName"] === "DIV"
+						) {
+							data.pageurl = toplevel.baseURI;
+						}
+
+						if (found) {
+							const [sublevelKey, sublevel] = found;
+
+							data.sitekey = sublevel.sitekey;
+							const callbackKey =
+								data.version === "V2" ? "callback" : "promise-callback";
+							const callback = sublevel[callbackKey];
+							if (!callback) {
+								data.callback = null;
+								data.function = null;
+							} else {
+								data.function = callback;
+								const keys = [cid, toplevelKey, sublevelKey, callbackKey]
+									.map(key => `['${key}']`)
+									.join("");
+								data.callback = `___grecaptcha_cfg.clients${keys}`;
+							}
+						}
+					});
+					return data;
+				});
+			}
+			return [];
+		};
+		return findRecaptchaClients();
+	});
+	// console.log("captchaParams:", captchaParams);
+
+	let captcha = await client.decodeRecaptchaV2({
+		googlekey: captchaParams[0].sitekey,
+		pageurl: captchaParams[0].pageurl,
+	});
+
+	// console.log("captcha", captcha);
+
+	await cdp.send("Runtime.evaluate", {
+		expression: `${captchaParams[0].function}('${captcha._text}')`,
+	});
 
 	await page.goto(`https://www.walmart.ca/search?q=${searchWords}`, {
 		waitUntil: "networkidle2",
 	});
-
-	const requestId = await initiateCaptchaRequest(process.env.API_KEY);
-	const response = await pollForRequestResults(process.env.API_KEY, requestId);
-	console.log("got response: ", response);
-
-	await page.evaluate(
-		`document.getElementById("g-recaptcha-response").innerHTML="${response}";`,
-	);
-	await page.evaluate(token => {
-		console.log("inside arrow function");
-		handleCaptcha(token);
-	}, response);
 
 	await page.waitForSelector("#product-results > div:nth-child(1)");
 
@@ -154,56 +214,5 @@ const store = async function (searchWords) {
 	await browser.close();
 	return result;
 };
-
-async function initiateCaptchaRequest(apiKey) {
-	console.log("initiating Captcha Request");
-	const formData = {
-		method: "userrecaptcha",
-		googlekey: siteDetails.sitekey,
-		key: apiKey,
-		pageurl: siteDetails.pageurl,
-		json: 1,
-	};
-	const response = await request.post("http://2captcha.com/in.php", {
-		form: formData,
-	});
-	console.log("response received!", response);
-	return JSON.parse(response).request;
-}
-
-async function pollForRequestResults(
-	key,
-	id,
-	retries = 30,
-	interval = 1500,
-	delay = 15000,
-) {
-	console.log("Polling for requests");
-	await timeout(delay);
-	const pollResult = poll({
-		taskFn: requestCaptchaResults(key, id),
-		interval,
-		retries,
-	});
-	console.log(pollResult);
-	return pollResult;
-}
-
-function requestCaptchaResults(apiKey, requestId) {
-	console.log("Requesting Recaptcha results with api key:", apiKey);
-	const url = `http://2captcha.com/res.php?key=${apiKey}&action=get&id=${requestId}&json=1`;
-	return async function () {
-		return new Promise(async function (resolve, reject) {
-			const rawResponse = await request.get(url);
-			const resp = JSON.parse(rawResponse);
-			console.log(resp);
-			if (resp.status === 0) return reject(resp.request);
-			console.log("finished requests");
-			resolve(resp.request);
-		});
-	};
-}
-
-const timeout = millis => new Promise(resolve => setTimeout(resolve, millis));
 
 module.exports = { store };
