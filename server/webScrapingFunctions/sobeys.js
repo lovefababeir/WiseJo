@@ -127,30 +127,24 @@ const store = async function (searchWords) {
 			};
 
 			//Function is used to correct check the values given which is sometimes different from whats in the title on this website.
-			const checkLitre = (itemTitle, valueGiven) => {
+			const checkValue = (itemTitle, valueGiven, capacityGiven) => {
 				const wordsInTitle = itemTitle.slice(0).split(" ");
-				if (
-					wordsInTitle.find(word => {
-						return word === "x";
-					})
-				) {
+				if (capacityGiven.includes("x")) {
 					return valueGiven;
 				}
 
-				const valueinTitleIndex = parseFloat(
-					wordsInTitle.findIndex(x => {
-						return parseFloat(x);
+				const valueinTitle = parseFloat(
+					wordsInTitle.find(word => {
+						return parseFloat(word);
 					}),
 				);
-				const unitsinTitle = wordsInTitle[valueinTitleIndex + 1];
 
-				const valueinTitle = wordsInTitle[valueinTitleIndex];
-
-				return !valueinTitle &&
-					valueinTitle === valueGiven &&
+				return !valueinTitle ||
+					valueinTitle === valueGiven ||
 					valueinTitle * 1000 === valueGiven
 					? valueGiven
-					: unitsinTitle.includes("kg") || !unitsinTitle.includes("ml")
+					: capacityGiven.toLowerCase().includes("kg") ||
+					  !capacityGiven.toLowerCase().includes("ml")
 					? valueinTitle * 1000
 					: valueinTitle;
 			};
@@ -162,7 +156,7 @@ const store = async function (searchWords) {
 				title: title,
 				price: price,
 				capacity: capacity,
-				value: checkLitre(title, value),
+				value: checkValue(title, value, capacity),
 				quantity: quantity,
 				unitPrice: {
 					cost: parseFloat(unitCost.slice(2)),
