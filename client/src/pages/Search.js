@@ -37,6 +37,23 @@ const Search = () => {
 
 			axios
 				.get(
+					`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${item}/${time}?currentlocation=${currentStore}`,
+				)
+				.then(result => {
+					console.log(result);
+					if (result) {
+						setLoaded(loaded => loaded + 1);
+					}
+				})
+				.catch(err => {
+					console.log(err);
+					if (err) {
+						setLoaded(loaded => loaded + 1);
+					}
+				});
+
+			axios
+				.get(
 					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
@@ -74,7 +91,7 @@ const Search = () => {
 	useEffect(() => {
 		console.log(loaded);
 		let mounted = true;
-		if (loaded === 3 && mounted) {
+		if (loaded === 4 && mounted) {
 			console.log("DONEEEEEE");
 			history.push("/compare");
 			setLoading(false);
