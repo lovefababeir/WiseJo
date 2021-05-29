@@ -62,27 +62,41 @@ const store = async function (searchWords) {
 				var value;
 
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x").find(str => {
-						return str.includes("l") || str.includes("g");
-					});
+					capacity = capacity.split("x")[1];
 				}
 
-				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count") ||
-					capacity.includes("ea")
-				) {
-					value = 1;
-				} else if (capacity.includes("kg")) {
+				const unitsString = capacity
+					.slice(0)
+					.split(" ")
+					.find(word => {
+						return (
+							word.replace(/[0-9]/g, "") === "kg" ||
+							word.replace(/[0-9]/g, "") === "g" ||
+							word.replace(/[0-9]/g, "") === "lb" ||
+							word.replace(/[0-9]/g, "") === "oz" ||
+							word.replace(/[0-9]/g, "") === "l" ||
+							word.replace(/[0-9]/g, "") === "ml"
+						);
+					});
+
+				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
+
+				// if (
+				// 	capacity.includes("pkg") ||
+				// 	capacity.includes("pack") ||
+				// 	capacity.includes("cup") ||
+				// 	capacity.includes("cans") ||
+				// 	capacity.includes("count") ||
+				// 	capacity.includes("ea")
+				// ) {
+				// 	value = 1;
+				// } else
+				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
-				} else if (capacity.includes("g") || capacity.includes("ml")) {
-					value = parseFloat(capacity);
-					return value;
-				} else if (capacity.includes("l")) {
-					value = parseFloat(capacity) * 1000;
+				} else if (units === "kg" || units === "ml" || units === "oz") {
+					value = parseInt(capacity);
+				} else if (units === "lb") {
+					value = parseFloat(capacity) * 16;
 				} else {
 					value = 1;
 				}
@@ -94,22 +108,29 @@ const store = async function (searchWords) {
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x").find(str => {
-						return !str.includes("l") && !str.includes("g");
-					});
-					return capacity.match(/\d+/g).map(Number)[0];
+					return parseInt(capacity.split("x")[0]);
 				}
+
+				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
+
 				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count") ||
-					capacity.includes("ea")
+					qtyUnits
+						.slice(0)
+						.split(" ")
+						.find(x => {
+							return (
+								x === "ml" ||
+								x === "l" ||
+								x === "g" ||
+								x === "kg" ||
+								x === "lb" ||
+								x === "oz"
+							);
+						})
 				) {
-					qty = capacity.match(/\d+/g).map(Number)[0];
-				} else {
 					qty = 1;
+				} else {
+					qty = capacity.match(/\d+/g).map(Number)[0];
 				}
 				return qty;
 			};
@@ -148,11 +169,11 @@ const store = async function (searchWords) {
 
 			topResults.push({
 				store: "No Frills",
-				productID: productID || "n/a",
-				image: image || "n/a",
-				title: title || "n/a",
-				price: price || "n/a",
-				capacity: size || "n/a",
+				productID: productID || "",
+				image: image || "",
+				title: title || "",
+				price: price || "",
+				capacity: size || "",
 				value: value,
 				quantity: quantity,
 				unitPrice: {
