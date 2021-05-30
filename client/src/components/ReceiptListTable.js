@@ -1,6 +1,7 @@
 import React from "react";
 import ReceiptListTableElements from "./ReceiptListTableElements";
 import ReceiptListTableSummary from "./ReceiptListTableSummary";
+import "./ReceiptListTable.scss";
 
 const ReceiptListTable = ({
 	receiptList,
