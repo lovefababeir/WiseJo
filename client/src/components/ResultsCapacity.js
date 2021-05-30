@@ -8,8 +8,11 @@ import TipsSection from "./TipsSection";
 
 const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 	var newList = [];
-	const capacityList = resultsList => {
+	const capacityList = itemList => {
 		//value refers to the capacity as a number
+		const resultsList = itemList.slice(0).filter(item => {
+			return item.capacity && item.value;
+		});
 		resultsList.sort((a, b) => {
 			return a.value * a.quantity - b.value * a.quantity;
 		});
