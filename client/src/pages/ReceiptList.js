@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ReceiptList.scss";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import ReceiptListSelected from "./ReceiptListSelected";
 
 const ReceiptList = () => {
 	const [receiptList, setReceiptList] = useState("");
@@ -104,46 +104,7 @@ const ReceiptList = () => {
 					</div>
 				</div>
 				{receiptSelected && (
-					<div className="receipts-selected">
-						<div className="receipts-selected__storeDetails">
-							<p className="receipts-selected__store">{receiptSelected.store}</p>
-							<p className="receipts-selected__receipt">
-								Store Location: {receiptSelected.purchaseData.storeID}
-							</p>
-							<p className="receipts-selected__receipt">
-								{receiptSelected.purchaseData.contact && (
-									<span>Contact: {receiptSelected.purchaseData.contact}</span>
-								)}
-							</p>
-							<p className="receipts-selected__receipt">
-								{receiptSelected.purchaseData.address}
-							</p>
-
-							{receiptSelected.purchaseData.manager && (
-								<p className="receipts-selected__receipt">
-									Manager: {receiptSelected.purchaseData.manager}
-								</p>
-							)}
-							{receiptSelected.purchaseData.cashier && (
-								<p className="receipts-selected__receipt">
-									Cashier: {receiptSelected.purchaseData.cashier}
-								</p>
-							)}
-						</div>
-						<div className="receipts-selected__itemsList">
-							<p className="receipts-selected__item-title">Items Purchased:</p>
-							{receiptSelected.purchaseData.purchases.map(item => {
-								return (
-									<p className="receipts-selected__item" key={uuidv4()}>
-										{item}
-									</p>
-								);
-							})}
-							<p className="receipts-selected__total">
-								Total Spent: ${receiptSelected.purchaseData.total}
-							</p>
-						</div>
-					</div>
+					<ReceiptListSelected purchaseData={receiptSelected.purchaseData} />
 				)}
 			</div>
 		</>
