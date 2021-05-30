@@ -9,6 +9,9 @@ const ResultsSolutions = props => {
 	//RETURNS AN ALTERED LIST: adds unit rates for all stores
 	const unitRates = list
 		.slice(0)
+		.filter(item => {
+			return item.unitPrice && item.unitPrice.cost && item.unitPrice.mass;
+		})
 		.sort((a, b) => {
 			return a.store.toLowerCase() === currentLocation.toLowerCase() ? -1 : 1;
 		})
@@ -16,6 +19,7 @@ const ResultsSolutions = props => {
 			return a.unitPrice.cost - b.unitPrice.cost;
 		});
 
+	console.log(unitRates);
 	//RETURNS STORE'S OPTIONS BEST TO WORST: gets all the options in store passed
 	const optionsInStore = store => {
 		if (store) {
