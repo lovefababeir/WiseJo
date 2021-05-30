@@ -1,0 +1,55 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.receiptsList {
+	&__box {
+		box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.15);
+		margin: 1rem -1rem;
+		padding: 1rem 2rem;
+		width: 100vw;
+		@include flex(column, space-between, center);
+	}
+
+	&__dayTotal,
+	&__weekTotal {
+		margin-top: 1rem;
+		font-size: 1.4rem;
+		@include surface {
+			font-size: 1.8rem;
+		}
+		&--Num {
+			color: #f2b988;
+			font-weight: bold;
+		}
+	}
+}
+.receipt {
+	&__record {
+		@include flex(row, space-between);
+		border-bottom: #f2f2f2 solid 1px;
+		padding: 1rem 0;
+		font-size: 1.2rem;
+		width: 100%;
+		max-width: 60rem;
+		margin: 0 auto;
+		@include mobileM {
+			font-size: 1.4rem;
+		}
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+	&__summary {
+		text-transform: capitalize;
+		font-size: 1.5rem;
+		@include surface {
+			font-size: 1.8rem;
+		}
+	}
+}
+
+.table-headings {
+	font-weight: bold;
+	font-size: 1.6rem;
+}
