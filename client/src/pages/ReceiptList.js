@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ReceiptList.scss";
 import axios from "axios";
-import ReceiptListSelected from "./ReceiptListSelected";
+import ReceiptListSelected from "../components/ReceiptListSelected";
+import ReceiptListTable from "../components/ReceiptListTable";
 
 const ReceiptList = () => {
 	const [receiptList, setReceiptList] = useState("");
@@ -59,50 +60,12 @@ const ReceiptList = () => {
 		<>
 			<div className="receiptsList">
 				<h1 className="results__title results__title--receiptList">SNAP & TRACK</h1>
-				<div className="receiptsList__box">
-					<h2 className="receiptsList__title">Record of Expenses</h2>
-					<div className="receipt__record table-headings">
-						<p className="receipt__summary">Store:</p>
-						<p className="receipt__summary">Date Logged:</p>
-						<p className="receipt__summary">Total:</p>
-					</div>
-					{receiptList &&
-						receiptList.map(receipt => {
-							return (
-								<div
-									className="receipt__record"
-									id={receipt.time}
-									key={receipt.time}
-									onClick={e => selectReceiptHandler(e, receipt.time)}
-								>
-									<p className="receipt__summary">{receipt.store}</p>
+				<ReceiptListTable
+					receiptList={receiptList}
+					selectReceiptHandler={selectReceiptHandler}
+					totalExpenses={totalExpenses}
+				/>
 
-									<p className="receipt__summary">
-										{receipt.date.month}/{receipt.date.day}/{receipt.date.year}
-									</p>
-									<p className="receipt__summary">${receipt.purchaseData.total}</p>
-								</div>
-							);
-						})}
-					<div className="receipt__record">
-						<h3 className="receiptsList__dayTotal">
-							Today you spent:{" "}
-							<span className="receiptsList__dayTotal--Num">
-								{receiptList &&
-									`$
-									${totalExpenses(receiptList, "day").toFixed(2)}`}
-							</span>
-						</h3>
-						<h3 className="receiptsList__weekTotal">
-							This week you spent:{" "}
-							<span className="receiptsList__weekTotal--Num">
-								{receiptList &&
-									`$
-									${totalExpenses(receiptList, "week").toFixed(2)}`}
-							</span>
-						</h3>
-					</div>
-				</div>
 				{receiptSelected && (
 					<ReceiptListSelected purchaseData={receiptSelected.purchaseData} />
 				)}
