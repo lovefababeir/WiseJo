@@ -47,6 +47,25 @@ const store = async function (searchWords) {
 				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.base__SizeText-sc-7vdzdx-34.gzMqij.fHaaeW`,
 			).innerText;
 
+			const unitCost = document.querySelector(
+				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
+			)
+				? document
+						.querySelector(
+							`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
+						)
+						.innerText.split(" ")[0]
+				: "";
+			const unitMass = document.querySelector(
+				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
+			)
+				? document
+						.querySelector(
+							`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
+						)
+						.innerText.split(" ")[2]
+				: "";
+
 			//function to get the capacity of each item as a number
 			const val = C => {
 				var capacity = C.toLowerCase();
@@ -114,28 +133,6 @@ const store = async function (searchWords) {
 				return qty;
 			};
 
-			const quantity = qty(capacity);
-			const value = val(capacity);
-
-			const unitCost = document.querySelector(
-				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
-			)
-				? document
-						.querySelector(
-							`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
-						)
-						.innerText.split(" ")[0]
-				: "";
-			const unitMass = document.querySelector(
-				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
-			)
-				? document
-						.querySelector(
-							`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.gVneWT`,
-						)
-						.innerText.split(" ")[2]
-				: "";
-
 			const findUnit = str => {
 				let newStr = str.replace(/[0-9]/g, "").split("");
 				newStr.pop();
@@ -168,6 +165,9 @@ const store = async function (searchWords) {
 					? valueinTitle
 					: 1;
 			};
+
+			const quantity = qty(capacity);
+			const value = val(capacity);
 
 			topResults.push({
 				store: "Sobeys",
