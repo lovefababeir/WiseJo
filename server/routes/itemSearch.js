@@ -51,7 +51,11 @@ router.get("/longos/:item/:time", (req, res) => {
 			})
 			.catch(err => {
 				console.log(`Could not complete Longos search for ${item}: ${err}`);
-				res.status(400).json(`Could not complete Longos search for ${item}`);
+				res
+					.status(500)
+					.json(
+						`Could not complete Longos search for ${item}. Internal issue with Longos function: ${err}`,
+					);
 			});
 	}
 });
@@ -101,7 +105,11 @@ router.get("/sobeys/:item/:time", (req, res) => {
 			})
 			.catch(err => {
 				console.log(`Could not complete Sobeys search for ${item}: ${err}`);
-				res.status(400).json(`Could not complete Sobeys search for ${item}`);
+				res
+					.status(500)
+					.json(
+						`Could not complete Sobeys search for ${item}. Internal issue with Sobeys function: ${err}`,
+					);
 			});
 	}
 });
@@ -146,7 +154,11 @@ router.get("/walmart/:item/:time", (req, res) => {
 			})
 			.catch(err => {
 				console.log(`Could not complete Walmart search for ${item}: ${err}`);
-				res.status(400).json(`Could not complete Walmart search for ${item}`);
+				res
+					.status(500)
+					.json(
+						`Could not complete Walmart search for ${item}. Internal issue with Walmart function: ${err}`,
+					);
 			});
 		// res.status(200).send("Not available at the moment. Please try again later");
 	}
@@ -193,7 +205,11 @@ router.get("/nofrills/:item/:time", (req, res) => {
 			})
 			.catch(err => {
 				console.log(`Could not complete No Frills search for ${item}: ${err}`);
-				res.status(400).json(`Could not complete No Frills search for ${item}`);
+				res
+					.status(500)
+					.json(
+						`Could not complete No Frills search for ${item}. Internal issue with No Frills function: ${err}`,
+					);
 			});
 	}
 });
