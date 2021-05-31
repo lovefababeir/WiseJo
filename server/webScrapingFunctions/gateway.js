@@ -45,49 +45,61 @@ const store = async function (searchWords) {
 
 				if (capacity.includes("x")) {
 					capacity = capacity.split("x")[1];
-					return capacity.match(/\d+/g).map(Number)[0];
 				}
 
-				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count") ||
-					capacity.includes("ea")
-				) {
-					value = 1;
-				} else if (capacity.includes("kg")) {
+				const unitsString = capacity
+					.slice(0)
+					.split(" ")
+					.find(word => {
+						return (
+							word.replace(/[0-9]/g, "") === "kg" ||
+							word.replace(/[0-9]/g, "") === "g" ||
+							word.replace(/[0-9]/g, "") === "lb" ||
+							word.replace(/[0-9]/g, "") === "oz" ||
+							word.replace(/[0-9]/g, "") === "l" ||
+							word.replace(/[0-9]/g, "") === "ml"
+						);
+					});
+
+				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
+				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
-				} else if (capacity.includes("g") || capacity.includes("ml")) {
-					value = parseFloat(capacity);
-					return value;
-				} else if (capacity.includes("l")) {
-					value = parseFloat(capacity) * 1000;
+				} else if (units === "g" || units === "ml" || units === "oz") {
+					value = parseInt(capacity);
+				} else if (units === "lb") {
+					value = parseFloat(capacity) * 16;
 				} else {
 					value = 1;
 				}
 				return value;
 			};
+
 			//function to get the quantity in item
 			const qty = C => {
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x")[0];
-					return capacity.match(/\d+/g).map(Number)[0];
+					return parseInt(capacity.split("x")[0]);
 				}
+				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
 				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count")
-					// capacity.includes("ea")
+					qtyUnits
+						.slice(0)
+						.split(" ")
+						.find(x => {
+							return (
+								x === "ml" ||
+								x === "l" ||
+								x === "g" ||
+								x === "kg" ||
+								x === "lb" ||
+								x === "oz"
+							);
+						})
 				) {
-					qty = capacity.match(/\d+/g).map(Number)[0];
-				} else {
 					qty = 1;
+				} else {
+					qty = capacity.match(/\d+/g).map(Number)[0];
 				}
 				return qty;
 			};
@@ -102,18 +114,33 @@ const store = async function (searchWords) {
 			).toFixed(2);
 
 			const findUnit = str => {
-				// const unitString = str.split("x")[1];
-				// let newStr = unitString.replace(/[0-9]/g, "");
-				// return newStr;
-				if (
-					str.includes("ml") ||
-					str.includes("mL") ||
-					str.includes("L") ||
-					str.includes("l")
-				) {
-					return "ml";
-				} else if (str.includes("kg") || str.includes("g")) {
-					return "g";
+				const unitsStr = str
+					.slice(0)
+					.toLowerCase()
+					.split(" ")
+					.find(text => {
+						console.log("text", text);
+						let textNoNums = text.replace(/[0-9]/g, "");
+						console.log("textNoNums", textNoNums);
+						return (
+							textNoNums === "ml" ||
+							textNoNums === "l" ||
+							textNoNums === "kg" ||
+							textNoNums === "g" ||
+							textNoNums === "lb" ||
+							textNoNums === "oz"
+						);
+					});
+
+				if (unitsStr) {
+					units = unitsStr.replace(/[0-9]/g, "");
+					return units === "ml" || units === "l"
+						? "ml"
+						: units === "kg" || units === "g"
+						? "g"
+						: units === "lb" || units === "oz"
+						? "oz"
+						: "each";
 				} else {
 					return "each";
 				}
