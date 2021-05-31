@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./RecordReceipt.scss";
 import { useHistory } from "react-router-dom";
-// import ReceiptsList from "../ReceiptsList/ReceiptsList";
-// import { Spring } from "react-spring/renderprops";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const RecordReceipt = () => {
 	const history = useHistory();
 	const [values, setValues] = useState({
-		// view: "form",
 		file: null,
 		errMsg: "",
 		loading: false,
-		// update: false,
 	});
 
 	const onFormSubmit = e => {
@@ -77,9 +73,6 @@ const RecordReceipt = () => {
 
 	return (
 		<>
-			{/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
-					{props => (
-						<div style={props}> */}
 			<div className="receipt-form">
 				<h1 className="form__title">SNAP & TRACK</h1>
 				<form onSubmit={e => onFormSubmit(e)}>
@@ -121,9 +114,6 @@ const RecordReceipt = () => {
 				</form>
 				{values.loading && <LoadingSpinner />}
 			</div>
-			{/* </div>
-					)}
-				</Spring> */}
 		</>
 	);
 };
