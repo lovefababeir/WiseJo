@@ -14,10 +14,13 @@ const store = async function (searchWords) {
 		let topResults = [];
 
 		for (var i = 1; i < 7; i++) {
-			const path = `#main > div:nth-child(2) > div > div > div.Col-sc-3u3i8h-0.hrgMkx > div > div > div:nth-child(${i})`;
+			let path = `#main > div:nth-child(2) > div > div > div.Col-sc-3u3i8h-0.hrgMkx > div > div > div:nth-child(${i})`;
 
 			if (!document.querySelector(path)) {
 				break;
+			}
+			if (!document.querySelector(`${path} > div:nth-child(2)`)) {
+				continue;
 			}
 			const productID = document
 				.querySelector(
@@ -51,25 +54,29 @@ const store = async function (searchWords) {
 
 				if (capacity.includes("x")) {
 					capacity = capacity.split("x")[1];
-					return capacity.match(/\d+/g).map(Number)[0];
 				}
 
-				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count") ||
-					capacity.includes("ea")
-				) {
-					value = 1;
-				} else if (capacity.includes("kg")) {
+				const unitsString = capacity
+					.slice(0)
+					.split(" ")
+					.find(word => {
+						return (
+							word.replace(/[0-9]/g, "") === "kg" ||
+							word.replace(/[0-9]/g, "") === "g" ||
+							word.replace(/[0-9]/g, "") === "lb" ||
+							word.replace(/[0-9]/g, "") === "oz" ||
+							word.replace(/[0-9]/g, "") === "l" ||
+							word.replace(/[0-9]/g, "") === "ml"
+						);
+					});
+
+				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
+				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
-				} else if (capacity.includes("g") || capacity.includes("ml")) {
-					value = parseFloat(capacity);
-					return value;
-				} else if (capacity.includes("l")) {
-					value = parseFloat(capacity) * 1000;
+				} else if (units === "g" || units === "ml" || units === "oz") {
+					value = parseInt(capacity);
+				} else if (units === "lb") {
+					value = parseFloat(capacity) * 16;
 				} else {
 					value = 1;
 				}
@@ -80,20 +87,29 @@ const store = async function (searchWords) {
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
-					capacity = capacity.split("x")[0];
-					return capacity.match(/\d+/g).map(Number)[0];
+					return parseInt(capacity.split("x")[0]);
 				}
+
+				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
+
 				if (
-					capacity.includes("pkg") ||
-					capacity.includes("pack") ||
-					capacity.includes("cup") ||
-					capacity.includes("cans") ||
-					capacity.includes("count")
-					// capacity.includes("ea")
+					qtyUnits
+						.slice(0)
+						.split(" ")
+						.find(x => {
+							return (
+								x === "ml" ||
+								x === "l" ||
+								x === "g" ||
+								x === "kg" ||
+								x === "lb" ||
+								x === "oz"
+							);
+						})
 				) {
-					qty = capacity.match(/\d+/g).map(Number)[0];
-				} else {
 					qty = 1;
+				} else {
+					qty = capacity.match(/\d+/g).map(Number)[0];
 				}
 				return qty;
 			};
@@ -144,9 +160,13 @@ const store = async function (searchWords) {
 					valueinTitle * 1000 === valueGiven
 					? valueGiven
 					: capacityGiven.toLowerCase().includes("kg") ||
-					  !capacityGiven.toLowerCase().includes("ml")
+					  (!capacityGiven.toLowerCase().includes("ml") &&
+							capacityGiven.toLowerCase().includes("l"))
 					? valueinTitle * 1000
-					: valueinTitle;
+					: capacityGiven.toLowerCase().includes("g") ||
+					  capacityGiven.toLowerCase().includes("ml")
+					? valueinTitle
+					: 1;
 			};
 
 			topResults.push({
@@ -160,7 +180,7 @@ const store = async function (searchWords) {
 				quantity: quantity,
 				unitPrice: {
 					cost: parseFloat(unitCost.slice(2)),
-					mass: parseFloat(unitMass),
+					mass: parseFloat(unitMass) || 1,
 					units: findUnit(unitMass),
 				},
 			});
