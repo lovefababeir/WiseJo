@@ -56,6 +56,23 @@ const store = async function (searchWords) {
 			);
 			size = size ? size.innerText : "est. each";
 
+			const unitCost = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
+			)
+				? document.querySelector(
+						`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
+				  ).innerText
+				: "";
+			const unitMass = document.querySelector(
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
+			)
+				? document
+						.querySelector(
+							`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
+						)
+						.innerText.split("/ ")[1]
+				: "";
+
 			//function to get the capacity of each item as a number
 			const val = C => {
 				var capacity = C.toLowerCase();
@@ -81,19 +98,9 @@ const store = async function (searchWords) {
 
 				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
 
-				// if (
-				// 	capacity.includes("pkg") ||
-				// 	capacity.includes("pack") ||
-				// 	capacity.includes("cup") ||
-				// 	capacity.includes("cans") ||
-				// 	capacity.includes("count") ||
-				// 	capacity.includes("ea")
-				// ) {
-				// 	value = 1;
-				// } else
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
-				} else if (units === "kg" || units === "ml" || units === "oz") {
+				} else if (units === "g" || units === "ml" || units === "oz") {
 					value = parseInt(capacity);
 				} else if (units === "lb") {
 					value = parseFloat(capacity) * 16;
@@ -134,23 +141,6 @@ const store = async function (searchWords) {
 				}
 				return qty;
 			};
-
-			const unitCost = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
-			)
-				? document.querySelector(
-						`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
-				  ).innerText
-				: "";
-			const unitMass = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
-			)
-				? document
-						.querySelector(
-							`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
-						)
-						.innerText.split("/ ")[1]
-				: "";
 
 			var quantity = "";
 			var value = "";
