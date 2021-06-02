@@ -8,7 +8,7 @@ const searchHistory = require("../data/searchResults");
 
 router.get("/longos/:item/:time", (req, res) => {
 	const item = req.params.item;
-	const time = parseInt(req.params.time);
+	const time = parseInt(req.params.time) - 3600000 * 4;
 	const moreInfo = req.query;
 
 	const alreadySearched = searchHistory.filter(record => {
@@ -62,7 +62,7 @@ router.get("/longos/:item/:time", (req, res) => {
 
 router.get("/sobeys/:item/:time", (req, res) => {
 	const item = req.params.item;
-	const time = parseInt(req.params.time);
+	const time = parseInt(req.params.time) - 3600000 * 4;
 	const moreInfo = req.query;
 
 	const alreadySearched = searchHistory.filter(record => {
@@ -116,7 +116,7 @@ router.get("/sobeys/:item/:time", (req, res) => {
 
 router.get("/walmart/:item/:time", (req, res) => {
 	const item = req.params.item;
-	const time = parseInt(req.params.time);
+	const time = parseInt(req.params.time) - 3600000 * 4;
 	const moreInfo = req.query;
 
 	const alreadySearched = searchHistory.filter(record => {
@@ -166,7 +166,7 @@ router.get("/walmart/:item/:time", (req, res) => {
 
 router.get("/nofrills/:item/:time", (req, res) => {
 	const item = req.params.item;
-	const time = parseInt(req.params.time);
+	const time = parseInt(req.params.time) - 3600000 * 4;
 	const moreInfo = req.query;
 
 	const alreadySearched = searchHistory.filter(record => {
