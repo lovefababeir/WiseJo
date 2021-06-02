@@ -3,7 +3,7 @@ import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
 import { Link } from "react-router-dom";
-import { Card, Form, Alert } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 // Configure FirebaseUI.
 const uiConfig = {
