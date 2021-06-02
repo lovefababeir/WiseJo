@@ -19,20 +19,14 @@ const Results = () => {
 		axios
 			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/history`)
 			.then(result => {
-				console.log("Made a request");
 				if (mounted) {
-					const lastIndex = result.data.length - 1;
-					const lastSearch = result.data.filter(item => {
-						return item.time === result.data[lastIndex].time;
-					});
-					const lastSearchResults = lastSearch.map(record => {
+					const lastSearchResults = result.data.map(record => {
 						return record.searchResults;
 					});
-
 					setValues({
 						...values,
 						results: [].concat.apply([], lastSearchResults),
-						currentLocation: result.data[lastIndex].currentlocation,
+						currentLocation: result.data[0].currentlocation,
 					});
 				}
 			})
