@@ -52,16 +52,17 @@ const store = async function (searchWords) {
 					.split(" ")
 					.find(word => {
 						return (
-							word.replace(/[0-9]/g, "") === "kg" ||
-							word.replace(/[0-9]/g, "") === "g" ||
-							word.replace(/[0-9]/g, "") === "lb" ||
-							word.replace(/[0-9]/g, "") === "oz" ||
-							word.replace(/[0-9]/g, "") === "l" ||
-							word.replace(/[0-9]/g, "") === "ml"
+							word.replace(/[^a-zA-Z ]/g, "") === "kg" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "g" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "lb" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "oz" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "l" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "ml"
 						);
 					});
 
-				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
+				const units = unitsString ? unitsString.replace(/[^a-zA-Z ]/g, "") : "";
+				console.log(units);
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
 				} else if (units === "g" || units === "ml" || units === "oz") {
@@ -81,7 +82,7 @@ const store = async function (searchWords) {
 				if (capacity.includes("x")) {
 					return parseInt(capacity.split("x")[0]);
 				}
-				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
+				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
 				if (
 					qtyUnits
 						.slice(0)
@@ -120,7 +121,7 @@ const store = async function (searchWords) {
 					.split(" ")
 					.find(text => {
 						console.log("text", text);
-						let textNoNums = text.replace(/[0-9]/g, "");
+						let textNoNums = text.replace(/[^a-zA-Z ]/g, "");
 						console.log("textNoNums", textNoNums);
 						return (
 							textNoNums === "ml" ||
@@ -133,7 +134,7 @@ const store = async function (searchWords) {
 					});
 
 				if (unitsStr) {
-					units = unitsStr.replace(/[0-9]/g, "");
+					units = unitsStr.replace(/[^a-zA-Z ]/g, "");
 					return units === "ml" || units === "l"
 						? "ml"
 						: units === "kg" || units === "g"
