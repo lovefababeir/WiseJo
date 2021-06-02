@@ -12,9 +12,9 @@ const Search = () => {
 	const submitHandler = e => {
 		e.preventDefault();
 
-		const item = e.target.search.value;
+		const item = e.target.search.value.toLowerCase();
 		const currentStore = e.target.storeList.value.toLowerCase();
-		const time = Date.now();
+		const time = Date.now() - 3600000 * 4;
 		if (item) {
 			setLoading(true);
 
@@ -23,7 +23,6 @@ const Search = () => {
 					`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
-					console.log(result);
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -40,7 +39,6 @@ const Search = () => {
 					`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
-					console.log(result);
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -57,7 +55,6 @@ const Search = () => {
 					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
-					console.log(result);
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -74,7 +71,6 @@ const Search = () => {
 					`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${item}/${time}?currentlocation=${currentStore}`,
 				)
 				.then(result => {
-					console.log(result);
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
