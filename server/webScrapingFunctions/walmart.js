@@ -11,7 +11,12 @@ client = new Client(process.env.API_KEY, {
 });
 
 const store = async function (searchWords) {
+	const args = [
+		'--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
+	];
+
 	const options = {
+		args,
 		headless: true,
 		slowMo: 40,
 		defaultViewport: {
@@ -23,6 +28,7 @@ const store = async function (searchWords) {
 
 	var browser = await puppeteer.launch(options);
 	const [page] = await browser.pages();
+	await page.setDefaultTimeout(120000);
 	const cdp = await page.target().createCDPSession();
 
 	try {
@@ -87,14 +93,11 @@ const store = async function (searchWords) {
 		};
 		return findRecaptchaClients();
 	});
-	// console.log("captchaParams:", captchaParams);
 
 	let captcha = await client.decodeRecaptchaV2({
 		googlekey: captchaParams[0].sitekey,
 		pageurl: captchaParams[0].pageurl,
 	});
-
-	// console.log("captcha", captcha);
 
 	await cdp.send("Runtime.evaluate", {
 		expression: `${captchaParams[0].function}('${captcha._text}')`,
@@ -195,12 +198,19 @@ const store = async function (searchWords) {
 				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
 
 				if (
-					qtyUnits === "ml" ||
-					qtyUnits === "l" ||
-					qtyUnits === "g" ||
-					qtyUnits === "kg" ||
-					qtyUnits === "lb" ||
-					qtyUnits === "oz"
+					qtyUnits
+						.slice(0)
+						.split(" ")
+						.find(x => {
+							return (
+								x === "ml" ||
+								x === "l" ||
+								x === "g" ||
+								x === "kg" ||
+								x === "lb" ||
+								x === "oz"
+							);
+						})
 				) {
 					qty = 1;
 				} else {
@@ -308,7 +318,7 @@ const store = async function (searchWords) {
 						? "oz"
 						: "each";
 				} else {
-					return "";
+					return "each";
 				}
 			};
 
