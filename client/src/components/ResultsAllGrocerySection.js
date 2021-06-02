@@ -1,11 +1,15 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import ResultsAllItemCard from "./ResultsAllItemCard";
+import walmartLogo from "../assets/images/walmart.png";
+import longosLogo from "../assets/images/longos.png";
+import nofrillsLogo from "../assets/images/nofrills.png";
+import sobeysLogo from "../assets/images/sobeys.png";
 
 const ResultsAllGrocerySection = ({ store, listOfItems, deleteHandler }) => {
 	return (
 		<div>
-			<div
+			<img
 				className={`store__logo store__logo--${
 					store === "Walmart"
 						? "0"
@@ -17,7 +21,19 @@ const ResultsAllGrocerySection = ({ store, listOfItems, deleteHandler }) => {
 						? "3"
 						: "4"
 				}`}
-			></div>
+				src={
+					store === "Walmart"
+						? walmartLogo
+						: store === "Longo's"
+						? longosLogo
+						: store === "No Frills"
+						? nofrillsLogo
+						: store === "Sobeys"
+						? sobeysLogo
+						: "4"
+				}
+				alt={`Results from ${store}`}
+			/>
 			<div className={`store__box store__box--${store}`}>
 				{listOfItems
 					.sort((a, b) => {
