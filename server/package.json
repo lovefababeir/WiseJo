@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"client": "cd ../client && start",
+		"dev": "concurrently -n 'server, client' -c 'red,green' \"node server.js\" \"npm run client\""
 	},
 	"author": "",
 	"license": "ISC",
@@ -12,11 +14,14 @@
 		"@infosimples/node_two_captcha": "^1.1.0",
 		"axios": "^0.19.2",
 		"cheerio": "^1.0.0-rc.9",
+		"concurrently": "^6.2.0",
 		"cors": "^2.8.5",
 		"dotenv": "^9.0.2",
 		"ejs": "^3.1.5",
 		"express": "^4.17.1",
 		"firebase-admin": "^9.8.0",
+		"mongoose": "^5.12.12",
+		"morgan": "^1.10.0",
 		"multer": "^1.4.2",
 		"node-sass": "^4.14.1",
 		"promise-poller": "^1.9.1",
