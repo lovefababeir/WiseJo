@@ -12,6 +12,7 @@ const ReceiptListSelected = ({ purchaseData }) => {
 		cashier,
 		purchases,
 		total,
+		subtotal,
 	} = purchaseData;
 	return (
 		<div className="receipts-selected">
@@ -39,6 +40,7 @@ const ReceiptListSelected = ({ purchaseData }) => {
 						</p>
 					);
 				})}
+				<p className="receipts-selected__subtotal">Subtotal: ${subtotal}</p>
 				<p className="receipts-selected__total">Total Spent: ${total}</p>
 			</div>
 		</div>
