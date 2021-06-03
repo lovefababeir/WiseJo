@@ -23,11 +23,20 @@
 
 #storeList {
 	@include inputBox;
+	&:disabled {
+		opacity: 0.6;
+	}
 }
 
 #search {
 	@include inputBox;
+	&:disabled {
+		opacity: 0.6;
+	}
 }
 #submitBtn {
 	@include button;
+	&:disabled {
+		opacity: 0.6;
+	}
 }
