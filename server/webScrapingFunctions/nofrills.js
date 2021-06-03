@@ -48,7 +48,7 @@ const store = async function (searchWords) {
 			const title = title1 + " " + title2;
 
 			const price = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(1) > li:nth-child(1) > span > span:nth-child(1)`,
+				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > div > div > span > span.price__value`,
 			).innerHTML;
 
 			var size = document.querySelector(
