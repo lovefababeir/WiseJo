@@ -211,7 +211,7 @@ router.patch("/item/:store/:id", async (req, res) => {
 	const store = req.params.store;
 
 	//Finds the document for the specified store where the item is from.
-	const result = await UserResults.find({
+	UserResults.find({
 		store: store,
 	})
 		.exec()
@@ -235,14 +235,11 @@ router.patch("/item/:store/:id", async (req, res) => {
 				{ searchResults: result },
 				{ new: true },
 			).then(result => {
-				//New document without the item is returned and added to the response data.
-				return {
-					code: 200,
-					jsonData: {
-						message: "successfully deleted the item",
-						data: result,
-					},
-				};
+				UserResults.find()
+					.exec()
+					.then(result => {
+						res.status(200).json(result);
+					});
 			});
 		})
 		.catch(err => {
@@ -254,34 +251,6 @@ router.patch("/item/:store/:id", async (req, res) => {
 				},
 			};
 		});
-	res.status(result.code).json(result.jsonData);
-});
-
-router.delete("/items/:value/:quantity", (req, res) => {
-	const itemValue = parseInt(req.params.value);
-	const itemQuantity = parseInt(req.params.quantity);
-
-	const lastSearchIndex = searchHistory.length - 1;
-
-	for (var i = lastSearchIndex; i > lastSearchIndex - 3; i--) {
-		for (var j = 0; j < searchHistory[i].searchResults.length; j++) {
-			if (
-				searchHistory[i].searchResults[j].value === itemValue &&
-				searchHistory[i].searchResults[j].quantity === itemQuantity
-			) {
-				console.log(searchHistory[i].searchResults[j].productID);
-				searchHistory[i].searchResults.splice(j, 1);
-			}
-		}
-	}
-
-	const lastSearchList = searchHistory.filter(search => {
-		return searchHistory[lastSearchIndex].time === search.time;
-	});
-
-	console.log(lastSearchList);
-
-	res.status(200).json(lastSearchList);
 });
 
 module.exports = router;
