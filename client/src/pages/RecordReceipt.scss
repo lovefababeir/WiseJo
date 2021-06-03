@@ -5,9 +5,15 @@
 .receipt-form {
 	&__storeSelect {
 		@include inputBox;
+		&:disabled {
+			opacity: 0.6;
+		}
 	}
 	&__submitBtn {
 		@include button;
+		&:disabled {
+			opacity: 0.6;
+		}
 	}
 	&__errMsg {
 		color: red;
@@ -20,6 +26,9 @@
 		font-size: 1.3rem;
 		@include surface {
 			font-size: 1.5rem;
+		}
+		&:disabled {
+			opacity: 0.6;
 		}
 	}
 }
