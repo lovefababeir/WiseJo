@@ -27,7 +27,7 @@ const ResultsAllItemCard = ({
 					src={deleteIcon}
 					alt="Click here to delete item"
 					onClick={e => {
-						deleteHandler("item", productID);
+						deleteHandler("item", store, productID);
 					}}
 					className="item__delete"
 				/>
