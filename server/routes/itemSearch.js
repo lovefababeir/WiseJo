@@ -253,4 +253,53 @@ router.patch("/item/:store/:id", async (req, res) => {
 		});
 });
 
+router.patch("/items/:value/:quantity", async (req, res) => {
+	const itemValue = parseInt(req.params.value);
+	const itemQuantity = parseInt(req.params.quantity);
+
+	const resultList = await UserResults.find();
+
+	Promise.all(
+		resultList.map(async doc => {
+			const store = doc.store;
+			const changedDoc = await UserResults.find({ store: store })
+				.exec()
+				.then(doc => {
+					const list = doc[0].searchResults.filter(item => {
+						return item.value !== itemValue || item.quantity !== itemQuantity;
+					});
+
+					return list;
+				})
+				.then(newList => {
+					return UserResults.findOneAndUpdate(
+						{ store: store },
+						{ searchResults: newList },
+						{ new: true },
+					);
+				})
+				.then(result => {
+					return result;
+				})
+				.catch(err => {
+					return err;
+				});
+
+			return changedDoc;
+		}),
+	)
+		.then(result => {
+			UserResults.find()
+				.exec()
+				.then(result => {
+					console.log(result);
+					res.status(200).json(result);
+				});
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(500).json(err);
+		});
+});
+
 module.exports = router;
