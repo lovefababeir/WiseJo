@@ -19,7 +19,6 @@ const ResultsSolutions = props => {
 			return a.unitPrice.cost - b.unitPrice.cost;
 		});
 
-	console.log(unitRates);
 	//RETURNS STORE'S OPTIONS BEST TO WORST: gets all the options in store passed
 	const optionsInStore = store => {
 		if (store) {
@@ -28,7 +27,6 @@ const ResultsSolutions = props => {
 			});
 		}
 	};
-	console.log(optionsInStore(currentLocation));
 	//////DATA FOR RENDERING PAGE:
 	//CHECK TO SEE IF THE BEST IN THE STORE IS NOT TIED WITH BEST OVERALL
 
@@ -40,7 +38,6 @@ const ResultsSolutions = props => {
 	let curLocationOptions;
 	let inStoreResults = optionsInStore(currentLocation).length > 0 ? true : false;
 
-	console.log("optionsInStore", optionsInStore(currentLocation));
 	if (inStoreResults) {
 		BESTinLocation = optionsInStore(currentLocation).reduce((best, item) => {
 			if (best.unitPrice.cost > item.unitPrice.cost) {
@@ -54,10 +51,8 @@ const ResultsSolutions = props => {
 
 		if (currentLocation !== BEST.store) {
 			let sameItem = curLocationOptions.find(option => {
-				console.log(option.value, BEST.value, option.quantity, BEST.quantity);
 				return option.value === BEST.value && option.quantity === BEST.quantity;
 			});
-			console.log(sameItem);
 			savings = (
 				sameItem
 					? parseFloat(sameItem.price.slice(1)) - parseFloat(BEST.price.slice(1))
