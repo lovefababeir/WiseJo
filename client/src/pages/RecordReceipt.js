@@ -88,8 +88,8 @@ const RecordReceipt = () => {
 							onChange={e => {
 								onFormChange(e);
 							}}
+							disabled={values.loading}
 						/>
-
 						<label className="form__label form__label--receipts">
 							Select the store from where you made your purchase
 						</label>
@@ -97,13 +97,17 @@ const RecordReceipt = () => {
 							className="receipt-form__storeSelect"
 							name="receiptStore"
 							id="receiptStore"
+							disabled={values.loading}
 						>
 							<option value="Longo's">Longo's</option>
 							<option value="No Frills">No Frills</option>
 							<option value="Walmart">Walmart</option>
 						</select>
-
-						<button className="receipt-form__submitBtn" type="submit">
+						<button
+							className="receipt-form__submitBtn"
+							type="submit"
+							disabled={values.loading}
+						>
 							Track
 						</button>
 					</div>
