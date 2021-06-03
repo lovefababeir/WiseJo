@@ -210,11 +210,13 @@ router.patch("/item/:store/:id", async (req, res) => {
 	const itemID = req.params.id;
 	const store = req.params.store;
 
+	//Finds the document for the specified store where the item is from.
 	const result = await UserResults.find({
 		store: store,
 	})
 		.exec()
 		.then(result => {
+			//Copies the searchResults from the store and removes the item with the itemID.
 			const listofItems = result[0].searchResults;
 			const itemToRemove = listofItems.findIndex(item => {
 				return item.productID === itemID;
@@ -227,11 +229,13 @@ router.patch("/item/:store/:id", async (req, res) => {
 			return listofItems;
 		})
 		.then(result => {
+			//Replaces the old array in the document with the new array wherein the item with itemID no longer exists in.
 			return UserResults.findOneAndUpdate(
 				{ store: store },
 				{ searchResults: result },
 				{ new: true },
 			).then(result => {
+				//New document without the item is returned and added to the response data.
 				return {
 					code: 200,
 					jsonData: {
