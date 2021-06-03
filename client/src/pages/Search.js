@@ -15,14 +15,16 @@ const Search = () => {
 		const item = e.target.search.value.toLowerCase();
 		const currentStore = e.target.storeList.value.toLowerCase();
 		const time = Date.now() - 3600000 * 4;
+		console.log(time);
 		if (item) {
 			setLoading(true);
 
 			axios
 				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${time}?userlocation=${currentStore}&item=${item}`,
 				)
 				.then(result => {
+					console.log(JSON.stringify(result.data));
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -36,9 +38,10 @@ const Search = () => {
 
 			axios
 				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${time}?userlocation=${currentStore}&item=${item}`,
 				)
 				.then(result => {
+					console.log(JSON.stringify(result.data));
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -52,9 +55,10 @@ const Search = () => {
 
 			axios
 				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${time}?userlocation=${currentStore}&item=${item}`,
 				)
 				.then(result => {
+					console.log(JSON.stringify(result.data));
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
@@ -68,9 +72,10 @@ const Search = () => {
 
 			axios
 				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${item}/${time}?currentlocation=${currentStore}`,
+					`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${time}?userlocation=${currentStore}&item=${item}`,
 				)
 				.then(result => {
+					console.log(JSON.stringify(result.data));
 					if (result) {
 						setLoaded(loaded => loaded + 1);
 					}
