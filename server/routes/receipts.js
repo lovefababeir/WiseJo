@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const walmart = require("../receiptFunctions/walmartReceipt");
 const longos = require("../receiptFunctions/longosReceipt");
-const receiptsCollection = require("../data/receiptsCollection");
-const multer = require("multer");
-const fs = require("fs");
-const axios = require("axios").default;
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
 const ReceiptDoc = require("../models/receipt");
@@ -66,61 +62,5 @@ router.get("/history", (req, res) => {
 			res.status(400).json(err);
 		});
 });
-
-//====================================
-//receipt OCR API for when storing the image
-//CURRENTLY NOT IN USE=====================//
-var Storage = multer.diskStorage({
-	destination: function (req, file, callback) {
-		callback(null, "uploads/");
-	},
-	filename: (req, file, callback) => {
-		callback(null, req.query.name + ".jpeg");
-	},
-});
-
-const fileFilter = (req, file, cb) => {
-	if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-		cb(null, true);
-	} else {
-		cb(null, false);
-	}
-};
-
-const upload = multer({ storage: Storage, fileFilter: fileFilter });
-
-router.post("/upload", upload.single("receipt"), (req, res) => {
-	const name = req.query.name;
-	console.log(name);
-	const store = req.query.store.toLowerCase();
-	console.log("store", store);
-	var image = fs.readFileSync(req.file.path, {
-		encoding: null,
-	});
-
-	//=============
-	axios
-		.post(`${process.env.OCR_ENDPOINT}vision/v3.2/ocr`, req.file.image, {
-			headers: {
-				"content-type": "application/json",
-				"Ocp-Apim-Subscription-Key": process.env.OCR_API_KEY_1,
-			},
-		})
-		.then(res => {
-			console.log(res);
-		})
-		.catch(err => console.log(err.response));
-	//=================================
-	//VISION API
-	// async function readText(pic) {
-	// 	const [result] = await client.textDetection(pic);
-	// 	const detections = result.textAnnotations;
-	// 	console.log("Text:");
-	// 	// detections.forEach(text => console.log(text));
-	// 	console.log(detections[0].description);
-	// }
-	// readText(image);
-});
-//CURRENTLY NOT IN USE=====================//
 
 module.exports = router;
