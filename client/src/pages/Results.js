@@ -20,13 +20,13 @@ const Results = () => {
 			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/history`)
 			.then(result => {
 				if (mounted) {
-					const lastSearchResults = result.data.map(record => {
+					const lastSearchResults = result.data.data.map(record => {
 						return record.searchResults;
 					});
 					setValues({
 						...values,
 						results: [].concat.apply([], lastSearchResults),
-						currentLocation: result.data[0].currentlocation,
+						currentLocation: result.data.data[0].userlocation,
 					});
 				}
 			})
