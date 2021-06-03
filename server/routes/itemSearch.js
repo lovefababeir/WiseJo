@@ -188,8 +188,10 @@ router.get("/:store/:time", async (req, res) => {
 router.get("/searchresults", async (req, res) => {
 	const allItems = await UserResults.find();
 	const latestTimeStamp = allItems.reduce((latest, record) => {
+		console.log(record);
 		return latest > record.time ? latest : record.time;
 	}, 0);
+	console.log(latestTimeStamp);
 	try {
 		await UserResults.deleteMany({ time: { $ne: latestTimeStamp } });
 	} catch (error) {
@@ -198,35 +200,57 @@ router.get("/searchresults", async (req, res) => {
 	const latestSearchResults = await UserResults.find({
 		time: latestTimeStamp,
 	});
+	console.log(latestSearchResults);
 	res
 		.status(200)
 		.json({ message: "Success! Results retrieved", data: latestSearchResults });
 });
 
-router.delete("/item/:id", (req, res) => {
+router.patch("/item/:store/:id", async (req, res) => {
 	const itemID = req.params.id;
+	const store = req.params.store;
 
-	const lastSearchIndex = searchHistory.length - 1;
-
-	var lastSearchList = searchHistory.filter(search => {
-		return searchHistory[lastSearchIndex].time === search.time;
-	});
-
-	for (
-		var i = lastSearchIndex;
-		i > lastSearchIndex - lastSearchList.length;
-		i--
-	) {
-		for (var j = 0; j < searchHistory[i].searchResults.length; j++) {
-			if (searchHistory[i].searchResults[j].productID === itemID) {
-				searchHistory[i].searchResults.splice(j, 1);
+	const result = await UserResults.find({
+		store: store,
+	})
+		.exec()
+		.then(result => {
+			const listofItems = result[0].searchResults;
+			const itemToRemove = listofItems.findIndex(item => {
+				return item.productID === itemID;
+			});
+			if (itemToRemove + 1 > 0) {
+				listofItems.splice(itemToRemove, 1);
+			} else {
+				console.log("Not in the list-------------");
 			}
-		}
-	}
-
-	console.log(lastSearchList);
-
-	res.status(200).json(lastSearchList);
+			return listofItems;
+		})
+		.then(result => {
+			return UserResults.findOneAndUpdate(
+				{ store: store },
+				{ searchResults: result },
+				{ new: true },
+			).then(result => {
+				return {
+					code: 200,
+					jsonData: {
+						message: "successfully deleted the item",
+						data: result,
+					},
+				};
+			});
+		})
+		.catch(err => {
+			return {
+				code: 500,
+				jsonData: {
+					message: "Had problems finding and deleting the item",
+					error: err,
+				},
+			};
+		});
+	res.status(result.code).json(result.jsonData);
 });
 
 router.delete("/items/:value/:quantity", (req, res) => {
