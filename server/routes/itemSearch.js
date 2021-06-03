@@ -185,7 +185,7 @@ router.get("/:store/:time", async (req, res) => {
 	res.status(responseData.code).json(responseData.jsonData);
 });
 
-router.get("/history", async (req, res) => {
+router.get("/searchresults", async (req, res) => {
 	const allItems = await UserResults.find();
 	const latestTimeStamp = allItems.reduce((latest, record) => {
 		return latest > record.time ? latest : record.time;

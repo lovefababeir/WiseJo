@@ -17,7 +17,7 @@ const Results = () => {
 		let mounted = true;
 
 		axios
-			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/history`)
+			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`)
 			.then(result => {
 				if (mounted) {
 					const lastSearchResults = result.data.data.map(record => {
