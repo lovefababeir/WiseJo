@@ -19,6 +19,7 @@ const Results = () => {
 		axios
 			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`)
 			.then(result => {
+				console.log(result);
 				if (mounted) {
 					const lastSearchResults = result.data.data.map(record => {
 						return record.searchResults;
@@ -46,7 +47,7 @@ const Results = () => {
 		//detail1 = item id for when del = "item"
 		if (del === "item") {
 			axios
-				.delete(url + del + "/" + detail1)
+				.patch(url + del + "/" + detail1 + "/" + detail2)
 				.then(res => {
 					const updatedResults = res.data.map(record => {
 						return record.searchResults;
@@ -63,7 +64,7 @@ const Results = () => {
 		} else {
 			//for this case del="items" so detail1 = capacity detail2 = quantity
 			axios
-				.delete(url + del + "/" + detail1 + "/" + detail2)
+				.patch(url + del + "/" + detail1 + "/" + detail2)
 				.then(res => {
 					const updatedResults = res.data.map(record => {
 						return record.searchResults;
