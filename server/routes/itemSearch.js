@@ -9,6 +9,8 @@ const UserResults = require("../models/userResults.js");
 const mongoose = require("mongoose");
 const promiseFcn = require("../promiseFunctions/promiseFunctions");
 
+mongoose.set("useFindAndModify", false);
+
 const conductSearch = async (
 	storeFunction,
 	item,
