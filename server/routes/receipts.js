@@ -8,6 +8,8 @@ const fs = require("fs");
 const axios = require("axios").default;
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
+const ReceiptDoc = require("../models/receipt");
+const mongoose = require("mongoose");
 
 router.post("/convertImage", (req, res) => {
 	const store = req.query.store.toLowerCase();
@@ -29,10 +31,6 @@ router.post("/convertImage", (req, res) => {
 	convertDate = timestamp => {
 		let dateSubmitted = new Date(timestamp);
 		return {
-			timeZone: "EST",
-			timeStamp: dateSubmitted,
-			mins: dateSubmitted.getUTCMinutes(),
-			hour: dateSubmitted.getUTCHours(),
 			day: dateSubmitted.getUTCDate(),
 			month: dateSubmitted.getMonth() + 1,
 			year: dateSubmitted.getFullYear(),
@@ -40,17 +38,20 @@ router.post("/convertImage", (req, res) => {
 	};
 
 	const receiptData = {
+		_id: mongoose.Types.ObjectId(),
 		time: timeEST,
-		id: time,
+		receiptID: timeEST,
 		date: convertDate(timeEST),
 		store: store,
 		purchaseData: purchaseData,
 		results: convertedText,
 	};
 
-	receiptsCollection.push(receiptData);
-	console.log(receiptsCollection);
-	setTimeout(() => res.status(200).json(receiptsCollection), 2000);
+	const newReceipt = new ReceiptDoc(receiptData);
+	newReceipt.save().then(result => {
+		console.log(result);
+		res.status(200).json(result);
+	});
 });
 
 router.get("/history", (req, res) => {
