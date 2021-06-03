@@ -95,9 +95,8 @@
 }
 
 .store__logo {
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
+	object-position: center;
+	object-fit: contain;
 	margin: 3rem 0 0 1rem;
 	&--0 {
 		width: 18rem;
