@@ -56,15 +56,15 @@ router.post("/convertImage", (req, res) => {
 
 router.get("/history", (req, res) => {
 	console.log("made a request for history");
-	if (receiptsCollection) {
-		res.status(200).json(receiptsCollection);
-	} else {
-		res
-			.status(400)
-			.send(
-				"Sorry no data available. This mean that you have not yet added any receipts to your collection. Please add a receipt",
-			);
-	}
+	ReceiptDoc.find()
+		.exec()
+		.then(result => {
+			console.log(result);
+			res.status(200).json(result);
+		})
+		.catch(err => {
+			res.status(400).json(err);
+		});
 });
 
 //====================================
