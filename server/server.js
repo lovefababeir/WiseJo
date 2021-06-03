@@ -19,15 +19,14 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 //Mongo DB
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI_ITEMSEARCH, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
 mongoose.connection.on("connected", () => {
-	console.log("-----Mongoose is connected!-----");
+	console.log("-----Mongoose is connected to ITEMSEARCH!-----");
 });
 
-//Routes
 app.use("/itemSearch", itemSearch);
 app.use("/receipts", receipts);
 
