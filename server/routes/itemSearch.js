@@ -185,8 +185,22 @@ router.get("/:store/:time", async (req, res) => {
 	res.status(responseData.code).json(responseData.jsonData);
 });
 
-router.get("/history", (req, res) => {
-	res.status(200).json(searchHistory);
+router.get("/history", async (req, res) => {
+	const allItems = await UserResults.find();
+	const latestTimeStamp = allItems.reduce((latest, record) => {
+		return latest > record.time ? latest : record.time;
+	}, 0);
+	try {
+		await UserResults.deleteMany({ time: { $ne: latestTimeStamp } });
+	} catch (error) {
+		console.log(`Unable to clear old searches. Error: ${err}`);
+	}
+	const latestSearchResults = await UserResults.find({
+		time: latestTimeStamp,
+	});
+	res
+		.status(200)
+		.json({ message: "Success! Results retrieved", data: latestSearchResults });
 });
 
 router.delete("/item/:id", (req, res) => {
