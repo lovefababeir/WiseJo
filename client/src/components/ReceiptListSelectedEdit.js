@@ -14,6 +14,7 @@ const ReceiptListSelectedEdit = ({
 	receiptID,
 	dateToString,
 	cancelChangesHandler,
+	deleteHandler,
 }) => {
 	const {
 		storeID,
@@ -184,7 +185,11 @@ const ReceiptListSelectedEdit = ({
 					></input>
 				</span>
 				<span className="button-container">
-					<button className="edit" type="button">
+					<button
+						className="edit"
+						type="button"
+						onClick={() => deleteHandler(receiptID)}
+					>
 						<img src={deleteIcon} className="edit-icon" />
 						Delete
 					</button>

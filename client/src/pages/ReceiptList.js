@@ -75,6 +75,20 @@ const ReceiptList = () => {
 	const editModeHandler = () => {
 		setEditMode(!editMode);
 	};
+
+	const deleteHandler = id => {
+		axios
+			.delete(`${process.env.REACT_APP_BASE_URL}receipts/receipt/${id}`)
+			.then(result => {
+				const newList = result.data;
+				setEditMode(!editMode);
+				setReceiptList(newList);
+				setReceiptSelected("");
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
 	const receiptFormHandler = e => {
 		e.preventDefault();
 		const purchaseList = receiptSelected.purchaseData.purchases
@@ -152,6 +166,7 @@ const ReceiptList = () => {
 						receiptID={receiptSelected.receiptID}
 						dateToString={dateToString}
 						cancelChangesHandler={cancelChangesHandler}
+						deleteHandler={deleteHandler}
 					/>
 				)}
 			</div>
