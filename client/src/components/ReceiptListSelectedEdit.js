@@ -12,6 +12,7 @@ const ReceiptListSelectedEdit = ({
 	setReceiptSelected,
 	receiptFormHandler,
 	receiptID,
+	dateToString,
 }) => {
 	const {
 		storeID,
@@ -54,11 +55,6 @@ const ReceiptListSelectedEdit = ({
 			day: parseInt(newDate[2]),
 		};
 		setReceiptSelected({ ...receiptSelected, date });
-	};
-
-	const dateToString = number => {
-		const newNumber = `0${number}`;
-		return newNumber.length === 2 ? newNumber : newNumber.slice(1);
 	};
 
 	const today = new Date();
@@ -189,11 +185,11 @@ const ReceiptListSelectedEdit = ({
 				<span className="button-container">
 					<button className="edit">
 						<img src={deleteIcon} className="edit-icon" />
-						Delete Receipt
+						Delete
 					</button>
 					<button type="submit" className="edit edit--purchaseDetails">
 						<img src={save} className="save-icon" />
-						Save Changes
+						Save
 					</button>
 					<button className="edit">
 						<img src={close} className="edit-icon" />
