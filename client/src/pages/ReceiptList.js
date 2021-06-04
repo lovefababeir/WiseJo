@@ -49,7 +49,7 @@ const ReceiptList = () => {
 			return;
 		}
 		const receipt = receiptList.find(item => {
-			return item.time === ID;
+			return item.receiptID === ID;
 		});
 		console.log("Selected Receipt===>", receipt);
 		setReceiptSelected(receipt);
@@ -106,7 +106,7 @@ const ReceiptList = () => {
 			.catch(err => console.log(err));
 	};
 	const dateToString = number => {
-		return number < 10 ? number.toString() : `0${number}`;
+		return number < 10 ? `0${number}` : number.toString();
 	};
 
 	return (
@@ -140,6 +140,7 @@ const ReceiptList = () => {
 						setReceiptSelected={setReceiptSelected}
 						receiptFormHandler={receiptFormHandler}
 						receiptID={receiptSelected.receiptID}
+						dateToString={dateToString}
 					/>
 				)}
 			</div>

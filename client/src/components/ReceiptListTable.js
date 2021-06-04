@@ -8,6 +8,7 @@ const ReceiptListTable = ({
 	selectReceiptHandler,
 	totalExpenses,
 	editMode,
+	dateToString,
 }) => {
 	return (
 		<>
@@ -39,6 +40,7 @@ const ReceiptListTable = ({
 									receipt={receipt}
 									selectReceiptHandler={selectReceiptHandler}
 									editMode={editMode}
+									dateToString={dateToString}
 								/>
 							);
 						})}
