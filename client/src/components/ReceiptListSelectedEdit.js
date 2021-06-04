@@ -1,5 +1,8 @@
 import React from "react";
 import "./ReceiptListSelected.scss";
+import save from "../assets/images/save2.svg";
+import deleteIcon from "../assets/images/delete.svg";
+import close from "../assets/images/close.svg";
 
 const ReceiptListSelectedEdit = ({
 	purchaseData,
@@ -23,6 +26,7 @@ const ReceiptListSelectedEdit = ({
 
 	const changePurchaseData = e => {
 		const { name, value } = e.target;
+
 		setReceiptSelected({
 			...receiptSelected,
 			purchaseData: { ...receiptSelected.purchaseData, [name]: value },
@@ -181,6 +185,20 @@ const ReceiptListSelectedEdit = ({
 						defaultValue={total}
 						onChange={e => changePurchaseData(e)}
 					></input>
+				</span>
+				<span className="button-container">
+					<button className="edit">
+						<img src={deleteIcon} className="edit-icon" />
+						Delete Receipt
+					</button>
+					<button type="submit" className="edit edit--purchaseDetails">
+						<img src={save} className="save-icon" />
+						Save Changes
+					</button>
+					<button className="edit">
+						<img src={close} className="edit-icon" />
+						Cancel
+					</button>
 				</span>
 			</div>
 		</form>
