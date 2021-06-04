@@ -80,6 +80,36 @@ const ReceiptList = () => {
 	const editModeHandler = () => {
 		setEditMode(!editMode);
 	};
+	const receiptFormHandler = e => {
+		e.preventDefault();
+		const purchaseList = receiptSelected.purchaseData.purchases
+			.slice(0)
+			.filter(item => {
+				return item;
+			});
+
+		const newReceipt = {
+			...receiptSelected,
+			purchaseData: { ...receiptSelected.purchaseData, purchases: purchaseList },
+		};
+
+		axios
+			.patch(`${process.env.REACT_APP_BASE_URL}receipts/receiptData`, {
+				receiptData: newReceipt,
+			})
+			.then(result => {
+				console.log(result.data);
+				const newReceiptSelected = result.data.find(receipt => {
+					return receipt.receiptID === receiptSelected.receiptID;
+				});
+				setReceiptList(result.data);
+				setReceiptSelected(newReceiptSelected);
+				setTimeout(() => {
+					setEditMode(!editMode);
+				}, 300);
+			})
+			.catch(err => console.log(err));
+	};
 
 	return (
 		<>
@@ -109,6 +139,7 @@ const ReceiptList = () => {
 						date={receiptSelected.date}
 						receiptSelected={receiptSelected}
 						setReceiptSelected={setReceiptSelected}
+						receiptFormHandler={receiptFormHandler}
 						receiptID={receiptSelected.receiptID}
 					/>
 				)}
