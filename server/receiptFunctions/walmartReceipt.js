@@ -76,7 +76,7 @@ const receipt = receiptResults => {
 	const subtotalStr = purchaseSummary.reduce((subtotal, line) => {
 		return line.includes("SUBTOTAL") || line.includes("SUB") ? line : subtotal;
 	});
-	const subtotal = Number(testAmount(subtotalStr.replace(/[^0-9.-]+/g, "")));
+	const subtotal = testAmount(subtotalStr.replace(/[^0-9.-]+/g, ""));
 
 	//TOTAL
 	const totalStr = purchaseSummary.reduce((total, line) => {
@@ -87,7 +87,7 @@ const receipt = receiptResults => {
 			: total;
 	});
 
-	const total = Number(testAmount(totalStr.replace(/[^0-9.-]+/g, "")));
+	const total = testAmount(totalStr.replace(/[^0-9.-]+/g, ""));
 
 	const storeData = {
 		storeID: storeID,
