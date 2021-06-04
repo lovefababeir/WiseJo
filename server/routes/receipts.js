@@ -45,21 +45,48 @@ router.post("/convertImage", (req, res) => {
 
 	const newReceipt = new ReceiptDoc(receiptData);
 	newReceipt.save().then(result => {
-		console.log(result);
 		res.status(200).json(result);
 	});
 });
 
 router.get("/history", (req, res) => {
-	console.log("made a request for history");
 	ReceiptDoc.find()
 		.exec()
 		.then(result => {
-			console.log(result);
 			res.status(200).json(result);
 		})
 		.catch(err => {
 			res.status(400).json(err);
+		});
+});
+
+router.patch("/receiptData", (req, res) => {
+	console.log("Requested to change a receipt:");
+	console.log(req.body.receiptData);
+	const updatedReceipt = new ReceiptDoc(req.body.receiptData);
+
+	ReceiptDoc.findOneAndUpdate(
+		{ receiptID: updatedReceipt.receiptID },
+		updatedReceipt,
+		{ new: true },
+	)
+		.then(result => {
+			return ReceiptDoc.find()
+				.exec()
+				.then(result => {
+					return result;
+				})
+				.catch(err => {
+					console.log("could not find list", err);
+					res.status(400).send("error");
+				});
+		})
+		.then(result => {
+			res.status(200).json(result);
+		})
+		.catch(err => {
+			console.log("could not replace receipt");
+			res.status(400).send("error");
 		});
 });
 
