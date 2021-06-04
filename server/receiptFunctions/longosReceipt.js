@@ -104,7 +104,7 @@ const receipt = receiptResults => {
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = Number(testAmount(subtotalStr).replace(/[^0-9.-]+/g, ""));
+		subtotal = testAmount(subtotalStr).replace(/[^0-9.-]+/g, "");
 	}
 
 	//TOTAL
@@ -118,7 +118,7 @@ const receipt = receiptResults => {
 		const totalStr = totalLine.pop();
 
 		// const totalStr = withTotal[totalIndex];
-		total = Number(testAmount(totalStr).replace(/[^0-9.-]+/g, ""));
+		total = testAmount(totalStr).replace(/[^0-9.-]+/g, "");
 	}
 
 	const storeData = {
