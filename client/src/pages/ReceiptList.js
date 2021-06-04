@@ -51,7 +51,7 @@ const ReceiptList = () => {
 		const receipt = receiptList.find(item => {
 			return item.receiptID === ID;
 		});
-		console.log("Selected Receipt===>", receipt);
+
 		setReceiptSelected(receipt);
 	};
 	const totalExpenses = (list, duration) => {
@@ -105,6 +105,16 @@ const ReceiptList = () => {
 			})
 			.catch(err => console.log(err));
 	};
+
+	const cancelChangesHandler = async id => {
+		const unchangedReceipt = receiptList.find(r => {
+			return r.receiptID === id;
+		});
+		await setReceiptSelected(unchangedReceipt);
+		await console.log("receipt selected", unchangedReceipt);
+		await setEditMode(!editMode);
+	};
+
 	const dateToString = number => {
 		return number < 10 ? `0${number}` : number.toString();
 	};
@@ -141,6 +151,7 @@ const ReceiptList = () => {
 						receiptFormHandler={receiptFormHandler}
 						receiptID={receiptSelected.receiptID}
 						dateToString={dateToString}
+						cancelChangesHandler={cancelChangesHandler}
 					/>
 				)}
 			</div>

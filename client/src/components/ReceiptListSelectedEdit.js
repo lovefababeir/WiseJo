@@ -13,6 +13,7 @@ const ReceiptListSelectedEdit = ({
 	receiptFormHandler,
 	receiptID,
 	dateToString,
+	cancelChangesHandler,
 }) => {
 	const {
 		storeID,
@@ -183,7 +184,7 @@ const ReceiptListSelectedEdit = ({
 					></input>
 				</span>
 				<span className="button-container">
-					<button className="edit">
+					<button className="edit" type="button">
 						<img src={deleteIcon} className="edit-icon" />
 						Delete
 					</button>
@@ -191,7 +192,11 @@ const ReceiptListSelectedEdit = ({
 						<img src={save} className="save-icon" />
 						Save
 					</button>
-					<button className="edit">
+					<button
+						type="button"
+						className="edit"
+						onClick={() => cancelChangesHandler(receiptID)}
+					>
 						<img src={close} className="edit-icon" />
 						Cancel
 					</button>
