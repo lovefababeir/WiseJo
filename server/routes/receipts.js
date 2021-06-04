@@ -90,4 +90,22 @@ router.patch("/receiptData", (req, res) => {
 		});
 });
 
+router.delete("/receipt/:id", (req, res) => {
+	const deleteReceiptID = req.params.id;
+	ReceiptDoc.deleteOne({ receiptID: deleteReceiptID })
+		.then(result => {
+			return ReceiptDoc.find()
+				.exec()
+				.then(result => {
+					return result;
+				});
+		})
+		.then(result => {
+			res.status(200).json(result);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+			console.log(err);
+		});
+});
 module.exports = router;
