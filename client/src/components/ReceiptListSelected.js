@@ -1,10 +1,16 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./ReceiptListSelected.scss";
+import edit from "../assets/images/edit.svg";
 
-const ReceiptListSelected = ({ purchaseData }) => {
+const ReceiptListSelected = ({
+	purchaseData,
+	store,
+	date,
+	editModeHandler,
+	monthNames,
+}) => {
 	const {
-		store,
 		storeID,
 		contact,
 		address,
@@ -14,34 +20,42 @@ const ReceiptListSelected = ({ purchaseData }) => {
 		total,
 		subtotal,
 	} = purchaseData;
+
 	return (
 		<div className="receipts-selected">
-			<div className="receipts-selected__storeDetails">
-				<p className="receipts-selected__store">{store}</p>
-				<p className="receipts-selected__receipt">Store Location: {storeID}</p>
-				<p className="receipts-selected__receipt">
-					{contact && <span>Contact: {contact}</span>}
+			<div className="storeDetails">
+				<div className="receipt-header">
+					<p className="storeDetails__store">{store}</p>
+					<button
+						className="edit edit--purchaseDetails"
+						onClick={() => editModeHandler()}
+					>
+						<img src={edit} className="edit-icon" />
+					</button>
+				</div>
+				<p className="storeDetails__detail">Store Location: {storeID}</p>
+				<p className="storeDetails__detail">
+					Purchase Date: {monthNames[date.month - 1]} {date.day} {date.year}
 				</p>
-				<p className="receipts-selected__receipt">{address}</p>
+				{contact && <p className="storeDetails__detail">Contact: {contact}</p>}
+				<p className="storeDetails__detail">{address}</p>
 
-				{manager && (
-					<p className="receipts-selected__receipt">Manager: {manager}</p>
-				)}
-				{cashier && (
-					<p className="receipts-selected__receipt">Cashier: {cashier}</p>
-				)}
+				{manager && <p className="storeDetails__detail">Manager: {manager}</p>}
+				{cashier && <p className="storeDetails__detail">Cashier: {cashier}</p>}
 			</div>
-			<div className="receipts-selected__itemsList">
-				<p className="receipts-selected__item-title">Items Purchased:</p>
+			<div className="purchaseDetails">
+				<div className="receipt-header">
+					<p className="purchaseDetails__item-title">Items Purchased:</p>
+				</div>
 				{purchases.map(item => {
 					return (
-						<p className="receipts-selected__item" key={uuidv4()}>
+						<p className="purchaseDetails__item" key={uuidv4()}>
 							{item}
 						</p>
 					);
 				})}
-				<p className="receipts-selected__subtotal">Subtotal: ${subtotal}</p>
-				<p className="receipts-selected__total">Total Spent: ${total}</p>
+				<p className="purchaseDetails__subtotal">Subtotal: ${subtotal}</p>
+				<p className="purchaseDetails__total">Total Spent: ${total}</p>
 			</div>
 		</div>
 	);
