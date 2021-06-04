@@ -7,6 +7,7 @@ const ReceiptListTable = ({
 	receiptList,
 	selectReceiptHandler,
 	totalExpenses,
+	editMode,
 }) => {
 	return (
 		<>
@@ -18,14 +19,29 @@ const ReceiptListTable = ({
 					<p className="receipt__summary">Total:</p>
 				</div>
 				{receiptList &&
-					receiptList.map(receipt => {
-						return (
-							<ReceiptListTableElements
-								receipt={receipt}
-								selectReceiptHandler={selectReceiptHandler}
-							/>
-						);
-					})}
+					receiptList
+						.sort((a, b) => {
+							const timestampA = new Date(
+								a.date.year,
+								a.date.month,
+								a.date.day,
+							).getTime();
+							const timestampB = new Date(
+								b.date.year,
+								b.date.month,
+								b.date.day,
+							).getTime();
+							return timestampA < timestampB ? -1 : 1;
+						})
+						.map(receipt => {
+							return (
+								<ReceiptListTableElements
+									receipt={receipt}
+									selectReceiptHandler={selectReceiptHandler}
+									editMode={editMode}
+								/>
+							);
+						})}
 				<ReceiptListTableSummary
 					receiptList={receiptList}
 					totalExpenses={totalExpenses}
