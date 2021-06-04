@@ -17,8 +17,8 @@ const receiptDoc = mongoose.Schema({
 		cashier: String,
 		contact: String,
 		purchases: Array,
-		subtotal: Number,
-		total: Number,
+		subtotal: String,
+		total: String,
 	},
 	results: Array,
 });
