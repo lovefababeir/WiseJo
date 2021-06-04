@@ -5,7 +5,48 @@
 .receipts-selected {
 	max-width: 50rem;
 	margin: 0 auto;
+	& label {
+		width: 18rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: rgb(107, 80, 55);
+		text-align: right;
+		padding-right: 1rem;
+	}
+	& span {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		&.button-container {
+			justify-content: space-between;
+			margin: 2rem auto;
+		}
+	}
+	& input {
+		font-size: 1.5rem;
+		padding-left: 1rem;
+		width: 100%;
+		max-width: 95%;
 
+		margin: 0.3rem 1rem;
+		border: #e7e7e7 solid 2px;
+		border-radius: 3px;
+		&:focus,
+		&:focus-within {
+			outline: seagreen solid 2px;
+		}
+	}
+}
+
+.storeDetails {
+	border: #e0e0e0 solid 3px;
+	border-radius: 1.5rem;
+	margin-top: 2rem;
+	padding: 1rem 0.5rem;
+	border-bottom-style: dashed;
+	@include mobileM {
+		padding: 1.5rem;
+	}
 	&__store {
 		font-size: 1.8rem;
 		font-weight: bold;
@@ -16,20 +57,10 @@
 			font-size: 2.3rem;
 		}
 	}
-	&__storeDetails {
-		border: #f2f2f2 solid 3px;
-		border-radius: 1.5rem;
-		margin-top: 2rem;
-		padding: 1rem 0.5rem;
-		border-bottom-style: dashed;
-		@include mobileM {
-			padding: 1.5rem;
-		}
-	}
-	&__receipt {
+	&__detail {
 		font-size: 1.5rem;
-		display: flex;
-		justify-content: space-between;
+		// display: flex;
+		// justify-content: space-between;
 		margin-bottom: 0;
 		@include surface {
 			font-size: 1.6rem;
@@ -38,16 +69,15 @@
 			margin-bottom: 1rem;
 		}
 	}
-
-	&__itemsList {
-		border: #f2f2f2 solid 3px;
-		border-radius: 1.5rem;
-		margin-top: 0;
-		padding: 1rem 0.5rem;
-		border-top-style: none;
-		@include mobileM {
-			padding: 1.5rem;
-		}
+}
+.purchaseDetails {
+	border: #e0e0e0 solid 3px;
+	border-radius: 1.5rem;
+	margin-top: 0;
+	padding: 1rem 0.5rem;
+	border-top-style: none;
+	@include mobileM {
+		padding: 1.5rem;
 	}
 	&__item {
 		font-size: 1.4rem;
@@ -66,6 +96,7 @@
 		&:nth-child(even) {
 			background-color: #f2f2f2;
 		}
+
 		&-title {
 			font-size: 1.4rem;
 			font-weight: bold;
@@ -92,11 +123,33 @@
 		}
 	}
 	&__total {
-		@extend .receipts-selected__subtotal;
+		@extend .purchaseDetails__subtotal;
 		font-weight: bold;
 		font-size: 1.7rem;
 		@include surface {
 			font-size: 2.2rem;
 		}
+	}
+}
+
+.receipt-header {
+	@include flex(row, space-between);
+}
+.edit {
+	border: none;
+	background-color: #fff;
+	font-size: 1.4rem;
+	outline: none;
+	border: none;
+	background-color: #fff;
+	&-icon {
+		width: 3rem;
+	}
+}
+
+.save {
+	&-icon {
+		width: 2.6rem;
+		margin: 0 0.3rem;
 	}
 }
