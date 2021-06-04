@@ -12,7 +12,6 @@ const ReceiptList = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		console.log("mounted");
 		axios
 			.get(`${process.env.REACT_APP_BASE_URL}receipts/history`)
 			.then(result => {
@@ -42,8 +41,6 @@ const ReceiptList = () => {
 		"November",
 		"December",
 	];
-
-	console.log(receiptSelected);
 	const selectReceiptHandler = (e, ID) => {
 		e.preventDefault();
 
@@ -57,7 +54,6 @@ const ReceiptList = () => {
 		console.log("Selected Receipt===>", receipt);
 		setReceiptSelected(receipt);
 	};
-
 	const totalExpenses = (list, duration) => {
 		return list.reduce((total, receipt) => {
 			//first is day in ms second is week in ms
@@ -76,7 +72,6 @@ const ReceiptList = () => {
 				: total;
 		}, 0);
 	};
-
 	const editModeHandler = () => {
 		setEditMode(!editMode);
 	};
@@ -110,6 +105,9 @@ const ReceiptList = () => {
 			})
 			.catch(err => console.log(err));
 	};
+	const dateToString = number => {
+		return number < 10 ? number.toString() : `0${number}`;
+	};
 
 	return (
 		<>
@@ -120,6 +118,7 @@ const ReceiptList = () => {
 					selectReceiptHandler={selectReceiptHandler}
 					totalExpenses={totalExpenses}
 					editMode={editMode}
+					dateToString={dateToString}
 				/>
 
 				{receiptSelected && !editMode && (
