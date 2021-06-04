@@ -103,12 +103,9 @@ const store = async function (searchWords) {
 		expression: `${captchaParams[0].function}('${captcha._text}')`,
 	});
 
-	await page.goto(
-		`https://www.walmart.ca/search?q=${searchWords}&sort=Popular%3ADESC`,
-		{
-			waitUntil: "networkidle2",
-		},
-	);
+	await page.goto(`https://www.walmart.ca/search?q=${searchWords}`, {
+		waitUntil: "networkidle2",
+	});
 
 	await page.waitForSelector("#product-results > div:nth-child(1)");
 
@@ -129,16 +126,21 @@ const store = async function (searchWords) {
 				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > p`,
 			).innerText;
 
-			// const title = grocItem.substr(0, grocItem.indexOf("|"));
-
 			const price = document.querySelector(
 				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div > span > span`,
 			).innerText;
 
-			// const capacity = grocItem.substr(grocItem.indexOf("|") + 2);
 			const capacity = document.querySelector(
 				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p`,
 			).innerText;
+
+			const unitPriceText = document.querySelector(
+				`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
+			)
+				? document.querySelector(
+						`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
+				  ).innerText
+				: "";
 
 			//function to get the capacity of each item as a number
 			const val = C => {
@@ -154,27 +156,16 @@ const store = async function (searchWords) {
 					.split(" ")
 					.find(word => {
 						return (
-							word.replace(/[0-9]/g, "") === "kg" ||
-							word.replace(/[0-9]/g, "") === "g" ||
-							word.replace(/[0-9]/g, "") === "lb" ||
-							word.replace(/[0-9]/g, "") === "oz" ||
-							word.replace(/[0-9]/g, "") === "l" ||
-							word.replace(/[0-9]/g, "") === "ml"
+							word.replace(/[^a-zA-Z ]/g, "") === "kg" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "g" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "lb" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "oz" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "l" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "ml"
 						);
 					});
+				const units = unitsString ? unitsString.replace(/[^a-zA-Z ]/g, "") : "";
 
-				const units = unitsString ? unitsString.replace(/[0-9]/g, "") : "";
-
-				// if (
-				// 	capacity.includes("pkg") ||
-				// 	capacity.includes("pack") ||
-				// 	capacity.includes("cup") ||
-				// 	capacity.includes("cans") ||
-				// 	capacity.includes("count") ||
-				// 	capacity.includes("ea")
-				// ) {
-				// 	value = 1;
-				// } else
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
 				} else if (units === "kg" || units === "ml" || units === "oz") {
@@ -195,7 +186,7 @@ const store = async function (searchWords) {
 					return parseInt(capacity.split("x")[0]);
 				}
 
-				const qtyUnits = capacity.slice(0).replace(/[0-9]/g, "");
+				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
 
 				if (
 					qtyUnits
@@ -223,14 +214,6 @@ const store = async function (searchWords) {
 
 			const value = val(capacity);
 
-			const unitPriceText = document.querySelector(
-				`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
-			)
-				? document.querySelector(
-						`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
-				  ).innerText
-				: "";
-
 			const getCostFrom = str => {
 				const costStr = str.slice(0).split("/")[0];
 				if (costStr.includes("¢")) {
@@ -251,7 +234,7 @@ const store = async function (searchWords) {
 
 			const getUnitsFrom = str => {
 				const massStr = str.slice(0).split("/")[1];
-				return massStr.replace(/[0-9]/g, "");
+				return massStr.replace(/[^a-zA-Z ]/g, "");
 			};
 
 			const calcCostValue = (costStr, value, quantity) => {
@@ -264,7 +247,7 @@ const store = async function (searchWords) {
 					.toLowerCase()
 					.split(" ")
 					.find(text => {
-						let textNoNums = text.replace(/[0-9]/g, "");
+						let textNoNums = text.replace(/[^a-zA-Z ]/g, "");
 						return (
 							textNoNums === "ml" ||
 							textNoNums === "l" ||
@@ -276,7 +259,7 @@ const store = async function (searchWords) {
 					});
 
 				if (unitsStr) {
-					units = unitsStr.replace(/[0-9]/g, "");
+					units = unitsStr.replace(/[^a-zA-Z ]/g, "");
 					return units === "ml" || units === "l"
 						? 100
 						: units === "kg" || units === "g"
@@ -296,7 +279,7 @@ const store = async function (searchWords) {
 					.split(" ")
 					.find(text => {
 						console.log("text", text);
-						let textNoNums = text.replace(/[0-9]/g, "");
+						let textNoNums = text.replace(/[^a-zA-Z ]/g, "");
 						console.log("textNoNums", textNoNums);
 						return (
 							textNoNums === "ml" ||
@@ -309,7 +292,7 @@ const store = async function (searchWords) {
 					});
 
 				if (unitsStr) {
-					units = unitsStr.replace(/[0-9]/g, "");
+					units = unitsStr.replace(/[^a-zA-Z ]/g, "");
 					return units === "ml" || units === "l"
 						? "ml"
 						: units === "kg" || units === "g"
