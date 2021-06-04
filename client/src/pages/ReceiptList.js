@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./ReceiptList.scss";
 import axios from "axios";
 import ReceiptListSelected from "../components/ReceiptListSelected";
+import ReceiptListSelectedEdit from "../components/ReceiptListSelectedEdit";
 import ReceiptListTable from "../components/ReceiptListTable";
 
 const ReceiptList = () => {
 	const [receiptList, setReceiptList] = useState("");
 	const [receiptSelected, setReceiptSelected] = useState("");
+	const [editMode, setEditMode] = useState(false);
 
 	useEffect(() => {
 		let mounted = true;
@@ -26,15 +28,34 @@ const ReceiptList = () => {
 		};
 	}, []);
 
+	const monthNames = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December",
+	];
+
+	console.log(receiptSelected);
 	const selectReceiptHandler = (e, ID) => {
 		e.preventDefault();
-		// const selectedItemID = e.target.value;
 
-		const receiptSelected = receiptList.find(item => {
+		//check if in edit mode. If so, exit handler so that the selected receipt is not changed
+		if (editMode) {
+			return;
+		}
+		const receipt = receiptList.find(item => {
 			return item.time === ID;
 		});
-
-		setReceiptSelected(receiptSelected);
+		console.log("Selected Receipt===>", receipt);
+		setReceiptSelected(receipt);
 	};
 
 	const totalExpenses = (list, duration) => {
@@ -51,9 +72,13 @@ const ReceiptList = () => {
 			const timeofLast = timeNow - (timeNow % timeDiff) - timeFix;
 
 			return timeofLast < receipt.time
-				? receipt.purchaseData.total + total
+				? parseFloat(receipt.purchaseData.total) + total
 				: total;
 		}, 0);
+	};
+
+	const editModeHandler = () => {
+		setEditMode(!editMode);
 	};
 
 	return (
@@ -64,10 +89,28 @@ const ReceiptList = () => {
 					receiptList={receiptList}
 					selectReceiptHandler={selectReceiptHandler}
 					totalExpenses={totalExpenses}
+					editMode={editMode}
 				/>
 
-				{receiptSelected && (
-					<ReceiptListSelected purchaseData={receiptSelected.purchaseData} />
+				{receiptSelected && !editMode && (
+					<ReceiptListSelected
+						store={receiptSelected.store}
+						date={receiptSelected.date}
+						purchaseData={receiptSelected.purchaseData}
+						editMode={editMode}
+						editModeHandler={editModeHandler}
+						monthNames={monthNames}
+					/>
+				)}
+				{receiptSelected && editMode && (
+					<ReceiptListSelectedEdit
+						purchaseData={receiptSelected.purchaseData}
+						store={receiptSelected.store}
+						date={receiptSelected.date}
+						receiptSelected={receiptSelected}
+						setReceiptSelected={setReceiptSelected}
+						receiptID={receiptSelected.receiptID}
+					/>
 				)}
 			</div>
 		</>
