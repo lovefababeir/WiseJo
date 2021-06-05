@@ -1,6 +1,6 @@
 import React from "react";
 import "./ReceiptListSelected.scss";
-import save from "../assets/images/save2.svg";
+import save from "../assets/images/save.svg";
 import deleteIcon from "../assets/images/delete.svg";
 import close from "../assets/images/close.svg";
 
