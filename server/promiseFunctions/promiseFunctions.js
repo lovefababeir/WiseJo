@@ -6,7 +6,7 @@ const ItemResults = require("../models/itemResults.js");
 const createUserCopy = (data, userid, userlocation, time) => {
 	const userResultsData = {
 		_id: mongoose.Types.ObjectId(),
-		userid: userid,
+		user_id: userid,
 		userlocation: userlocation,
 		time: time,
 		searchItem: data.searchItem,
@@ -44,7 +44,7 @@ const recordNewSearchUserCopy = (
 	result,
 ) => {
 	const userResultsData = {
-		userid: userid,
+		user_id: userid,
 		userlocation: userlocation,
 		time: time,
 		_id: new mongoose.Types.ObjectId(),
