@@ -49,21 +49,21 @@ const ReceiptListSelectedEdit = ({
 		});
 	};
 	const changeDate = e => {
-		console.log(e.target.value);
 		const newDate = e.target.value.split("-");
 		const date = {
 			year: parseInt(newDate[0]),
 			month: parseInt(newDate[1]),
 			day: parseInt(newDate[2]),
 		};
-		setReceiptSelected({ ...receiptSelected, date });
+		const newTime = new Date(date.year, date.month - 1, date.day).getTime() + 1;
+		setReceiptSelected({ ...receiptSelected, date, time: newTime });
 	};
 
 	const today = new Date();
 	const todaysDate = `${today.getFullYear()}-${dateToString(
 		today.getMonth() + 1,
 	)}-${dateToString(today.getDay())}`;
-
+	console.log(receiptSelected);
 	return (
 		<form
 			action="submit"
