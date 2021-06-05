@@ -5,6 +5,7 @@ import ResultsCapacity from "../components/ResultsCapacity";
 import ResultsSolutions from "../components/ResultsSolutions";
 import axios from "axios";
 import ResultsSubMenu from "../components/ResultsSubMenu";
+import { useAuth } from "../contexts/AuthContext";
 
 const Results = () => {
 	const [values, setValues] = useState({
@@ -13,27 +14,32 @@ const Results = () => {
 		selected: "",
 		currentLocation: "",
 	});
+	const { createToken } = useAuth();
 	useEffect(() => {
 		let mounted = true;
-
-		axios
-			.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`)
-			.then(result => {
-				console.log(result);
-				if (mounted) {
-					const lastSearchResults = result.data.data.map(record => {
-						return record.searchResults;
-					});
-					setValues({
-						...values,
-						results: [].concat.apply([], lastSearchResults),
-						currentLocation: result.data.data[0].userlocation,
-					});
-				}
-			})
-			.catch(error => {
-				console.log(`error: ${error}`);
-			});
+		createToken().then(token => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+				.then(result => {
+					console.log(result);
+					if (mounted) {
+						const lastSearchResults = result.data.data.map(record => {
+							return record.searchResults;
+						});
+						setValues({
+							...values,
+							results: [].concat.apply([], lastSearchResults),
+							currentLocation: result.data.data[0].userlocation,
+						});
+					}
+				})
+				.catch(error => {
+					console.log(`error: ${error}`);
+				})
+				.catch(err => {
+					console.log("Could not create token");
+				});
+		});
 		return () => {
 			mounted = false;
 		};
