@@ -148,63 +148,85 @@ const conductSearch = async (
 };
 
 router.get("/:store/:time", async (req, res) => {
-	const time = parseInt(req.params.time);
-	const userlocation = req.query.userlocation;
-	const item = req.query.item;
-	const userid = "lovefababeir";
-	console.log(req.params.store);
-	const store =
-		req.params.store === "longos"
-			? "Longo's"
-			: req.params.store === "sobeys"
-			? "Sobeys"
-			: req.params.store === "walmart"
-			? "Walmart"
-			: req.params.store === "nofrills"
-			? "No Frills"
-			: "n/a";
-	const storeFunction =
-		req.params.store === "longos"
-			? longos
-			: req.params.store === "sobeys"
-			? sobeys
-			: req.params.store === "walmart"
-			? walmart
-			: req.params.store === "nofrills"
-			? nofrills
-			: "n/a";
-	console.log(userlocation);
+	const auth = req.currentUser;
+	if (auth) {
+		const time = parseInt(req.params.time);
+		const userlocation = req.query.userlocation;
+		const item = req.query.item;
+		const userid = auth.user_id;
+		console.log(req.params.store);
+		const store =
+			req.params.store === "longos"
+				? "Longo's"
+				: req.params.store === "sobeys"
+				? "Sobeys"
+				: req.params.store === "walmart"
+				? "Walmart"
+				: req.params.store === "nofrills"
+				? "No Frills"
+				: "n/a";
+		const storeFunction =
+			req.params.store === "longos"
+				? longos
+				: req.params.store === "sobeys"
+				? sobeys
+				: req.params.store === "walmart"
+				? walmart
+				: req.params.store === "nofrills"
+				? nofrills
+				: "n/a";
+		console.log(userlocation);
 
-	const responseData = await conductSearch(
-		storeFunction,
-		item,
-		time,
-		userlocation,
-		userid,
-		store,
-	);
-	// console.log("inside endpoint", responseData.code, responseData.jsonData);
-	res.status(responseData.code).json(responseData.jsonData);
+		const responseData = await conductSearch(
+			storeFunction,
+			item,
+			time,
+			userlocation,
+			userid,
+			store,
+		);
+		// console.log("inside endpoint", responseData.code, responseData.jsonData);
+		res.status(responseData.code).json(responseData.jsonData);
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.get("/searchresults", async (req, res) => {
-	const allItems = await UserResults.find();
-	const latestTimeStamp = allItems.reduce((latest, record) => {
-		return latest > record.time ? latest : record.time;
-	}, 0);
+	const auth = req.currentUser;
+	if (auth) {
+		const allItems = await UserResults.find({ user_id: auth.user_id });
+		const latestTimeStamp = allItems.reduce((latest, record) => {
+			return latest > record.time ? latest : record.time;
+		}, 0);
 
-	try {
-		await UserResults.deleteMany({ time: { $ne: latestTimeStamp } });
-	} catch (error) {
-		console.log(`Unable to clear old searches. Error: ${err}`);
+		try {
+			await UserResults.deleteMany({
+				time: { $ne: latestTimeStamp },
+				user_id: auth.user_id,
+			});
+		} catch (error) {
+			console.log(`Unable to clear old searches. Error: ${err}`);
+		}
+		const latestSearchResults = await UserResults.find({
+			time: latestTimeStamp,
+			user_id: auth.user_id,
+		});
+		// console.log(latestSearchResults);
+		res
+			.status(200)
+			.json({ message: "Success! Results retrieved", data: latestSearchResults });
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
 	}
-	const latestSearchResults = await UserResults.find({
-		time: latestTimeStamp,
-	});
-	// console.log(latestSearchResults);
-	res
-		.status(200)
-		.json({ message: "Success! Results retrieved", data: latestSearchResults });
 });
 
 router.patch("/item/:store/:id", async (req, res) => {
