@@ -79,18 +79,25 @@ const ReceiptList = () => {
 	};
 
 	const deleteHandler = id => {
-		axios
-			.delete(`${process.env.REACT_APP_BASE_URL}receipts/receipt/${id}`)
-			.then(result => {
-				const newList = result.data;
-				setEditMode(!editMode);
-				setReceiptList(newList);
-				setReceiptSelected("");
+		createToken()
+			.then(token => {
+				axios
+					.delete(`${process.env.REACT_APP_BASE_URL}receipts/receipt/${id}`, token)
+					.then(result => {
+						const newList = result.data;
+						setEditMode(!editMode);
+						setReceiptList(newList);
+						setReceiptSelected("");
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			})
-			.catch(err => {
-				console.log(err);
+			.catch(error => {
+				console.log("Could not create Token:", error);
 			});
 	};
+
 	const receiptFormHandler = e => {
 		e.preventDefault();
 		const purchaseList = receiptSelected.purchaseData.purchases
