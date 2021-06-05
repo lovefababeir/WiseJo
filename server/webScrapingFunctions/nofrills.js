@@ -47,9 +47,14 @@ const store = async function (searchWords) {
 			title2 = title2 ? title2.innerText : "";
 			const title = title1 + " " + title2;
 
-			const price = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > div > div > span > span.price__value`,
-			).innerHTML;
+			const priceElement =
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > div > div > span > span.price__value`,
+				) ||
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices.product-prices--product-tile > ul > li > span > span`,
+				);
+			const price = priceElement.innerHTML;
 
 			var size = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
