@@ -8,56 +8,78 @@ const ReceiptDoc = require("../models/receipt");
 const mongoose = require("mongoose");
 
 router.post("/convertImage", (req, res) => {
-	const store = req.query.store.toLowerCase();
-	const time = parseInt(req.query.time);
-	const convertedText = fcn.decodeText(req.body.data.regions);
-	let purchaseData;
-	if (store === "walmart") {
-		purchaseData = walmart.receipt(convertedText);
-	} else if (store === "longo's") {
-		purchaseData = longos.receipt(convertedText);
-	} else if (store === "no frills") {
-		purchaseData =
-			"Sorry, algorithm for reading No Frills receipts is currently not working";
-	} else {
-		purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
-	}
+	const auth = req.currentUser;
+	if (auth) {
+		const userID = auth.user_id;
+		const store = req.query.store.toLowerCase();
+		const time = parseInt(req.query.time);
+		const convertedText = fcn.decodeText(req.body.data.regions);
+		let purchaseData;
+		if (store === "walmart") {
+			purchaseData = walmart.receipt(convertedText);
+		} else if (store === "longo's") {
+			purchaseData = longos.receipt(convertedText);
+		} else if (store === "no frills") {
+			purchaseData =
+				"Sorry, algorithm for reading No Frills receipts is currently not working";
+		} else {
+			purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
+		}
 
-	const timeEST = time - 3600000 * 4;
-	convertDate = timestamp => {
-		let dateSubmitted = new Date(timestamp);
-		return {
-			day: dateSubmitted.getUTCDate(),
-			month: dateSubmitted.getMonth() + 1,
-			year: dateSubmitted.getFullYear(),
+		const timeEST = time - 3600000 * 4;
+		convertDate = timestamp => {
+			let dateSubmitted = new Date(timestamp);
+			return {
+				day: dateSubmitted.getUTCDate(),
+				month: dateSubmitted.getMonth() + 1,
+				year: dateSubmitted.getFullYear(),
+			};
 		};
-	};
 
-	const receiptData = {
-		_id: mongoose.Types.ObjectId(),
-		time: timeEST,
-		receiptID: timeEST,
-		date: convertDate(timeEST),
-		store: store,
-		purchaseData: purchaseData,
-		results: convertedText,
-	};
+		const receiptData = {
+			_id: mongoose.Types.ObjectId(),
+			user_id: userID,
+			time: timeEST,
+			receiptID: timeEST,
+			date: convertDate(timeEST),
+			store: store,
+			purchaseData: purchaseData,
+			results: convertedText,
+		};
 
-	const newReceipt = new ReceiptDoc(receiptData);
-	newReceipt.save().then(result => {
-		res.status(200).json(result);
-	});
+		const newReceipt = new ReceiptDoc(receiptData);
+		newReceipt.save().then(result => {
+			res.status(200).json(result);
+		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.get("/history", (req, res) => {
-	ReceiptDoc.find()
-		.exec()
-		.then(result => {
-			res.status(200).json(result);
-		})
-		.catch(err => {
-			res.status(400).json(err);
-		});
+	const auth = req.currentUser;
+
+	if (auth) {
+		const userID = auth.user_id;
+		ReceiptDoc.find({ user_id: userID })
+			.exec()
+			.then(result => {
+				res.status(200).json(result);
+			})
+			.catch(err => {
+				res.status(400).json(err);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.patch("/receiptData", (req, res) => {
