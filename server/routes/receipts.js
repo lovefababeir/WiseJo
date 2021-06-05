@@ -10,7 +10,6 @@ const mongoose = require("mongoose");
 router.post("/convertImage", (req, res) => {
 	const auth = req.currentUser;
 	if (auth) {
-		const userID = auth.user_id;
 		const store = req.query.store.toLowerCase();
 		const time = parseInt(req.query.time);
 		const convertedText = fcn.decodeText(req.body.data.regions);
@@ -38,7 +37,7 @@ router.post("/convertImage", (req, res) => {
 
 		const receiptData = {
 			_id: mongoose.Types.ObjectId(),
-			user_id: userID,
+			user_id: auth.user_id,
 			time: timeEST,
 			receiptID: timeEST,
 			date: convertDate(timeEST),
@@ -64,8 +63,7 @@ router.get("/history", (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
-		const userID = auth.user_id;
-		ReceiptDoc.find({ user_id: userID })
+		ReceiptDoc.find({ user_id: auth.user_id })
 			.exec()
 			.then(result => {
 				res.status(200).json(result);
@@ -83,33 +81,40 @@ router.get("/history", (req, res) => {
 });
 
 router.patch("/receiptData", (req, res) => {
-	console.log("Requested to change a receipt:");
-	console.log(req.body.receiptData);
-	const updatedReceipt = new ReceiptDoc(req.body.receiptData);
+	const auth = req.currentUser;
 
-	ReceiptDoc.findOneAndUpdate(
-		{ receiptID: updatedReceipt.receiptID },
-		updatedReceipt,
-		{ new: true },
-	)
-		.then(result => {
-			return ReceiptDoc.find()
-				.exec()
-				.then(result => {
-					return result;
-				})
-				.catch(err => {
-					console.log("could not find list", err);
-					res.status(400).send("error");
-				});
-		})
-		.then(result => {
-			res.status(200).json(result);
-		})
-		.catch(err => {
-			console.log("could not replace receipt");
-			res.status(400).send("error");
-		});
+	if (auth) {
+		const updatedReceipt = new ReceiptDoc(req.body.receiptData);
+		ReceiptDoc.findOneAndUpdate(
+			{ receiptID: updatedReceipt.receiptID, user_id: auth.user_id },
+			updatedReceipt,
+			{ new: true },
+		)
+			.then(() => {
+				return ReceiptDoc.find({ user_id: auth.user_id })
+					.exec()
+					.then(result => {
+						return result;
+					})
+					.catch(err => {
+						console.log("could not find list", err);
+						res.status(400).json(err);
+					});
+			})
+			.then(result => {
+				res.status(200).json(result);
+			})
+			.catch(() => {
+				console.log("could not replace receipt");
+				res.status(400).json(error);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.delete("/receipt/:id", (req, res) => {
