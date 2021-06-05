@@ -3,6 +3,7 @@ import axios from "axios";
 import "./RecordReceipt.scss";
 import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useAuth } from "../contexts/AuthContext";
 
 const RecordReceipt = () => {
 	const history = useHistory();
@@ -11,61 +12,74 @@ const RecordReceipt = () => {
 		errMsg: "",
 		loading: false,
 	});
+	const { createToken } = useAuth();
 
+	//FormHandler
 	const onFormSubmit = e => {
 		const time = Date.now();
 		e.preventDefault();
 		const store = e.target.receiptStore.value;
-		if (store && values.file) {
-			const formData = new FormData();
-			formData.append("receipt", values.file);
-			setValues({ ...values, errMsg: "", loading: true });
-
-			// //=======================
-			const config = {
-				headers: {
-					"content-type": "application/json",
-					"Ocp-Apim-Subscription-Key": process.env.REACT_APP_OCR_API_KEY_1,
-				},
-			};
-			axios
-				.post(
-					`${process.env.REACT_APP_OCR_ENDPOINT}vision/v3.2/ocr`,
-					formData,
-					config,
-				)
-				.then(res => {
-					const dataRes = res.data.regions;
-					console.log(JSON.stringify(dataRes));
-					axios
-						.post(
-							`${process.env.REACT_APP_BASE_URL}receipts/convertImage?store=${store}&time=${time}`,
-							res,
-						)
-						.then(result => {
-							console.log("result from conversion", result);
-							history.push("/track");
-						})
-						.catch(err => {
-							console.log("could not convert");
-						});
-				})
-				.catch(err => {
-					console.log(err.response);
-					setValues({
-						...values,
-						errMsg:
-							"Sorry, the OCR had trouble reading your image. Try increasing the contrast and brightness and to make the image as black and white as possible.",
-					});
-				});
-		} else {
+		if (!store || !values.file) {
 			setValues({
 				...values,
 				errMsg:
 					"Error: Please check to see that you have selected the store from which you made your purchase and that you've uploaded an image in JPG, JPEG or PNG form",
 			});
+			return;
 		}
+
+		const formData = new FormData();
+		formData.append("receipt", values.file);
+		setValues({ ...values, errMsg: "", loading: true });
+
+		//=======================
+
+		const config = {
+			headers: {
+				"content-type": "application/json",
+				"Ocp-Apim-Subscription-Key": process.env.REACT_APP_OCR_API_KEY_1,
+			},
+		};
+		axios
+			.post(
+				`${process.env.REACT_APP_OCR_ENDPOINT}vision/v3.2/ocr`,
+				formData,
+				config,
+			)
+			.then(res => {
+				const dataRes = res.data.regions;
+				createToken()
+					.then(token => {
+						axios
+							.post(
+								`${process.env.REACT_APP_BASE_URL}receipts/convertImage?store=${store}&time=${time}`,
+								res,
+								token,
+							)
+							.then(result => {
+								console.log("result from conversion", result);
+								history.push("/track");
+							})
+							.catch(err => {
+								console.log("could not convert");
+							});
+					})
+					.catch(err => {
+						console.log(
+							"Could not create authentication token to gain access to backend",
+						);
+					});
+			})
+			.catch(err => {
+				console.log(err.response);
+				setValues({
+					...values,
+					errMsg:
+						"Sorry, the OCR had trouble reading your image. Try increasing the contrast and brightness and to make the image as black and white as possible.",
+				});
+			});
 	};
+
 	const onFormChange = e => {
 		console.log(e.target.files);
 		setValues({ ...values, file: e.target.files[0] });
