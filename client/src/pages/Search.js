@@ -3,90 +3,103 @@ import "./Search.scss";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
+import { useAuth } from "../contexts/AuthContext";
 
 const Search = () => {
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
 	const [loaded, setLoaded] = useState(0);
+	const { createToken } = useAuth();
 
 	const submitHandler = e => {
 		e.preventDefault();
-
 		const item = e.target.search.value.toLowerCase();
 		const currentStore = e.target.storeList.value.toLowerCase();
 		const time = Date.now() - 3600000 * 4;
 		console.log(time);
-		if (item) {
-			setLoading(true);
 
-			axios
-				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${time}?userlocation=${currentStore}&item=${item}`,
-				)
-				.then(result => {
-					console.log(JSON.stringify(result.data));
-					if (result) {
-						setLoaded(loaded => loaded + 1);
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					if (err) {
-						setLoaded(loaded => loaded + 1);
-					}
-				});
-
-			axios
-				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${time}?userlocation=${currentStore}&item=${item}`,
-				)
-				.then(result => {
-					console.log(JSON.stringify(result.data));
-					if (result) {
-						setLoaded(loaded => loaded + 1);
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					if (err) {
-						setLoaded(loaded => loaded + 1);
-					}
-				});
-
-			axios
-				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${time}?userlocation=${currentStore}&item=${item}`,
-				)
-				.then(result => {
-					console.log(JSON.stringify(result.data));
-					if (result) {
-						setLoaded(loaded => loaded + 1);
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					if (err) {
-						setLoaded(loaded => loaded + 1);
-					}
-				});
-
-			axios
-				.get(
-					`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${time}?userlocation=${currentStore}&item=${item}`,
-				)
-				.then(result => {
-					console.log(JSON.stringify(result.data));
-					if (result) {
-						setLoaded(loaded => loaded + 1);
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					if (err) {
-						setLoaded(loaded => loaded + 1);
-					}
-				});
+		//Cancel search if there is not item
+		if (!item) {
+			return;
 		}
+		setLoading(true);
+		createToken()
+			.then(token => {
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						console.log(JSON.stringify(result.data));
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						console.log(err);
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						console.log(JSON.stringify(result.data));
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						console.log(err);
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						console.log(JSON.stringify(result.data));
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						console.log(err);
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						console.log(JSON.stringify(result.data));
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						console.log(err);
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+			})
+			.catch(err => {
+				console.log("Could not create access token");
+			});
 	};
 
 	useEffect(() => {
