@@ -119,20 +119,29 @@ router.patch("/receiptData", (req, res) => {
 
 router.delete("/receipt/:id", (req, res) => {
 	const deleteReceiptID = req.params.id;
-	ReceiptDoc.deleteOne({ receiptID: deleteReceiptID })
-		.then(result => {
-			return ReceiptDoc.find()
-				.exec()
-				.then(result => {
-					return result;
-				});
-		})
-		.then(result => {
-			res.status(200).json(result);
-		})
-		.catch(err => {
-			res.status(500).json(err);
-			console.log(err);
-		});
+	const auth = req.currentUser;
+	if (auth) {
+		ReceiptDoc.deleteOne({ receiptID: deleteReceiptID, user_id: auth.user_id })
+			.then(result => {
+				return ReceiptDoc.find({ user_id: auth.user_id })
+					.exec()
+					.then(result => {
+						return result;
+					});
+			})
+			.then(result => {
+				res.status(200).json(result);
+			})
+			.catch(err => {
+				res.status(500).json(err);
+				console.log(err);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 module.exports = router;
