@@ -4,24 +4,26 @@ import axios from "axios";
 import ReceiptListSelected from "../components/ReceiptListSelected";
 import ReceiptListSelectedEdit from "../components/ReceiptListSelectedEdit";
 import ReceiptListTable from "../components/ReceiptListTable";
+import { useAuth } from "../contexts/AuthContext";
 
 const ReceiptList = () => {
 	const [receiptList, setReceiptList] = useState("");
 	const [receiptSelected, setReceiptSelected] = useState("");
 	const [editMode, setEditMode] = useState(false);
+	const { createToken } = useAuth();
 
 	useEffect(() => {
 		let mounted = true;
-		axios
-			.get(`${process.env.REACT_APP_BASE_URL}receipts/history`)
-			.then(result => {
-				if (mounted) {
-					console.log(result);
-					setReceiptList(result.data);
-					console.log("receiptList:", result.data);
-				}
-			})
-			.catch(err => console.log("Could not get list", err));
+		createToken().then(headers => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}receipts/history`, headers)
+				.then(result => {
+					if (mounted) {
+						setReceiptList(result.data);
+					}
+				})
+				.catch(err => console.log("Could not get list", err));
+		});
 		return () => {
 			mounted = false;
 		};
@@ -102,22 +104,32 @@ const ReceiptList = () => {
 			purchaseData: { ...receiptSelected.purchaseData, purchases: purchaseList },
 		};
 
-		axios
-			.patch(`${process.env.REACT_APP_BASE_URL}receipts/receiptData`, {
-				receiptData: newReceipt,
+		createToken()
+			.then(token => {
+				axios
+					.patch(
+						`${process.env.REACT_APP_BASE_URL}receipts/receiptData`,
+						{
+							receiptData: newReceipt,
+						},
+						token,
+					)
+					.then(result => {
+						console.log(result.data);
+						const newReceiptSelected = result.data.find(receipt => {
+							return receipt.receiptID === receiptSelected.receiptID;
+						});
+						setReceiptList(result.data);
+						setReceiptSelected(newReceiptSelected);
+						setTimeout(() => {
+							setEditMode(!editMode);
+						}, 300);
+					})
+					.catch(err => console.log(err));
 			})
-			.then(result => {
-				console.log(result.data);
-				const newReceiptSelected = result.data.find(receipt => {
-					return receipt.receiptID === receiptSelected.receiptID;
-				});
-				setReceiptList(result.data);
-				setReceiptSelected(newReceiptSelected);
-				setTimeout(() => {
-					setEditMode(!editMode);
-				}, 300);
-			})
-			.catch(err => console.log(err));
+			.catch(error => {
+				console.log("Could not create Token:", error);
+			});
 	};
 
 	const cancelChangesHandler = async id => {
