@@ -3,14 +3,35 @@ import { useSpring, animated } from "react-spring";
 import deleteIcon from "../assets/images/delete.svg";
 import ResultsCapacitySelectedStoreDetails from "./ResultsCapacitySelectedStoreDetails";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
+import { useAuth } from "../contexts/AuthContext";
 const ResultsCapacitySelected = ({
 	capacity,
 	value,
 	quantity,
 	storeList,
-	deleteHandler,
+	values,
+	setValues,
 }) => {
+	const { createToken } = useAuth();
+	const deleteCapacityHandler = (value, quantity) => {
+		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/items/${value}/${quantity}`;
+
+		createToken()
+			.then(token => {
+				axios
+					.delete(url, token)
+					.then(() => {
+						setValues({ ...values, updateList: true });
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			})
+			.catch(err => console.log("Not authorized to delete", err));
+	};
+
 	const animationStyle = useSpring({
 		from: { opacity: 0 },
 		to: { opacity: 1 },
@@ -25,7 +46,7 @@ const ResultsCapacitySelected = ({
 					src={deleteIcon}
 					alt="Click here to delete item"
 					onClick={e => {
-						deleteHandler("items", value, quantity);
+						deleteCapacityHandler(value, quantity);
 					}}
 				/>
 				<div className="capacity__optionsList">

@@ -5,9 +5,17 @@ import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
 import ResultsCapacitySelected from "./ResultsCapacitySelected";
 import { v4 as uuidv4 } from "uuid";
 import TipsSection from "./TipsSection";
+import { useAuth } from "../contexts/AuthContext";
 
-const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
+const ResultsCapacity = ({
+	list,
+	selected,
+	changeSelected,
+	values,
+	setValues,
+}) => {
 	var newList = [];
+
 	const capacityList = itemList => {
 		//value refers to the capacity as a number
 		const resultsList = itemList.slice(0).filter(item => {
@@ -68,7 +76,8 @@ const ResultsCapacity = ({ list, deleteHandler, selected, changeSelected }) => {
 								value={selected.value}
 								quantity={selected.quantity}
 								storeList={selected.storeList}
-								deleteHandler={deleteHandler}
+								values={values}
+								setValues={setValues}
 							/>
 						)}
 					</div>
