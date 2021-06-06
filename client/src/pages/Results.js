@@ -28,6 +28,7 @@ const Results = () => {
 						});
 						setValues({
 							...values,
+							selected: "",
 							results: [].concat.apply([], lastSearchResults),
 							currentLocation: result.data.data[0].userlocation,
 							updateList: false,
