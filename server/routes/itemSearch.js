@@ -154,7 +154,6 @@ router.get("/:store/:time", async (req, res) => {
 		const userlocation = req.query.userlocation;
 		const item = req.query.item;
 		const userid = auth.user_id;
-		console.log(req.params.store);
 		const store =
 			req.params.store === "longos"
 				? "Longo's"
@@ -175,7 +174,6 @@ router.get("/:store/:time", async (req, res) => {
 				: req.params.store === "nofrills"
 				? nofrills
 				: "n/a";
-		console.log(userlocation);
 
 		const responseData = await conductSearch(
 			storeFunction,
@@ -229,100 +227,121 @@ router.get("/searchresults", async (req, res) => {
 	}
 });
 
-router.patch("/item/:store/:id", async (req, res) => {
-	const itemID = req.params.id;
-	const store = req.params.store;
+router.delete("/item/:store/:id", async (req, res) => {
+	const auth = req.currentUser;
 
-	//Finds the document for the specified store where the item is from.
-	UserResults.find({
-		store: store,
-	})
-		.exec()
-		.then(result => {
-			//Copies the searchResults from the store and removes the item with the itemID.
-			const listofItems = result[0].searchResults;
-			const itemToRemove = listofItems.findIndex(item => {
-				return item.productID === itemID;
-			});
-			if (itemToRemove + 1 > 0) {
-				listofItems.splice(itemToRemove, 1);
-			} else {
-				console.log("Not in the list-------------");
-			}
-			return listofItems;
+	if (auth) {
+		const itemID = req.params.id;
+		const store = req.params.store;
+
+		//Finds the document for the specified store where the item is from.
+		UserResults.find({
+			store: store,
+			user_id: auth.user_id,
 		})
-		.then(result => {
-			//Replaces the old array in the document with the new array wherein the item with itemID no longer exists in.
-			return UserResults.findOneAndUpdate(
-				{ store: store },
-				{ searchResults: result },
-				{ new: true },
-			).then(result => {
-				UserResults.find()
-					.exec()
-					.then(result => {
-						res.status(200).json(result);
-					});
+			.exec()
+			.then(result => {
+				//Copies the searchResults from the store and removes the item with the itemID.
+				console.log(result[0]);
+				const listofItems = result[0].searchResults;
+				const itemToRemove = listofItems.findIndex(item => {
+					return item.productID === itemID;
+				});
+				if (itemToRemove + 1 > 0) {
+					listofItems.splice(itemToRemove, 1);
+				} else {
+					console.log("Not in the list-------------");
+				}
+				return listofItems;
+			})
+			.then(result => {
+				//Replaces the old array in the document with the new array wherein the item with itemID no longer exists in.
+				return UserResults.findOneAndUpdate(
+					{ store: store, user_id: auth.user_id },
+					{ searchResults: result },
+					{ new: true },
+				).then(result => {
+					UserResults.find({ user_id: auth.user_id })
+						.exec()
+						.then(result => {
+							res.status(200).json(result);
+						});
+				});
+			})
+			.catch(err => {
+				return {
+					code: 500,
+					jsonData: {
+						message: "Had problems finding and deleting the item",
+						error: err,
+					},
+				};
 			});
-		})
-		.catch(err => {
-			return {
-				code: 500,
-				jsonData: {
-					message: "Had problems finding and deleting the item",
-					error: err,
-				},
-			};
-		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
-router.patch("/items/:value/:quantity", async (req, res) => {
-	const itemValue = parseInt(req.params.value);
-	const itemQuantity = parseInt(req.params.quantity);
+router.delete("/items/:value/:quantity", async (req, res) => {
+	const auth = req.currentUser;
 
-	const resultList = await UserResults.find();
+	if (auth) {
+		const itemValue = parseInt(req.params.value);
+		const itemQuantity = parseInt(req.params.quantity);
 
-	Promise.all(
-		resultList.map(async doc => {
-			const store = doc.store;
-			const changedDoc = await UserResults.find({ store: store })
-				.exec()
-				.then(doc => {
-					const list = doc[0].searchResults.filter(item => {
-						return item.value !== itemValue || item.quantity !== itemQuantity;
+		const resultList = await UserResults.find({ user_id: auth.user_id });
+
+		Promise.all(
+			resultList.map(async doc => {
+				const store = doc.store;
+				const changedDoc = await UserResults.find({
+					store: store,
+					user_id: auth.user_id,
+				})
+					.exec()
+					.then(doc => {
+						const list = doc[0].searchResults.filter(item => {
+							return item.value !== itemValue || item.quantity !== itemQuantity;
+						});
+
+						return list;
+					})
+					.then(newList => {
+						return UserResults.findOneAndUpdate(
+							{ store: store, user_id: auth.user_id },
+							{ searchResults: newList },
+							{ new: true },
+						);
+					})
+					.then(result => {
+						return result;
+					})
+					.catch(err => {
+						return err;
 					});
 
-					return list;
-				})
-				.then(newList => {
-					return UserResults.findOneAndUpdate(
-						{ store: store },
-						{ searchResults: newList },
-						{ new: true },
-					);
-				})
-				.then(result => {
-					return result;
-				})
-				.catch(err => {
-					return err;
-				});
-
-			return changedDoc;
-		}),
-	)
-		.then(result => {
-			UserResults.find()
-				.exec()
-				.then(result => {
-					// console.log(result);
-					res.status(200).json(result);
-				});
-		})
-		.catch(err => {
-			console.log(err);
-			res.status(500).json(err);
-		});
+				return changedDoc;
+			}),
+		)
+			.then(result => {
+				res.status(200).json(result);
+				console.log(result);
+			})
+			.catch(err => {
+				console.log(err);
+				res.status(500).json(err);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 module.exports = router;
