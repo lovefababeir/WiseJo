@@ -1,5 +1,7 @@
 import React from "react";
 import deleteIcon from "../assets/images/delete.svg";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 const ResultsAllItemCard = ({
 	image,
@@ -8,8 +10,28 @@ const ResultsAllItemCard = ({
 	price,
 	title,
 	productID,
-	deleteHandler,
+	values,
+	setValues,
 }) => {
+	const { createToken } = useAuth();
+
+	//Handler that deletes the item
+	const deleteItemHandler = (store, productID) => {
+		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/item/${store}/${productID}`;
+		createToken()
+			.then(token => {
+				axios
+					.delete(url, token)
+					.then(() => {
+						setValues({ ...values, updateList: true });
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
+			})
+			.catch(err => console.log("Not authorized to delete", err));
+	};
+
 	return (
 		<div className="item">
 			<img
@@ -27,7 +49,7 @@ const ResultsAllItemCard = ({
 					src={deleteIcon}
 					alt="Click here to delete item"
 					onClick={e => {
-						deleteHandler("item", store, productID);
+						deleteItemHandler(store, productID);
 					}}
 					className="item__delete"
 				/>
