@@ -48,42 +48,9 @@ const Results = () => {
 		setValues({ ...values, view: page });
 	};
 
-	const deleteHandler = (del, detail1, detail2) => {
-		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/`;
-		//detail1 = item id for when del = "item"
-		if (del === "item") {
-			createToken()
-				.then(token => {
-					axios
-						.delete(url + del + "/" + detail1 + "/" + detail2, token)
-						.then(() => {
-							setValues({ ...values, updateList: true });
-						})
-						.catch(function (error) {
-							console.log(error);
-						});
-				})
-				.catch(err => console.log("Not authorized to delete", err));
-		} else {
-			//for this case del="items" so detail1 = capacity detail2 = quantity
-			createToken()
-				.then(token => {
-					axios
-						.delete(url + del + "/" + detail1 + "/" + detail2, token)
-						.then(() => {
-							setValues({ ...values, updateList: true });
-						})
-						.catch(function (error) {
-							console.log(error);
-						});
-				})
-				.catch(err => console.log("Not authorized to delete", err));
-		}
-	};
 	const changeSelected = category => {
 		setValues({ ...values, selected: category });
 	};
-
 	return (
 		<>
 			<div
@@ -93,14 +60,15 @@ const Results = () => {
 				<ResultsSubMenu view={values.view} changePageHandler={changePageHandler} />
 				<div className="results__view">
 					{values.view === "All" && (
-						<ResultsAll list={values.results} deleteHandler={deleteHandler} />
+						<ResultsAll list={values.results} values={values} setValues={setValues} />
 					)}
 					{values.view === "Capacity" && (
 						<ResultsCapacity
 							list={values.results}
-							deleteHandler={deleteHandler}
 							changeSelected={changeSelected}
 							selected={values.selected}
+							values={values}
+							setValues={setValues}
 						/>
 					)}
 					{values.view === "Solutions" && (
