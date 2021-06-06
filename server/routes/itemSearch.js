@@ -261,11 +261,7 @@ router.delete("/item/:store/:id", async (req, res) => {
 					{ searchResults: result },
 					{ new: true },
 				).then(result => {
-					UserResults.find({ user_id: auth.user_id })
-						.exec()
-						.then(result => {
-							res.status(200).json(result);
-						});
+					res.status(200).json(result);
 				});
 			})
 			.catch(err => {
