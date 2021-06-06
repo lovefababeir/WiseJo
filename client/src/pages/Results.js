@@ -13,16 +13,16 @@ const Results = () => {
 		view: "All",
 		selected: "",
 		currentLocation: "",
+		updateList: true,
 	});
+
 	const { createToken } = useAuth();
 	useEffect(() => {
-		let mounted = true;
-		createToken().then(token => {
-			axios
-				.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
-				.then(result => {
-					console.log(result);
-					if (mounted) {
+		if (values.updateList === true) {
+			createToken().then(token => {
+				axios
+					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+					.then(result => {
 						const lastSearchResults = result.data.data.map(record => {
 							return record.searchResults;
 						});
@@ -30,67 +30,59 @@ const Results = () => {
 							...values,
 							results: [].concat.apply([], lastSearchResults),
 							currentLocation: result.data.data[0].userlocation,
+							updateList: false,
 						});
-					}
-				})
-				.catch(error => {
-					console.log(`error: ${error}`);
-				})
-				.catch(err => {
-					console.log("Could not create token");
-				});
-		});
-		return () => {
-			mounted = false;
-		};
-	}, []);
+					})
+					.catch(error => {
+						console.log(`error: ${error}`);
+					})
+					.catch(err => {
+						console.log("Could not create token");
+					});
+			});
+		}
+	}, [values, createToken]);
 
 	const changePageHandler = page => {
 		setValues({ ...values, view: page });
 	};
+
 	const deleteHandler = (del, detail1, detail2) => {
 		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/`;
 		//detail1 = item id for when del = "item"
 		if (del === "item") {
-			axios
-				.patch(url + del + "/" + detail1 + "/" + detail2)
-				.then(res => {
-					const updatedResults = res.data.map(record => {
-						return record.searchResults;
-					});
-					setValues({
-						...values,
-						results: [].concat.apply([], updatedResults),
-						selected: "",
-					});
+			createToken()
+				.then(token => {
+					axios
+						.delete(url + del + "/" + detail1 + "/" + detail2, token)
+						.then(() => {
+							setValues({ ...values, updateList: true });
+						})
+						.catch(function (error) {
+							console.log(error);
+						});
 				})
-				.catch(function (error) {
-					console.log(error);
-				});
+				.catch(err => console.log("Not authorized to delete", err));
 		} else {
 			//for this case del="items" so detail1 = capacity detail2 = quantity
-			axios
-				.patch(url + del + "/" + detail1 + "/" + detail2)
-				.then(res => {
-					const updatedResults = res.data.map(record => {
-						return record.searchResults;
-					});
-					setValues({
-						...values,
-						results: [].concat.apply([], updatedResults),
-						selected: "",
-					});
+			createToken()
+				.then(token => {
+					axios
+						.delete(url + del + "/" + detail1 + "/" + detail2, token)
+						.then(() => {
+							setValues({ ...values, updateList: true });
+						})
+						.catch(function (error) {
+							console.log(error);
+						});
 				})
-				.catch(function (error) {
-					console.log(error);
-				});
+				.catch(err => console.log("Not authorized to delete", err));
 		}
 	};
 	const changeSelected = category => {
 		setValues({ ...values, selected: category });
 	};
 
-	console.log(values);
 	return (
 		<>
 			<div
