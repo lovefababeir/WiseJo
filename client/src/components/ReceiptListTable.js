@@ -2,6 +2,7 @@ import React from "react";
 import ReceiptListTableElements from "./ReceiptListTableElements";
 import ReceiptListTableSummary from "./ReceiptListTableSummary";
 import "./ReceiptListTable.scss";
+import { v4 as uuidv4 } from "uuid";
 
 const ReceiptListTable = ({
 	receiptList,
@@ -41,6 +42,7 @@ const ReceiptListTable = ({
 									selectReceiptHandler={selectReceiptHandler}
 									editMode={editMode}
 									dateToString={dateToString}
+									key={uuidv4()}
 								/>
 							);
 						})}
