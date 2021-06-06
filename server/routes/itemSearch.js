@@ -260,9 +260,10 @@ router.delete("/item/:store/:id", async (req, res) => {
 					{ store: store, user_id: auth.user_id },
 					{ searchResults: result },
 					{ new: true },
-				).then(result => {
-					res.status(200).json(result);
-				});
+				);
+			})
+			.then(result => {
+				res.status(200).json(result);
 			})
 			.catch(err => {
 				return {
