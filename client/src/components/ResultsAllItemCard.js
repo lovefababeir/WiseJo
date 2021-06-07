@@ -25,11 +25,11 @@ const ResultsAllItemCard = ({
 					.then(() => {
 						setValues({ ...values, updateList: true });
 					})
-					.catch(function (error) {
-						console.log(error);
-					});
+					.catch(function (error) {});
 			})
-			.catch(err => console.log("Not authorized to delete", err));
+			.catch(err =>
+				setValues({ ...values, errorMessageAll: "Failed to delete item" }),
+			);
 	};
 
 	return (
