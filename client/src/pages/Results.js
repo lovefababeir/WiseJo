@@ -15,6 +15,8 @@ const Results = () => {
 		selected: "",
 		currentLocation: "",
 		updateList: true,
+		errorMessageAll: "",
+		errorMessageCapacity: "",
 	});
 	const history = useHistory();
 	const { createToken, logout } = useAuth();
