@@ -12,6 +12,7 @@ const RecordReceipt = () => {
 		file: null,
 		errMsg: "",
 		loading: false,
+		advice: "",
 	});
 	const { createToken } = useAuth();
 
@@ -19,6 +20,7 @@ const RecordReceipt = () => {
 	const onFormSubmit = e => {
 		const time = Date.now();
 		e.preventDefault();
+
 		const store = e.target.receiptStore.value;
 		if (!store || !values.file) {
 			setValues({
@@ -90,7 +92,25 @@ const RecordReceipt = () => {
 	};
 
 	const onFormChange = e => {
-		setValues({ ...values, file: e.target.files[0] });
+		const store = e.target.receiptStore?.value;
+		if (store === "Walmart") {
+			setValues({
+				...values,
+				advice:
+					"For best results make sure your picture starts just a little but above the Store # just below the survey ad",
+			});
+		}
+		if (store === "Longos") {
+			setValues({
+				...values,
+				advice:
+					"For best results make sure your is focused on the main content of the receipt. Don't include the information after the payment",
+			});
+		}
+
+		const imgSrc = URL.createObjectURL(e.target.files[0]);
+
+		setValues({ ...values, file: e.target.files[0], imgSrc: imgSrc });
 	};
 
 	return (
@@ -102,6 +122,7 @@ const RecordReceipt = () => {
 					onFormSubmit={onFormSubmit}
 					loading={values.loading}
 					errMsg={values.errMsg}
+					imgSrc={values.imgSrc}
 				/>
 				{values.loading && <LoadingSpinner />}
 			</div>
