@@ -5,22 +5,26 @@ const ReceiptListTableElements = ({
 	receipt,
 	selectReceiptHandler,
 	dateToString,
+	selectedReceiptID,
 }) => {
 	const { receiptID, store, date, purchaseData } = receipt;
 	const { day, month, year } = date;
 	return (
 		<div
-			className="receipt__record"
+			className={`receipt__record${
+				selectedReceiptID === receiptID ? " receipt__record--active" : ""
+			}`}
 			id={receiptID}
 			key={uuidv4()}
 			onClick={e => selectReceiptHandler(e, receiptID)}
 		>
-			<p className="receipt__summary">{store}</p>
-
-			<p className="receipt__summary">
-				{dateToString(month)} / {dateToString(day)} / {year}
-			</p>
-			<p className="receipt__summary">${purchaseData.total}</p>
+			<div>
+				<p className="receipt__summary">{store}</p>
+				<p className="receipt__summary">
+					{dateToString(month)} / {dateToString(day)} / {year}
+				</p>
+				<p className="receipt__summary">${purchaseData.total}</p>
+			</div>
 		</div>
 	);
 };
