@@ -4,19 +4,23 @@ const receipt = receiptResults => {
 		return text.includes("STORE") || text.includes("STO") || text.includes("ORE");
 	});
 
-	const storeID = receiptResults[storeIDindex].split(" ").pop();
+	const storeID = receiptResults[storeIDindex]?.split(" ").pop();
 
+	let address;
+	let contact;
 	//======================================s
-	//To get addres
-	const address =
-		receiptResults[storeIDindex + 1] +
-		" " +
-		receiptResults[storeIDindex + 2] +
-		" " +
-		receiptResults[storeIDindex + 3];
+	if (storeIDindex + 1 > 0) {
+		//To get addres
+		address =
+			receiptResults[storeIDindex + 1] +
+			" " +
+			receiptResults[storeIDindex + 2] +
+			" " +
+			receiptResults[storeIDindex + 3];
 
-	//To get the number
-	const contact = receiptResults[storeIDindex + 4];
+		//To get the number
+		contact = receiptResults[storeIDindex + 4];
+	}
 
 	//======================================
 	//To index of where List of items starts
@@ -32,6 +36,9 @@ const receipt = receiptResults => {
 			  });
 
 	const testAmount = amount => {
+		if (!amount) {
+			return;
+		}
 		const digits = amount.split("");
 		const numDigits = amount.length;
 		const decimalIndex = digits.indexOf(".");
@@ -51,10 +58,14 @@ const receipt = receiptResults => {
 	};
 
 	//======================================
-	//SUBTOTAL
-	const subtotalIndex = receiptResults.findIndex(line => {
-		return line.includes("SUBTOTAL");
-	});
+	//Index of the last item
+	const lastItemIndex =
+		receiptResults.findIndex(line => {
+			return line.includes("SUBTOTAL");
+		}) ||
+		receiptResults.findIndex(line => {
+			return line.includes("HST") || line.includes("13.0000%");
+		});
 
 	//======================================
 	//Change Index
@@ -75,27 +86,25 @@ const receipt = receiptResults => {
 
 	//======================================
 	//LIST OF ITEMS PURCHASED
-	const purchases = receiptResults.slice(itemsIndex, subtotalIndex);
+	const purchases = receiptResults.slice(itemsIndex, lastItemIndex);
 
 	//======================================
-	//SUBTOTAL SUMMARY
-	const purchaseSummary = receiptResults.slice(subtotalIndex, changeIndex + 1);
-
-	const subtotalStr = purchaseSummary.reduce((subtotal, line) => {
+	//SUBTOTAL
+	const subtotalStr = receiptResults.reduce((subtotal, line) => {
 		return line.includes("SUBTOTAL") || line.includes("SUB") ? line : subtotal;
 	});
 	const subtotal = testAmount(subtotalStr.replace(/[^0-9.-]+/g, ""));
 
 	//======================================
 	//TOTAL
-	const totalStr = purchaseSummary.reduce((total, line) => {
+	const totalStr = receiptResults.reduce((total, line) => {
 		return !line.includes("SUBTOTAL") &&
 			!line.includes("SUB") &&
 			(line.includes("TOTAL") || line.includes("TOT"))
 			? line
 			: total;
 	});
-	const paymentString = receiptResults.find(line => {
+	const paymentLine = receiptResults.find(line => {
 		return (
 			line.includes("DEBIT") ||
 			line.includes("TEND") ||
@@ -106,28 +115,28 @@ const receipt = receiptResults => {
 
 	let total;
 	const totalNum = totalStr.replace(/[^0-9.-]+/g, "");
-	const paymentNum = paymentString && paymentString.replace(/[^0-9.-]+/g, "");
+	const paymentNum = paymentLine?.replace(/[^0-9.-]+/g, "");
 
-	if (totalStr && paymentString && totalNum !== paymentNum) {
+	if (totalStr && paymentLine && totalNum !== paymentNum) {
 		total =
 			totalNum.includes(paymentNum) || totalNum.length > paymentNum.length
-				? Number(testAmount(totalNum))
-				: Number(testAmount(paymentNum));
+				? testAmount(totalNum)
+				: testAmount(paymentNum);
 	} else {
-		total = Number(testAmount(totalNum));
+		total = testAmount(totalNum);
 	}
 
-	const storeData = {
+	//Purchase Breakdown
+	const purchaseData = {
 		storeID: storeID,
 		address: address,
 		contact: contact,
 		purchases: purchases,
-		purchaseSummary: purchaseSummary,
 		subtotal: subtotal,
 		total: total,
 	};
 
-	return storeData;
+	return purchaseData;
 };
 
 module.exports = { receipt };
