@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ReceiptList.scss";
 import axios from "axios";
-import ReceiptListSelected from "../components/ReceiptListSelected";
-import ReceiptListSelectedEdit from "../components/ReceiptListSelectedEdit";
+import ReceiptSelected from "../components/ReceiptSelected";
+import ReceiptEdit from "../components/ReceiptEdit";
 import ReceiptListTable from "../components/ReceiptListTable";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -27,7 +27,7 @@ const ReceiptList = () => {
 		return () => {
 			mounted = false;
 		};
-	}, []);
+	}, [createToken]);
 
 	const monthNames = [
 		"January",
@@ -48,6 +48,10 @@ const ReceiptList = () => {
 
 		//check if in edit mode. If so, exit handler so that the selected receipt is not changed
 		if (editMode) {
+			return;
+		}
+		if (receiptSelected.receiptID === ID) {
+			setReceiptSelected("");
 			return;
 		}
 		const receipt = receiptList.find(item => {
@@ -162,10 +166,11 @@ const ReceiptList = () => {
 					totalExpenses={totalExpenses}
 					editMode={editMode}
 					dateToString={dateToString}
+					selectedReceiptID={receiptSelected.receiptID}
 				/>
 
 				{receiptSelected && !editMode && (
-					<ReceiptListSelected
+					<ReceiptSelected
 						store={receiptSelected.store}
 						date={receiptSelected.date}
 						purchaseData={receiptSelected.purchaseData}
@@ -175,7 +180,7 @@ const ReceiptList = () => {
 					/>
 				)}
 				{receiptSelected && editMode && (
-					<ReceiptListSelectedEdit
+					<ReceiptEdit
 						purchaseData={receiptSelected.purchaseData}
 						store={receiptSelected.store}
 						date={receiptSelected.date}
