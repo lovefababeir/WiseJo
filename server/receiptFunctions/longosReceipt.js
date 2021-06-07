@@ -1,64 +1,73 @@
 const receipt = receiptResults => {
-	//To get store details ID
-	const storeDetailsIndex = receiptResults.findIndex(text => {
-		return text.includes("Cashier");
-	});
-
-	//store details
-	const storeDetails = receiptResults.slice(0, storeDetailsIndex + 1);
-
 	let contact;
 	let storeLocation;
 	let manager;
 	let cashier;
 	//=====Store location and contact details:
-	if (storeDetails) {
-		const locationDetails = storeDetails
-			? storeDetails
-					.find(line => {
-						return line.includes("Longos") && line.includes("-");
-					})
-					.split(" ")
-			: [];
 
-		if (locationDetails.length) {
-			const contactIndex = locationDetails.findIndex(word => {
-				return word.includes("-");
-			});
-			contact = locationDetails.splice(contactIndex)[0];
-			storeLocation = locationDetails.join(" ");
-		} else {
-			contact = "No info detected";
-			storeLocation = "No info detected";
-		}
-		//store Manager:
-		const lineWithManager =
-			storeDetails
+	const locationDetails = receiptResults.find(line => {
+		return line.includes("Longos") || line.includes("-");
+	})
+		? receiptResults
 				.find(line => {
-					return line.includes("Manager");
+					return line.includes("Longos") || line.includes("-");
 				})
-				.split(" ") || "";
-		manager = lineWithManager
-			.slice(
-				lineWithManager.findIndex(word => {
-					return word.includes("is");
-				}) + 1,
-			)
-			.join(" ");
-
-		//Cashier details:
-		const cashierLine = storeDetails
-			.find(line => {
-				return line.includes("Cashier");
-			})
-			.split(" ");
-
-		const cashierIndex = cashierLine.findIndex(word => {
-			return word.includes("was");
+				.split(" ")
+		: [];
+	if (locationDetails.length) {
+		const contactIndex = locationDetails.findIndex(word => {
+			return word.includes("-");
 		});
-		cashier = cashierLine[cashierIndex + 1];
+
+		contact = locationDetails.splice(contactIndex)[0];
+		storeLocation = locationDetails.join(" ");
+	} else {
+		contact = "No info detected";
+		storeLocation = "No info detected";
 	}
 
+	//======================================
+	//store Manager:
+	const lineWithManager =
+		receiptResults
+			.find(line => {
+				return line.includes("Manager");
+			})
+			.split(" ") || "";
+	manager = lineWithManager
+		.slice(
+			lineWithManager.findIndex(word => {
+				return word.includes("is");
+			}) + 1,
+		)
+		.join(" ");
+
+	//======================================
+	//Cashier details:
+	const cashierLine = receiptResults
+		.find(line => {
+			return (
+				line.includes("Cashier") ||
+				(line.includes("Today") && line.includes("was")) ||
+				(line.includes("Your") && line.includes("was")) ||
+				(line.includes("Your") && line.includes("Today"))
+			);
+		})
+		?.split(" ");
+
+	if ([...cashierLine].length > 1) {
+		const cashierIndex =
+			cashierLine.findIndex(word => {
+				return word.includes("was");
+			}) + 1;
+
+		cashier = cashierLine.splice(cashierIndex).join(" ");
+	} else {
+		cashier = cashierLine[0];
+	}
+
+	//======================================
+	//LIST OF ITEMS
 	//To find the index of where List of items starts
 	const firstItemsIndex =
 		receiptResults.findIndex(line => {
@@ -75,6 +84,8 @@ const receipt = receiptResults => {
 		itemsList = receiptResults.slice(firstItemsIndex, lastItemIndex);
 	}
 
+	//======================================
+	//Correcting Money Amount
 	const testAmount = amount => {
 		const digits = amount.split("");
 		const numDigits = amount.length;
@@ -94,19 +105,21 @@ const receipt = receiptResults => {
 		}
 	};
 
+	//======================================
 	//SUBTOTAL
 	let subtotal;
 	const subtotalLine = receiptResults
 		.find(text => {
 			return text.includes("Subtotal");
 		})
-		.split(" ");
+		?.split(" ");
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = testAmount(subtotalStr).replace(/[^0-9.-]+/g, "");
+		subtotal = Number(testAmount(subtotalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
+	//======================================
 	//TOTAL
 	let total;
 	const totalLine = receiptResults
@@ -118,17 +131,17 @@ const receipt = receiptResults => {
 		const totalStr = totalLine.pop();
 
 		// const totalStr = withTotal[totalIndex];
-		total = testAmount(totalStr).replace(/[^0-9.-]+/g, "");
+		total = Number(testAmount(totalStr).replace(/[^0-9.-]+/g, ""));
 	}
 
 	const storeData = {
-		storeID: storeLocation || "No info detected",
-		manager: manager || "No info detected",
-		cashier: cashier || "No info detected",
-		contact: contact || "No info detected",
-		purchases: itemsList || "No info detected",
-		subtotal: subtotal || "No info detected",
-		total: total || "No info detected",
+		storeID: storeLocation || "",
+		manager: manager || "",
+		cashier: cashier || "",
+		contact: contact || "",
+		purchases: itemsList || "",
+		subtotal: subtotal || "",
+		total: total || "",
 	};
 
 	return storeData;
