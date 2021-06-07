@@ -12,7 +12,7 @@ const receipt = receiptResults => {
 				.find(line => {
 					return line.includes("Longos") || line.includes("-");
 				})
-				.split(" ")
+				?.split(" ")
 		: [];
 	if (locationDetails.length) {
 		const contactIndex = locationDetails.findIndex(word => {
@@ -33,14 +33,14 @@ const receipt = receiptResults => {
 			.find(line => {
 				return line.includes("Manager");
 			})
-			.split(" ") || "";
+			?.split(" ") || "";
 	manager = lineWithManager
-		.slice(
+		?.slice(
 			lineWithManager.findIndex(word => {
 				return word.includes("is");
 			}) + 1,
 		)
-		.join(" ");
+		?.join(" ");
 
 	//======================================
 	//Cashier details:
@@ -87,15 +87,19 @@ const receipt = receiptResults => {
 	//======================================
 	//Correcting Money Amount
 	const testAmount = amount => {
-		const digits = amount.split("");
-		const numDigits = amount.length;
+		console.log("test amount", amount);
+		if (!amount) {
+			return;
+		}
+		const digits = amount?.split("");
+		const numDigits = amount?.length;
 		const decimalIndex = digits.indexOf(".");
+		console.log(digits, numDigits, decimalIndex);
 		if (decimalIndex + 1 > 0) {
 			if (numDigits - decimalIndex === 3) {
 				return digits.join("");
 			} else {
 				digits.push("0", "0");
-
 				digits.splice(decimalIndex + 3);
 				return digits.join("");
 			}
@@ -116,25 +120,49 @@ const receipt = receiptResults => {
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = Number(testAmount(subtotalStr).replace(/[^0-9.-]+/g, ""));
+		subtotal = testAmount(subtotalStr.replace(/[^0-9.-]+/g, ""));
 	}
 
 	//======================================
 	//TOTAL
 	let total;
-	const totalLine = receiptResults
+	const totalStr = receiptResults
 		.find(line => {
 			return line.includes("TOTAL") || line.includes("Item count");
 		})
-		.split(" ");
-	if (totalLine) {
-		const totalStr = totalLine.pop();
+		?.split(" ")
+		?.pop();
 
-		// const totalStr = withTotal[totalIndex];
-		total = Number(testAmount(totalStr).replace(/[^0-9.-]+/g, ""));
+	const paymentLine = receiptResults.find(line => {
+		return (
+			line.includes("Debit Card") ||
+			line.includes("Debit ") ||
+			line.includes("Debit Card") ||
+			line.includes("Master Card") ||
+			line.includes("Credit Card")
+		);
+	});
+
+	const totalNum = totalStr?.replace(/[^0-9.-]+/g, "");
+
+	const paymentNum = paymentLine?.replace(/[^0-9.-]+/g, "");
+
+	let theTotal;
+	if (totalNum && !paymentNum) {
+		theTotal = totalNum;
+	} else if (!totalNum && paymentNum) {
+		theTotal = paymenNum;
+	} else if (totalStr && paymentLine && totalNum !== paymentNum) {
+		theTotal =
+			totalNum.includes(paymentNum) || totalNum.length > paymentNum.length
+				? totalNum
+				: paymentNum;
+	} else {
+		theTotal = testAmount(totalNum);
 	}
+	total = testAmount(theTotal);
 
-	const storeData = {
+	const purchaseData = {
 		storeID: storeLocation || "",
 		manager: manager || "",
 		cashier: cashier || "",
@@ -144,7 +172,7 @@ const receipt = receiptResults => {
 		total: total || "",
 	};
 
-	return storeData;
+	return purchaseData;
 };
 
 module.exports = { receipt };
