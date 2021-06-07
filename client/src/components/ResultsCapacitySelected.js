@@ -26,10 +26,12 @@ const ResultsCapacitySelected = ({
 						setValues({ ...values, updateList: true });
 					})
 					.catch(function (error) {
-						console.log(error);
+						setValues({ ...values, errorMessageAll: "Failed to delete item" });
 					});
 			})
-			.catch(err => console.log("Not authorized to delete", err));
+			.catch(err =>
+				setValues({ ...values, errorMessageAll: "Failed to create acces token" }),
+			);
 	};
 
 	const animationStyle = useSpring({
