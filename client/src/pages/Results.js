@@ -4,6 +4,7 @@ import ResultsAll from "../components/ResultsAll";
 import ResultsCapacity from "../components/ResultsCapacity";
 import ResultsSolutions from "../components/ResultsSolutions";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import ResultsSubMenu from "../components/ResultsSubMenu";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -15,8 +16,8 @@ const Results = () => {
 		currentLocation: "",
 		updateList: true,
 	});
-
-	const { createToken } = useAuth();
+	const history = useHistory();
+	const { createToken, logout } = useAuth();
 	useEffect(() => {
 		if (values.updateList === true) {
 			createToken().then(token => {
@@ -51,6 +52,18 @@ const Results = () => {
 	const changeSelected = category => {
 		setValues({ ...values, selected: category });
 	};
+
+	const signoutHandler = async e => {
+		e.preventDefault();
+		try {
+			await logout();
+			history.push("/login");
+		} catch {
+			console.log("Sorry, we could not sign you out");
+			// setError("Sorry, we could not sign you out");
+		}
+	};
+
 	return (
 		<>
 			<div
@@ -77,6 +90,9 @@ const Results = () => {
 							currentLocation={values.currentLocation}
 						/>
 					)}
+					<button className="signoutBtn" onClick={signoutHandler}>
+						Sign Out
+					</button>
 				</div>
 			</div>
 		</>
