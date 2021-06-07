@@ -4,6 +4,7 @@ import "./RecordReceipt.scss";
 import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../contexts/AuthContext";
+import RecordReceiptForm from "../components/RecordReceiptForm";
 
 const RecordReceipt = () => {
 	const history = useHistory();
@@ -47,7 +48,7 @@ const RecordReceipt = () => {
 				config,
 			)
 			.then(res => {
-				const dataRes = res.data.regions;
+				console.log(JSON.stringify(res.data.regions));
 				createToken()
 					.then(token => {
 						axios
@@ -61,19 +62,27 @@ const RecordReceipt = () => {
 								history.push("/track");
 							})
 							.catch(err => {
-								console.log("could not convert");
+								setValues({
+									...values,
+									loading: false,
+									errMsg: `Error: The image you uploaded could not be analyzed for ${store}. Please check to see that you've selected the correct store.`,
+								});
 							});
 					})
 					.catch(err => {
-						console.log(
-							"Could not create authentication token to gain access to backend",
-						);
+						setValues({
+							...values,
+							loading: false,
+							errMsg:
+								"Could not create authentication token to gain access to backend.",
+						});
 					});
 			})
 			.catch(err => {
 				console.log(err.response);
 				setValues({
 					...values,
+					loading: false,
 					errMsg:
 						"Sorry, the OCR had trouble reading your image. Try increasing the contrast and brightness and to make the image as black and white as possible.",
 				});
@@ -81,7 +90,6 @@ const RecordReceipt = () => {
 	};
 
 	const onFormChange = e => {
-		console.log(e.target.files);
 		setValues({ ...values, file: e.target.files[0] });
 	};
 
@@ -89,47 +97,12 @@ const RecordReceipt = () => {
 		<>
 			<div className="receipt-form">
 				<h1 className="form__title">SNAP & TRACK</h1>
-				<form onSubmit={e => onFormSubmit(e)}>
-					<div className="form__box">
-						<label className="form__label form__label--receipts">
-							Take a picture of your receipt and upload it here
-						</label>
-						<input
-							className="receipt-form__fileUpload"
-							accept="image/*"
-							type="file"
-							name="receipt"
-							onChange={e => {
-								onFormChange(e);
-							}}
-							disabled={values.loading}
-						/>
-						<label className="form__label form__label--receipts">
-							Select the store from where you made your purchase
-						</label>
-						<select
-							className="receipt-form__storeSelect"
-							name="receiptStore"
-							id="receiptStore"
-							disabled={values.loading}
-						>
-							<option value="Longo's">Longo's</option>
-							<option value="No Frills">No Frills</option>
-							<option value="Walmart">Walmart</option>
-						</select>
-						<button
-							className="receipt-form__submitBtn"
-							type="submit"
-							disabled={values.loading}
-						>
-							Track
-						</button>
-					</div>
-
-					<p className={values.errMsg ? "receipt-form__errMsg" : ""}>
-						{values.errMsg}
-					</p>
-				</form>
+				<RecordReceiptForm
+					onFormChange={onFormChange}
+					onFormSubmit={onFormSubmit}
+					loading={values.loading}
+					errMsg={values.errMsg}
+				/>
 				{values.loading && <LoadingSpinner />}
 			</div>
 		</>
