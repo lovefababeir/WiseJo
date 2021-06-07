@@ -18,8 +18,10 @@
 	&__errMsg {
 		color: red;
 		font-size: 1.7rem;
-		width: 23rem;
+		width: 70%;
+		max-width: 33rem;
 		margin: 2rem auto;
+		text-align: center;
 	}
 	&__fileUpload {
 		margin-bottom: 2rem;
