@@ -49,3 +49,25 @@
 		}
 	}
 }
+
+.userProfile {
+	width: 30rem;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	&__email {
+		font-size: 1.3rem;
+	}
+	&__signOut {
+		width: 11rem;
+		height: 2.8rem;
+		border-radius: 2rem;
+		background-color: rgba(242, 185, 136, 0.8);
+		color: black;
+		border: none;
+		// font-weight: bold;
+		font-size: 1.4rem;
+		margin: 1rem;
+	}
+}
