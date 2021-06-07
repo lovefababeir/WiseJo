@@ -19,10 +19,11 @@ const Dashboard = () => {
 			setError("Sorry, we could not sign you out");
 		}
 	};
-
+	const userName = currentUser.displayName.split(" ")[0];
 	const pageHandler = page => {
 		history.push(`/${page}`);
 	};
+	const greeting = userName ? `Hello ${userName}!` : "Hello!";
 	return (
 		<div>
 			<section className="home">
@@ -30,7 +31,7 @@ const Dashboard = () => {
 					<img className="home__logo" src={jo} alt="Home logo" />
 				</div>
 				<h2 className="home__heading">
-					Hello Love!
+					{greeting}
 					<br />
 					What would you like to do today?
 				</h2>
@@ -50,10 +51,12 @@ const Dashboard = () => {
 					</button>
 				</div>
 				{error && <Alert variant="warning">{error}</Alert>}
-				<h1 className="home__userEmail">{currentUser && currentUser.email}</h1>
-				<button onClick={signoutHandler} className="home__signOut">
-					Sign Out
-				</button>
+				<div class="userProfile">
+					<h1 className="userProfile__email">{currentUser && currentUser.email}</h1>
+					<button onClick={signoutHandler} className="userProfile__signOut">
+						Sign Out
+					</button>
+				</div>
 			</section>
 		</div>
 	);
