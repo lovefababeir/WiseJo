@@ -24,7 +24,7 @@ const RecordReceiptForm = ({
 					<option value="Walmart">Walmart</option>
 				</select>
 				<label className="form__label form__label--receipts">
-					Take a picture of your receipt and upload it here
+					Upload a picture of your receipt in jpg form
 				</label>
 				<input
 					className="receipt-form__fileUpload"
