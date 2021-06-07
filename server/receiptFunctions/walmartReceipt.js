@@ -6,7 +6,8 @@ const receipt = receiptResults => {
 
 	const storeID = receiptResults[storeIDindex].split(" ").pop();
 
-	//To get address
+	//======================================s
+	//To get addres
 	const address =
 		receiptResults[storeIDindex + 1] +
 		" " +
@@ -16,6 +17,8 @@ const receipt = receiptResults => {
 
 	//To get the number
 	const contact = receiptResults[storeIDindex + 4];
+
+	//======================================
 	//To index of where List of items starts
 	const itemsIndex =
 		receiptResults.findIndex(text => {
@@ -46,11 +49,14 @@ const receipt = receiptResults => {
 			return digits.join("");
 		}
 	};
+
+	//======================================
 	//SUBTOTAL
 	const subtotalIndex = receiptResults.findIndex(line => {
 		return line.includes("SUBTOTAL");
 	});
 
+	//======================================
 	//Change Index
 	const changeIndex =
 		receiptResults.findIndex(line => {
@@ -67,9 +73,11 @@ const receipt = receiptResults => {
 					return line.includes("CHANGE");
 			  });
 
+	//======================================
 	//LIST OF ITEMS PURCHASED
 	const purchases = receiptResults.slice(itemsIndex, subtotalIndex);
 
+	//======================================
 	//SUBTOTAL SUMMARY
 	const purchaseSummary = receiptResults.slice(subtotalIndex, changeIndex + 1);
 
@@ -78,6 +86,7 @@ const receipt = receiptResults => {
 	});
 	const subtotal = testAmount(subtotalStr.replace(/[^0-9.-]+/g, ""));
 
+	//======================================
 	//TOTAL
 	const totalStr = purchaseSummary.reduce((total, line) => {
 		return !line.includes("SUBTOTAL") &&
@@ -86,8 +95,27 @@ const receipt = receiptResults => {
 			? line
 			: total;
 	});
+	const paymentString = receiptResults.find(line => {
+		return (
+			line.includes("DEBIT") ||
+			line.includes("TEND") ||
+			line.includes("MCARD") ||
+			line.includes("CARD")
+		);
+	});
 
-	const total = testAmount(totalStr.replace(/[^0-9.-]+/g, ""));
+	let total;
+	const totalNum = totalStr.replace(/[^0-9.-]+/g, "");
+	const paymentNum = paymentString && paymentString.replace(/[^0-9.-]+/g, "");
+
+	if (totalStr && paymentString && totalNum !== paymentNum) {
+		total =
+			totalNum.includes(paymentNum) || totalNum.length > paymentNum.length
+				? Number(testAmount(totalNum))
+				: Number(testAmount(paymentNum));
+	} else {
+		total = Number(testAmount(totalNum));
+	}
 
 	const storeData = {
 		storeID: storeID,
