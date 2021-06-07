@@ -8,9 +8,13 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState("");
 	const [loading, setLoading] = useState(true);
+
+	//function that executes logout
 	const logout = () => {
 		return firebase.auth().signOut();
 	};
+
+	//update current user variable one the user signs in
 	useEffect(() => {
 		const unsubscribe = firebase.auth().onAuthStateChanged(user => {
 			setCurrentUser(user);
@@ -19,6 +23,8 @@ export const AuthProvider = ({ children }) => {
 
 		return unsubscribe;
 	}, []);
+
+	//Function to create token for access to the database
 	const createToken = async () => {
 		const token = await currentUser.getIdToken();
 		const payloadHeader = {
