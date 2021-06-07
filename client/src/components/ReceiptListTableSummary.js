@@ -2,7 +2,7 @@ import React from "react";
 
 const ReceiptListTableSummary = ({ receiptList, totalExpenses }) => {
 	return (
-		<div className="receipt__record">
+		<div className="receipt__record receipt__record--totals">
 			<h3 className="receiptsList__dayTotal">
 				Today you spent:{" "}
 				<span className="receiptsList__dayTotal--Num">
