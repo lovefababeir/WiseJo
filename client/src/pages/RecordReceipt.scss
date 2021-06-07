@@ -3,6 +3,9 @@
 @import "../styles/mixins.scss";
 
 .receipt-form {
+	height: calc(100vh - 9rem);
+	overflow-y: scroll;
+
 	&__storeSelect {
 		@include inputBox;
 		&:disabled {
@@ -36,9 +39,25 @@
 }
 
 .form__label--receipts {
-	margin-top: 2rem;
 	font-size: 1.2rem;
-	@include surface {
-		font-size: 1.6rem;
+	@include mobileL {
+		margin-top: 2rem;
+		@include surface {
+			font-size: 1.6rem;
+		}
+	}
+}
+
+.receiptPreview {
+	height: 15rem;
+	overflow-y: scroll;
+	margin-bottom: 2rem;
+	@include mobileL {
+		height: 18rem;
+	}
+	&__img {
+		width: 100%;
+		margin: 0 auto;
+		display: block;
 	}
 }
