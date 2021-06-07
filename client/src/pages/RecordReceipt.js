@@ -76,17 +76,18 @@ const RecordReceipt = () => {
 							...values,
 							loading: false,
 							errMsg:
-								"Could not create authentication token to gain access to backend.",
+								"Could not create authentication token to gain access to backend. Please try again or contact the WiseJo admin.",
 						});
 					});
 			})
 			.catch(err => {
 				console.log(err.response);
+
 				setValues({
 					...values,
 					loading: false,
 					errMsg:
-						"Sorry, the OCR had trouble reading your image. Try increasing the contrast and brightness and to make the image as black and white as possible.",
+						"We're having some trouble send processing the request to the OCR. Please contact the WiseJo admin for some help.",
 				});
 			});
 	};
