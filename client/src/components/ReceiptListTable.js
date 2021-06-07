@@ -10,6 +10,7 @@ const ReceiptListTable = ({
 	totalExpenses,
 	editMode,
 	dateToString,
+	selectedReceiptID,
 }) => {
 	return (
 		<>
@@ -42,6 +43,7 @@ const ReceiptListTable = ({
 									selectReceiptHandler={selectReceiptHandler}
 									editMode={editMode}
 									dateToString={dateToString}
+									selectedReceiptID={selectedReceiptID}
 									key={uuidv4()}
 								/>
 							);
