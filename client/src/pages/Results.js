@@ -17,33 +17,43 @@ const Results = () => {
 		updateList: true,
 		errorMessageAll: "",
 		errorMessageCapacity: "",
+		errorLoadResults: "",
 	});
 	const history = useHistory();
 	const { createToken, logout } = useAuth();
 	useEffect(() => {
 		if (values.updateList === true) {
-			createToken().then(token => {
-				axios
-					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
-					.then(result => {
-						const lastSearchResults = result.data.data.map(record => {
-							return record.searchResults;
+			createToken()
+				.then(token => {
+					axios
+						.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+						.then(result => {
+							const lastSearchResults = result.data.data.map(record => {
+								return record.searchResults;
+							});
+							setValues({
+								...values,
+								selected: "",
+								results: [].concat.apply([], lastSearchResults),
+								currentLocation: result.data.data[0].userlocation,
+								updateList: false,
+							});
+						})
+						.catch(error => {
+							setValues({
+								...values,
+								errorMessageAll:
+									"Error: WiseJo was unable to retrieve your results. Please make sure your have a strong internet connection and try again.",
+							});
 						});
-						setValues({
-							...values,
-							selected: "",
-							results: [].concat.apply([], lastSearchResults),
-							currentLocation: result.data.data[0].userlocation,
-							updateList: false,
-						});
-					})
-					.catch(error => {
-						console.log(`error: ${error}`);
-					})
-					.catch(err => {
-						console.log("Could not create token");
+				})
+				.catch(err => {
+					setValues({
+						...values,
+						errorMessageAll:
+							"Error: Unable to create access token for the database. Try again later",
 					});
-			});
+				});
 		}
 	}, [values, createToken]);
 
@@ -61,8 +71,10 @@ const Results = () => {
 			await logout();
 			history.push("/login");
 		} catch {
-			console.log("Sorry, we could not sign you out");
-			// setError("Sorry, we could not sign you out");
+			setValues({
+				...values,
+				errorMessageAll: "Error: Failed to sign out.",
+			});
 		}
 	};
 
