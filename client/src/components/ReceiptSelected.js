@@ -1,9 +1,9 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import "./ReceiptListSelected.scss";
+import "./ReceiptSelected.scss";
 import edit from "../assets/images/edit.svg";
 
-const ReceiptListSelected = ({
+const ReceiptSelected = ({
 	purchaseData,
 	store,
 	date,
@@ -61,4 +61,4 @@ const ReceiptListSelected = ({
 	);
 };
 
-export default ReceiptListSelected;
+export default ReceiptSelected;
