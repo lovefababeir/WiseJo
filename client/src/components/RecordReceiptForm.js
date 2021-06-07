@@ -1,22 +1,15 @@
 import React from "react";
 
-const RecordReceiptForm = ({ onFormSubmit, onFormChange, loading, errMsg }) => {
+const RecordReceiptForm = ({
+	onFormSubmit,
+	onFormChange,
+	loading,
+	errMsg,
+	imgSrc,
+}) => {
 	return (
 		<form onSubmit={e => onFormSubmit(e)}>
 			<div className="form__box">
-				<label className="form__label form__label--receipts">
-					Take a picture of your receipt and upload it here
-				</label>
-				<input
-					className="receipt-form__fileUpload"
-					accept="image/*"
-					type="file"
-					name="receipt"
-					onChange={e => {
-						onFormChange(e);
-					}}
-					disabled={loading}
-				/>
 				<label className="form__label form__label--receipts">
 					Select the store from where you made your purchase
 				</label>
@@ -30,6 +23,25 @@ const RecordReceiptForm = ({ onFormSubmit, onFormChange, loading, errMsg }) => {
 					<option value="No Frills">No Frills</option>
 					<option value="Walmart">Walmart</option>
 				</select>
+				<label className="form__label form__label--receipts">
+					Take a picture of your receipt and upload it here
+				</label>
+				<input
+					className="receipt-form__fileUpload"
+					id="fileInput"
+					accept="image/*"
+					type="file"
+					name="receipt"
+					onChange={e => {
+						onFormChange(e);
+					}}
+					disabled={loading}
+				/>
+				{!loading && imgSrc && (
+					<div className="receiptPreview">
+						<img className="receiptPreview__img" src={imgSrc} />
+					</div>
+				)}
 				<button
 					className="receipt-form__submitBtn"
 					type="submit"
