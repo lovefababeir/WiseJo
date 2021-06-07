@@ -5,7 +5,6 @@ import ResultsCapacityItemCard from "./ResultsCapacityItemCard";
 import ResultsCapacitySelected from "./ResultsCapacitySelected";
 import { v4 as uuidv4 } from "uuid";
 import TipsSection from "./TipsSection";
-import { useAuth } from "../contexts/AuthContext";
 
 const ResultsCapacity = ({
 	list,
@@ -14,9 +13,8 @@ const ResultsCapacity = ({
 	values,
 	setValues,
 }) => {
-	var newList = [];
-
-	const capacityList = itemList => {
+	const sortByCapacity = itemList => {
+		const capacityList = [];
 		//value refers to the capacity as a number
 		const resultsList = itemList.slice(0).filter(item => {
 			return item.capacity && item.value;
@@ -26,7 +24,9 @@ const ResultsCapacity = ({
 		});
 		resultsList.forEach(item => {
 			if (
-				!newList.find(i => item.value === i.value && i.quantity === item.quantity)
+				!capacityList.find(
+					i => item.value === i.value && i.quantity === item.quantity,
+				)
 			) {
 				const details = {
 					image: item.image,
@@ -39,11 +39,12 @@ const ResultsCapacity = ({
 					}),
 				};
 
-				newList.push(details);
+				capacityList.push(details);
 			}
 		});
+		return capacityList;
 	};
-	capacityList(list);
+	const newList = sortByCapacity(list);
 
 	const animationStyle = useSpring({
 		from: { opacity: 0, marginLeft: 500 },
