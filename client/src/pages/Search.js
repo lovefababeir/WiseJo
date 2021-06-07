@@ -11,12 +11,25 @@ const Search = () => {
 	const [loaded, setLoaded] = useState(0);
 	const { createToken } = useAuth();
 
+	useEffect(() => {
+		console.log(loaded);
+		let mounted = true;
+		if (loaded === 4 && mounted) {
+			console.log("DONEEEEEE");
+			history.push("/compare");
+			setLoading(false);
+			setLoaded(0);
+		} else {
+			console.log("load:", loaded);
+		}
+		return () => (mounted = false);
+	}, [loaded, history]);
+
 	const submitHandler = e => {
 		e.preventDefault();
 		const item = e.target.search.value.toLowerCase();
 		const currentStore = e.target.storeList.value.toLowerCase();
 		const time = Date.now() - 3600000 * 4;
-		console.log(time);
 
 		//Cancel search if there is not item
 		if (!item) {
@@ -31,7 +44,6 @@ const Search = () => {
 						token,
 					)
 					.then(result => {
-						console.log(JSON.stringify(result.data));
 						if (result) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -49,7 +61,6 @@ const Search = () => {
 						token,
 					)
 					.then(result => {
-						console.log(JSON.stringify(result.data));
 						if (result) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -67,7 +78,6 @@ const Search = () => {
 						token,
 					)
 					.then(result => {
-						console.log(JSON.stringify(result.data));
 						if (result) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -85,7 +95,6 @@ const Search = () => {
 						token,
 					)
 					.then(result => {
-						console.log(JSON.stringify(result.data));
 						if (result) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -102,19 +111,6 @@ const Search = () => {
 			});
 	};
 
-	useEffect(() => {
-		console.log(loaded);
-		let mounted = true;
-		if (loaded === 4 && mounted) {
-			console.log("DONEEEEEE");
-			history.push("/compare");
-			setLoading(false);
-			setLoaded(0);
-		} else {
-			console.log("load:", loaded);
-		}
-		return () => (mounted = false);
-	}, [loaded, history]);
 	return (
 		<>
 			<SearchForm submitHandler={submitHandler} loading={loading} />
