@@ -43,6 +43,7 @@ const ReceiptList = () => {
 		"November",
 		"December",
 	];
+
 	const selectReceiptHandler = (e, ID) => {
 		e.preventDefault();
 
@@ -74,7 +75,7 @@ const ReceiptList = () => {
 			const timeofLast = timeNow - (timeNow % timeDiff) - timeFix;
 
 			return timeofLast < receipt.time
-				? parseFloat(receipt.purchaseData.total) + total
+				? parseFloat(receipt.purchaseData.total || 0) + total
 				: total;
 		}, 0);
 	};
