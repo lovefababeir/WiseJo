@@ -50,7 +50,7 @@ const Dashboard = () => {
 					</button>
 				</div>
 				{error && <Alert variant="warning">{error}</Alert>}
-				<div class="userProfile">
+				<div className="userProfile">
 					<h1 className="userProfile__email">{currentUser && currentUser.email}</h1>
 					<button onClick={signoutHandler} className="userProfile__signOut">
 						Sign Out
