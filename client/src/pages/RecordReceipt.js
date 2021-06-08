@@ -50,7 +50,6 @@ const RecordReceipt = () => {
 				config,
 			)
 			.then(res => {
-				console.log(JSON.stringify(res.data.regions));
 				createToken()
 					.then(token => {
 						axios
@@ -60,7 +59,6 @@ const RecordReceipt = () => {
 								token,
 							)
 							.then(result => {
-								console.log("result from conversion", result);
 								history.push("/track");
 							})
 							.catch(err => {
@@ -81,8 +79,6 @@ const RecordReceipt = () => {
 					});
 			})
 			.catch(err => {
-				console.log(err.response);
-
 				setValues({
 					...values,
 					loading: false,

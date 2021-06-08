@@ -47,7 +47,6 @@ const ReceiptListSelectedEdit = ({
 		setReceiptSelected({ ...receiptSelected, date, time: newTime });
 	};
 
-	console.log(receiptSelected);
 	return (
 		<form
 			action="submit"

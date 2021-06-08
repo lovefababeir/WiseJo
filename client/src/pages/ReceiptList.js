@@ -127,7 +127,6 @@ const ReceiptList = () => {
 						token,
 					)
 					.then(result => {
-						console.log(result.data);
 						const newReceiptSelected = result.data.find(receipt => {
 							return receipt.receiptID === receiptSelected.receiptID;
 						});

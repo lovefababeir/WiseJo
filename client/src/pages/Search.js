@@ -12,15 +12,11 @@ const Search = () => {
 	const { createToken } = useAuth();
 
 	useEffect(() => {
-		console.log(loaded);
 		let mounted = true;
 		if (loaded === 4 && mounted) {
-			console.log("DONEEEEEE");
 			history.push("/compare");
 			setLoading(false);
 			setLoaded(0);
-		} else {
-			console.log("load:", loaded);
 		}
 		return () => (mounted = false);
 	}, [loaded, history]);
@@ -49,7 +45,6 @@ const Search = () => {
 						}
 					})
 					.catch(err => {
-						console.log(err);
 						if (err) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -66,7 +61,6 @@ const Search = () => {
 						}
 					})
 					.catch(err => {
-						console.log(err);
 						if (err) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -83,7 +77,6 @@ const Search = () => {
 						}
 					})
 					.catch(err => {
-						console.log(err);
 						if (err) {
 							setLoaded(loaded => loaded + 1);
 						}
@@ -100,7 +93,6 @@ const Search = () => {
 						}
 					})
 					.catch(err => {
-						console.log(err);
 						if (err) {
 							setLoaded(loaded => loaded + 1);
 						}

@@ -278,9 +278,7 @@ const store = async function (searchWords) {
 					.toLowerCase()
 					.split(" ")
 					.find(text => {
-						console.log("text", text);
 						let textNoNums = text.replace(/[^a-zA-Z ]/g, "");
-						console.log("textNoNums", textNoNums);
 						return (
 							textNoNums === "ml" ||
 							textNoNums === "l" ||

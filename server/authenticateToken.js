@@ -25,7 +25,6 @@ async function decodeIDToken(req, res, next) {
 		header !== "Bearer null" &&
 		req.headers?.authorization?.startsWith("Bearer ")
 	) {
-		console.log("Authenticated!!!========");
 		const idToken = req.headers.authorization.split("Bearer ")[1];
 		try {
 			const decodedToken = await admin.auth().verifyIdToken(idToken);

@@ -97,7 +97,6 @@ router.patch("/receiptData", (req, res) => {
 						return result;
 					})
 					.catch(err => {
-						console.log("could not find list", err);
 						res.status(400).json(err);
 					});
 			})
@@ -105,7 +104,6 @@ router.patch("/receiptData", (req, res) => {
 				res.status(200).json(result);
 			})
 			.catch(() => {
-				console.log("could not replace receipt");
 				res.status(400).json(error);
 			});
 	} else {
@@ -134,7 +132,6 @@ router.delete("/receipt/:id", (req, res) => {
 			})
 			.catch(err => {
 				res.status(500).json(err);
-				console.log(err);
 			});
 	} else {
 		res

@@ -87,14 +87,12 @@ const receipt = receiptResults => {
 	//======================================
 	//Correcting Money Amount
 	const testAmount = amount => {
-		console.log("test amount", amount);
 		if (!amount) {
 			return;
 		}
 		const digits = amount?.split("");
 		const numDigits = amount?.length;
 		const decimalIndex = digits.indexOf(".");
-		console.log(digits, numDigits, decimalIndex);
 		if (decimalIndex + 1 > 0) {
 			if (numDigits - decimalIndex === 3) {
 				return digits.join("");

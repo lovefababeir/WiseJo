@@ -62,7 +62,6 @@ const store = async function (searchWords) {
 					});
 
 				const units = unitsString ? unitsString.replace(/[^a-zA-Z ]/g, "") : "";
-				console.log(units);
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
 				} else if (units === "g" || units === "ml" || units === "oz") {
@@ -120,9 +119,7 @@ const store = async function (searchWords) {
 					.toLowerCase()
 					.split(" ")
 					.find(text => {
-						console.log("text", text);
 						let textNoNums = text.replace(/[^a-zA-Z ]/g, "");
-						console.log("textNoNums", textNoNums);
 						return (
 							textNoNums === "ml" ||
 							textNoNums === "l" ||

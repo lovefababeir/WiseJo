@@ -2,7 +2,6 @@ import React from "react";
 import "./TipsSection.scss";
 
 const TipsSection = ({ page }) => {
-	console.log(page);
 	return (
 		<section className="tips">
 			<h1 className="tips__title">Not the results you want? Here are some tips</h1>

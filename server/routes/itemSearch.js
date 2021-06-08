@@ -41,16 +41,12 @@ const conductSearch = async (
 				return promiseFcn
 					.createUserCopy(data, userid, userlocation, time)
 					.then(result => {
-						console.log("Recorded in userResults");
 						return {
 							code: 201,
 							jsonData: { message: "Found data already on record", data: result },
 						};
 					})
 					.catch(error => {
-						console.log(
-							`Found something from a previous search today but could not log user data: ${error}`,
-						);
 						return {
 							code: 500,
 							jsonData: {
@@ -61,11 +57,9 @@ const conductSearch = async (
 					});
 				//if there is nothing on record, conduct a new search
 			} else {
-				console.log("No record of search yet.  Website search requested");
 				return storeFunction
 					.store(item)
 					.then(result => {
-						console.log("-----GOT RESULTS FROM WEBSITE------");
 						//If there were no results from the search then don't log the research and just return a message.
 						if (!result.length) {
 							return {
@@ -118,7 +112,6 @@ const conductSearch = async (
 						}
 					})
 					.catch(error => {
-						console.log(`Could not complete ${store} search for ${item}: ${error}`);
 						return {
 							code: 500,
 							jsonData: {
@@ -133,9 +126,6 @@ const conductSearch = async (
 			return response;
 		})
 		.catch(err => {
-			console.log(
-				`Could not conduct a search for the item in the database: ${err}`,
-			);
 			return {
 				code: 500,
 				jsonData: {
@@ -183,7 +173,6 @@ router.get("/:store/:time", async (req, res) => {
 			userid,
 			store,
 		);
-		// console.log("inside endpoint", responseData.code, responseData.jsonData);
 		res.status(responseData.code).json(responseData.jsonData);
 	} else {
 		res
@@ -214,7 +203,6 @@ router.get("/searchresults", async (req, res) => {
 			time: latestTimeStamp,
 			user_id: auth.user_id,
 		});
-		// console.log(latestSearchResults);
 		res
 			.status(200)
 			.json({ message: "Success! Results retrieved", data: latestSearchResults });
@@ -242,7 +230,6 @@ router.delete("/item/:store/:id", async (req, res) => {
 			.exec()
 			.then(result => {
 				//Copies the searchResults from the store and removes the item with the itemID.
-				console.log(result[0]);
 				const listofItems = result[0].searchResults;
 				const itemToRemove = listofItems.findIndex(item => {
 					return item.productID === itemID;
@@ -326,10 +313,8 @@ router.delete("/items/:value/:quantity", async (req, res) => {
 		)
 			.then(result => {
 				res.status(200).json(result);
-				console.log(result);
 			})
 			.catch(err => {
-				console.log(err);
 				res.status(500).json(err);
 			});
 	} else {

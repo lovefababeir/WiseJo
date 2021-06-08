@@ -15,7 +15,6 @@ const createUserCopy = (data, userid, userlocation, time) => {
 		store: data.store,
 		searchResults: data.searchResults,
 	};
-	console.log("found something");
 	const userData = new UserResults(userResultsData);
 	return userData.save();
 };
