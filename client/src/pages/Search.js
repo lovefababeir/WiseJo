@@ -25,7 +25,7 @@ const Search = () => {
 		e.preventDefault();
 		const item = e.target.search.value.toLowerCase();
 		const currentStore = e.target.storeList.value.toLowerCase();
-		const time = Date.now() - 3600000 * 4;
+		const time = Date.now();
 
 		//Cancel search if there is not item
 		if (!item) {

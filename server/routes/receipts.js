@@ -25,11 +25,10 @@ router.post("/convertImage", (req, res) => {
 			purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
 		}
 
-		const timeEST = time - 3600000 * 4;
 		convertDate = timestamp => {
 			let dateSubmitted = new Date(timestamp);
 			return {
-				day: dateSubmitted.getUTCDate(),
+				day: dateSubmitted.getDate(),
 				month: dateSubmitted.getMonth() + 1,
 				year: dateSubmitted.getFullYear(),
 			};
@@ -38,9 +37,9 @@ router.post("/convertImage", (req, res) => {
 		const receiptData = {
 			_id: mongoose.Types.ObjectId(),
 			user_id: auth.user_id,
-			time: timeEST,
-			receiptID: timeEST,
-			date: convertDate(timeEST),
+			time: time,
+			receiptID: time,
+			date: convertDate(time),
 			store: store,
 			purchaseData: purchaseData,
 			results: convertedText,

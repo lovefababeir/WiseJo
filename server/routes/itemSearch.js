@@ -24,7 +24,7 @@ const conductSearch = async (
 	const searchDate = {
 		year: dateSubmitted.getFullYear(),
 		month: dateSubmitted.getMonth() + 1,
-		day: dateSubmitted.getUTCDate(),
+		day: dateSubmitted.getDate(),
 	};
 
 	//Checks if there is already an up to date(same day) result.
