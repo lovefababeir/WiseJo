@@ -10,9 +10,11 @@ const ReceiptEditStoreDetails = ({
 }) => {
 	const { storeID, contact, address, manager, cashier } = purchaseData;
 	const today = new Date();
+
+	//For the max date on the Calendar
 	const todaysDate = `${today.getFullYear()}-${dateToString(
 		today.getMonth() + 1,
-	)}-${dateToString(today.getDay())}`;
+	)}-${dateToString(today.getDate())}`;
 
 	return (
 		<div className="storeDetails">
