@@ -1,0 +1,55 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.card {
+	height: 100vh;
+	width: 100vw;
+	&-body {
+		@include flex(column, center, center);
+		&.loginForm {
+			@include fadeIn(ease-in-out, 8s);
+		}
+	}
+}
+
+.signin {
+	overflow: hidden;
+	&__card {
+		position: absolute;
+		&.card {
+			background: transparent;
+		}
+	}
+	&__logo {
+		overflow: hidden;
+		z-index: 2;
+		position: absolute;
+		@include flex(row, center, center);
+		height: 100vh;
+		width: 100vw;
+		overflow: hidden;
+		& > img {
+			height: 100vh;
+			width: 100vw;
+			max-height: 80rem;
+			max-width: 60rem;
+			object-fit: cover;
+			object-position: center;
+			opacity: 0;
+			@include fadeOut(ease-in-out, 6s);
+			@include surface {
+				height: auto;
+			}
+		}
+	}
+	&__appName {
+		font-family: "Kaushan Script", cursive;
+		font-size: 10rem;
+		text-align: center;
+		margin: 1rem auto;
+	}
+	&__text {
+		font-size: 1.4rem;
+	}
+}

@@ -1,0 +1,30 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.accountForms {
+	&__title {
+		font-size: 3rem;
+	}
+	&__form {
+		width: 80vh;
+		max-width: 30rem;
+		& input,
+		& button {
+			height: 3.2rem;
+			font-size: 1.4rem;
+			margin-bottom: 2rem;
+		}
+		& button {
+			background-color: rgb(73, 94, 81);
+			border: none;
+		}
+		& label {
+			font-size: 1.4rem;
+		}
+	}
+	&__loginLink {
+		margin: 1rem 0;
+		font-size: 1.4rem;
+	}
+}
