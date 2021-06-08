@@ -39,6 +39,7 @@ const SignUp = () => {
 			{" "}
 			<Card>
 				<Card.Body>
+					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Sign Up</h2>
 					{error && <Alert variant="danger">{error}</Alert>}
 					{message && <Alert variant="warning">{message}</Alert>}
