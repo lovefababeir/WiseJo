@@ -61,6 +61,7 @@ const ReceiptList = () => {
 
 		setReceiptSelected(receipt);
 	};
+
 	const totalExpenses = (list, duration) => {
 		const timeNow = new Date();
 		const todayDay = timeNow.getDay();
@@ -70,14 +71,14 @@ const ReceiptList = () => {
 			timeNow.getDate(),
 		);
 		const sundayMidnightTime = today - todayDay * 86400000;
-
 		return list.reduce((total, receipt) => {
-			const timeofLast = duration === "today" ? today : sundayMidnightTime;
+			const timeofLast = duration === "day" ? today.getTime() : sundayMidnightTime;
 			return timeofLast < receipt.time
 				? parseFloat(receipt.purchaseData.total || 0) + total
 				: total;
 		}, 0);
 	};
+
 	const editModeHandler = () => {
 		setEditMode(!editMode);
 	};
