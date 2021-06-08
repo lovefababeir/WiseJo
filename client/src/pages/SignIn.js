@@ -45,7 +45,7 @@ function SignInScreen() {
 		<section className="signin">
 			{logoDisplay && (
 				<div className="signin__logo">
-					<img src={wiseJo}></img>
+					<img src={wiseJo} alt="Wise Jo the sun logo"></img>
 				</div>
 			)}
 
