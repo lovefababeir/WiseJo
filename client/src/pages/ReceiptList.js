@@ -62,18 +62,17 @@ const ReceiptList = () => {
 		setReceiptSelected(receipt);
 	};
 	const totalExpenses = (list, duration) => {
+		const timeNow = new Date();
+		const todayDay = timeNow.getDay();
+		const today = new Date(
+			timeNow.getFullYear(),
+			timeNow.getMonth(),
+			timeNow.getDate(),
+		);
+		const sundayMidnightTime = today - todayDay * 86400000;
+
 		return list.reduce((total, receipt) => {
-			//first is day in ms second is week in ms
-			const timeDiff = duration === "day" ? 86400000 : 604800000;
-
-			//timestamps are in UTC start from thursday Jan 1 1970
-			const timeFix = duration === "week" ? 259200000 + 14400000 : 14400000;
-
-			const timeNow = Date.now();
-
-			//calculations the time since sunday if week or since midnight if day
-			const timeofLast = timeNow - (timeNow % timeDiff) - timeFix;
-
+			const timeofLast = duration === "today" ? today : sundayMidnightTime;
 			return timeofLast < receipt.time
 				? parseFloat(receipt.purchaseData.total || 0) + total
 				: total;
