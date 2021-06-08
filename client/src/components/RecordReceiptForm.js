@@ -39,7 +39,11 @@ const RecordReceiptForm = ({
 				/>
 				{!loading && imgSrc && (
 					<div className="receiptPreview">
-						<img className="receiptPreview__img" src={imgSrc} />
+						<img
+							className="receiptPreview__img"
+							src={imgSrc}
+							alt="A preview of the receipt you selected."
+						/>
 					</div>
 				)}
 				<button

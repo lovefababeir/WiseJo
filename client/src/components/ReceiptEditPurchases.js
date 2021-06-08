@@ -58,11 +58,19 @@ const ReceiptEditPurchases = ({
 					type="button"
 					onClick={() => deleteHandler(receiptID)}
 				>
-					<img src={deleteIcon} className="edit-icon" />
+					<img
+						src={deleteIcon}
+						className="edit-icon"
+						alt="Click here to delete the receipt record."
+					/>
 					Delete
 				</button>
 				<button type="submit" className="edit edit--purchaseDetails">
-					<img src={save} className="save-icon" />
+					<img
+						src={save}
+						className="save-icon"
+						alt="Click here to save the changes you made to the receipt."
+					/>
 					Save
 				</button>
 				<button
@@ -70,7 +78,11 @@ const ReceiptEditPurchases = ({
 					className="edit"
 					onClick={() => cancelChangesHandler(receiptID)}
 				>
-					<img src={close} className="edit-icon" />
+					<img
+						src={close}
+						className="edit-icon"
+						alt="Click here to cancel changes and exit the edit mode."
+					/>
 					Cancel
 				</button>
 			</span>

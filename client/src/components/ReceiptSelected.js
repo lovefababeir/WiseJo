@@ -30,7 +30,11 @@ const ReceiptSelected = ({
 						className="edit edit--purchaseDetails"
 						onClick={() => editModeHandler()}
 					>
-						<img src={edit} className="edit-icon" />
+						<img
+							src={edit}
+							className="edit-icon"
+							alt="Click here to edit the contents of the receipt"
+						/>
 					</button>
 				</div>
 				<p className="storeDetails__detail">Store Location: {storeID}</p>
