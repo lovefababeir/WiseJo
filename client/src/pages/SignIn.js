@@ -39,7 +39,7 @@ function SignInScreen() {
 		return () => {
 			mounted = false;
 		};
-	}, []);
+	}, [currentUser, history]);
 
 	return (
 		<section className="signin">
