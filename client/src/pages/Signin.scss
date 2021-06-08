@@ -44,12 +44,23 @@
 		}
 	}
 	&__appName {
+		color: #415049;
 		font-family: "Kaushan Script", cursive;
-		font-size: 10rem;
 		text-align: center;
-		margin: 1rem auto;
+		font-size: 7rem;
+		margin: 0.3rem auto;
+		@include mobileM {
+			margin: 1rem auto;
+			font-size: 10rem;
+		}
 	}
 	&__text {
 		font-size: 1.4rem;
+	}
+}
+
+.firebaseui-card-content {
+	& button {
+		height: 3rem;
 	}
 }
