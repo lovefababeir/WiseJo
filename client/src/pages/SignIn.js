@@ -1,9 +1,12 @@
 // Import FirebaseAuth and firebase.
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
+import "./Signin.scss";
+import wiseJo from "../assets/images/WiseJo.png";
+import { useAuth } from "../contexts/AuthContext";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -23,20 +26,46 @@ const uiConfig = {
 };
 
 function SignInScreen() {
+	const { currentUser } = useAuth();
+	const history = useHistory();
+	const [logoDisplay, setLogoDisplay] = useState(true);
+	console.log(currentUser);
+	useEffect(() => {
+		let mounted = true;
+		if (currentUser && mounted) {
+			history.push("/");
+		}
+		setTimeout(() => setLogoDisplay(false), 7000);
+		return () => {
+			mounted = false;
+		};
+	}, []);
+
 	return (
-		<div>
-			<Card>
-				<Card.Body>
-					<h1>My App</h1>
-					<p>Please sign-in:</p>
+		<section className="signin">
+			{logoDisplay && (
+				<div className="signin__logo">
+					<img src={wiseJo}></img>
+				</div>
+			)}
+
+			<Card className="signin__card">
+				<Card.Body className="loginForm">
+					<h1 className="signin__appName">WiseJo</h1>
+					<p className="signin__text">Please sign-in:</p>
 					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-					<Link to="/forgot-password">Forgot password?</Link>
-					<div className="w-100 text-center mt-2">
-						Need an account? <Link to="/signup">Sign Up</Link>
+					<Link to="/forgot-password" className="signin__text">
+						Forgot password?
+					</Link>
+					<div className="w-100 text-center mt-2 signin__text">
+						Need an account?{" "}
+						<Link to="/signup" className="signin__text">
+							Sign Up
+						</Link>
 					</div>
 				</Card.Body>
 			</Card>
-		</div>
+		</section>
 	);
 }
 

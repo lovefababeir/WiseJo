@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
 import { Link } from "react-router-dom";
+import "./SignUp.scss";
 
 const SignUp = () => {
 	const emailRef = useRef();
@@ -38,10 +39,10 @@ const SignUp = () => {
 			{" "}
 			<Card>
 				<Card.Body>
-					<h2 className="text-center mb-4">Sign Up</h2>
+					<h2 className="accountForms__title">Sign Up</h2>
 					{error && <Alert variant="danger">{error}</Alert>}
 					{message && <Alert variant="warning">{message}</Alert>}
-					<Form onSubmit={handleSubmit}>
+					<Form onSubmit={handleSubmit} className="accountForms__form">
 						<Form.Group id="email">
 							<Form.Label>Email</Form.Label>
 							<Form.Control type="email" ref={emailRef} required />
@@ -58,11 +59,11 @@ const SignUp = () => {
 							Sign Up
 						</Button>
 					</Form>
+					<div className="accountForms__loginLink">
+						Already have an account? <Link to="/login">Log In</Link>
+					</div>
 				</Card.Body>
 			</Card>
-			<div className="w-100 text-center mt-2">
-				Already have an account? <Link to="/login">Log In</Link>
-			</div>
 		</>
 	);
 };
