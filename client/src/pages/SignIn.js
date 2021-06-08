@@ -29,7 +29,7 @@ function SignInScreen() {
 	const { currentUser } = useAuth();
 	const history = useHistory();
 	const [logoDisplay, setLogoDisplay] = useState(true);
-	console.log(currentUser);
+
 	useEffect(() => {
 		let mounted = true;
 		if (currentUser && mounted) {
