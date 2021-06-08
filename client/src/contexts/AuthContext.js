@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
 		return payloadHeader;
 	};
 
-	console.log("current user", currentUser);
 	const value = { currentUser, logout, createToken };
 	return (
 		<AuthContext.Provider value={value}>
