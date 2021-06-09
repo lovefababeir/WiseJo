@@ -40,7 +40,7 @@ function App() {
 			mounted = false;
 		};
 	}, [onPage]);
-	console.log("onPage", onPage);
+
 	return (
 		<div
 			className={`App${

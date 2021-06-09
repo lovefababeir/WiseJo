@@ -8,7 +8,14 @@
 	background-color: rgba(83, 139, 110, 0.4);
 	border: rgba(83, 139, 110, 0.5) solid 3px;
 	padding: 1rem 2rem;
+	font-size: 1.4rem;
+	@include surface {
+		font-size: 1.6rem;
+	}
 	&__title {
-		font-size: 2rem;
+		font-size: 1.8rem;
+		@include surface {
+			font-size: 2.1rem;
+		}
 	}
 }
