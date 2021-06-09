@@ -14,13 +14,58 @@ const Results = () => {
 		view: "All",
 		selected: "",
 		currentLocation: "",
-		updateList: true,
 		errorMessageAll: "",
 		errorMessageCapacity: "",
 		errorLoadResults: "",
 	});
 	const history = useHistory();
 	const { createToken, logout } = useAuth();
+
+	useEffect(() => {
+		createToken()
+			.then(token => {
+				axios
+					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+					.then(result => {
+						const lastSearchResults = result.data.data.map(record => {
+							return record.searchResults;
+						});
+						setValues({
+							results: [].concat.apply([], lastSearchResults),
+							view: "All",
+							selected: "",
+							currentLocation: result.data.data[0].userlocation,
+							errorMessageAll: "",
+							errorMessageCapacity: "",
+							errorLoadResults: "",
+						});
+					})
+					.catch(error => {
+						setValues({
+							results: "",
+							view: "All",
+							selected: "",
+							currentLocation: "",
+							errorMessageAll:
+								"Error: WiseJo was unable to retrieve your results. Please make sure your have a strong internet connection and try again.",
+							errorMessageCapacity: "",
+							errorLoadResults: "",
+						});
+					});
+			})
+			.catch(err => {
+				setValues({
+					results: "",
+					view: "All",
+					selected: "",
+					currentLocation: "",
+					errorMessageAll:
+						"Error: Unable to create access token for the database. Try again later",
+					errorMessageCapacity: "",
+					errorLoadResults: "",
+				});
+			});
+	}, [createToken]);
 
 	const updateList = () => {
 		createToken()
@@ -33,7 +78,6 @@ const Results = () => {
 						});
 						setValues({
 							...values,
-							selected: "",
 							results: [].concat.apply([], lastSearchResults),
 							currentLocation: result.data.data[0].userlocation,
 						});
@@ -54,10 +98,6 @@ const Results = () => {
 				});
 			});
 	};
-
-	useEffect(() => {
-		updateList();
-	}, []);
 
 	const changePageHandler = page => {
 		setValues({ ...values, view: page });
