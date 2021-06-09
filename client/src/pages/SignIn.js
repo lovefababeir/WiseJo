@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
+import * as firebaseui from "firebaseui";
 import { Link, useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import "./Signin.scss";
@@ -12,8 +13,7 @@ import { useAuth } from "../contexts/AuthContext";
 const uiConfig = {
 	// Popup signin flow rather than redirect flow.
 	signInFlow: "popup",
-	// Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-	signInSuccessUrl: "/",
+
 	// We will display Google and Facebook as auth providers.
 	signInOptions: [
 		firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -24,6 +24,7 @@ const uiConfig = {
 			provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
 			signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
 		},
+		firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
 	],
 };
 
@@ -36,8 +37,9 @@ function SignInScreen() {
 		let mounted = true;
 		if (currentUser && mounted) {
 			history.push("/");
+		} else {
+			setTimeout(() => setLogoDisplay(false), 7000);
 		}
-		setTimeout(() => setLogoDisplay(false), 7000);
 		return () => {
 			mounted = false;
 		};
