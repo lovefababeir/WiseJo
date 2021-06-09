@@ -40,9 +40,15 @@ function App() {
 			mounted = false;
 		};
 	}, [onPage]);
-
+	console.log("onPage", onPage);
 	return (
-		<div className="App">
+		<div
+			className={`App${
+				onPage === "/shop" || onPage === "/snap" || onPage === "/login"
+					? " gradientBG"
+					: ""
+			}`}
+		>
 			<main className="main">
 				<AuthProvider>
 					<Switch>
