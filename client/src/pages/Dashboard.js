@@ -18,7 +18,7 @@ const Dashboard = () => {
 			setError("Sorry, we could not sign you out");
 		}
 	};
-	const userName = currentUser.displayName.split(" ")[0];
+	const userName = currentUser.displayName?.split(" ")[0];
 	const pageHandler = page => {
 		history.push(`/${page}`);
 	};
