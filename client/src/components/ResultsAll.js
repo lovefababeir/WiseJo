@@ -5,7 +5,7 @@ import ResultsAllGrocerySection from "./ResultsAllGrocerySection";
 import { v4 as uuidv4 } from "uuid";
 import TipsSection from "./TipsSection";
 
-const ResultsAll = ({ list, deleteHandler, values, setValues }) => {
+const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 	var listOfStores = [];
 	const storeList = () => {
 		const orderedList = list.sort((a, b) => {
@@ -43,6 +43,7 @@ const ResultsAll = ({ list, deleteHandler, values, setValues }) => {
 							key={uuidv4()}
 							values={values}
 							setValues={setValues}
+							updateList={updateList}
 						/>
 					);
 				})}

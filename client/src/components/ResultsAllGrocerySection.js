@@ -12,6 +12,7 @@ const ResultsAllGrocerySection = ({
 	deleteHandler,
 	values,
 	setValues,
+	updateList,
 }) => {
 	return (
 		<div>
@@ -58,6 +59,7 @@ const ResultsAllGrocerySection = ({
 								key={uuidv4()}
 								values={values}
 								setValues={setValues}
+								updateList={updateList}
 							/>
 						);
 					})}

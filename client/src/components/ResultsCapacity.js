@@ -12,6 +12,7 @@ const ResultsCapacity = ({
 	changeSelected,
 	values,
 	setValues,
+	updateList,
 }) => {
 	const sortByCapacity = itemList => {
 		const capacityList = [];
@@ -79,6 +80,7 @@ const ResultsCapacity = ({
 								storeList={selected.storeList}
 								values={values}
 								setValues={setValues}
+								updateList={updateList}
 							/>
 						)}
 					</div>

@@ -12,6 +12,7 @@ const ResultsAllItemCard = ({
 	productID,
 	values,
 	setValues,
+	updateList,
 }) => {
 	const { createToken } = useAuth();
 
@@ -23,7 +24,7 @@ const ResultsAllItemCard = ({
 				axios
 					.delete(url, token)
 					.then(() => {
-						setValues({ ...values, updateList: true });
+						updateList();
 					})
 					.catch(function (error) {});
 			})

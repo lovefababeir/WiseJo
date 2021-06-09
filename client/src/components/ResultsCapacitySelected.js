@@ -13,6 +13,7 @@ const ResultsCapacitySelected = ({
 	storeList,
 	values,
 	setValues,
+	updateList,
 }) => {
 	const { createToken } = useAuth();
 	const deleteCapacityHandler = (value, quantity) => {
@@ -23,7 +24,7 @@ const ResultsCapacitySelected = ({
 				axios
 					.delete(url, token)
 					.then(() => {
-						setValues({ ...values, updateList: true });
+						updateList();
 					})
 					.catch(function (error) {
 						setValues({ ...values, errorMessageAll: "Failed to delete item" });
