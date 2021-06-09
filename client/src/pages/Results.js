@@ -21,41 +21,43 @@ const Results = () => {
 	});
 	const history = useHistory();
 	const { createToken, logout } = useAuth();
-	useEffect(() => {
-		if (values.updateList === true) {
-			createToken()
-				.then(token => {
-					axios
-						.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
-						.then(result => {
-							const lastSearchResults = result.data.data.map(record => {
-								return record.searchResults;
-							});
-							setValues({
-								...values,
-								selected: "",
-								results: [].concat.apply([], lastSearchResults),
-								currentLocation: result.data.data[0].userlocation,
-								updateList: false,
-							});
-						})
-						.catch(error => {
-							setValues({
-								...values,
-								errorMessageAll:
-									"Error: WiseJo was unable to retrieve your results. Please make sure your have a strong internet connection and try again.",
-							});
+
+	const updateList = () => {
+		createToken()
+			.then(token => {
+				axios
+					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+					.then(result => {
+						const lastSearchResults = result.data.data.map(record => {
+							return record.searchResults;
 						});
-				})
-				.catch(err => {
-					setValues({
-						...values,
-						errorMessageAll:
-							"Error: Unable to create access token for the database. Try again later",
+						setValues({
+							...values,
+							selected: "",
+							results: [].concat.apply([], lastSearchResults),
+							currentLocation: result.data.data[0].userlocation,
+						});
+					})
+					.catch(error => {
+						setValues({
+							...values,
+							errorMessageAll:
+								"Error: WiseJo was unable to retrieve your results. Please make sure your have a strong internet connection and try again.",
+						});
 					});
+			})
+			.catch(err => {
+				setValues({
+					...values,
+					errorMessageAll:
+						"Error: Unable to create access token for the database. Try again later",
 				});
-		}
-	}, [values, createToken]);
+			});
+	};
+
+	useEffect(() => {
+		updateList();
+	}, []);
 
 	const changePageHandler = page => {
 		setValues({ ...values, view: page });
@@ -87,7 +89,12 @@ const Results = () => {
 				<ResultsSubMenu view={values.view} changePageHandler={changePageHandler} />
 				<div className="results__view">
 					{values.view === "All" && (
-						<ResultsAll list={values.results} values={values} setValues={setValues} />
+						<ResultsAll
+							list={values.results}
+							values={values}
+							setValues={setValues}
+							updateList={updateList}
+						/>
 					)}
 					{values.view === "Capacity" && (
 						<ResultsCapacity
@@ -96,6 +103,7 @@ const Results = () => {
 							selected={values.selected}
 							values={values}
 							setValues={setValues}
+							updateList={updateList}
 						/>
 					)}
 					{values.view === "Solutions" && (
