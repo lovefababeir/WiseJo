@@ -50,6 +50,7 @@ const RecordReceipt = () => {
 				config,
 			)
 			.then(res => {
+				// console.log(JSON.stringify(res.data.regions));
 				createToken()
 					.then(token => {
 						axios
@@ -79,11 +80,12 @@ const RecordReceipt = () => {
 					});
 			})
 			.catch(err => {
+				console.log(err);
 				setValues({
 					...values,
 					loading: false,
 					errMsg:
-						"We're having some trouble send processing the request to the OCR. Please contact the WiseJo admin for some help.",
+						"We're having some trouble sending the request to the OCR. Please ensure that your reciept is not wrinkled and that the picture is not taken on an angle. Double check to see that your image is in jpg/jpeg format.",
 				});
 			});
 	};
@@ -104,8 +106,11 @@ const RecordReceipt = () => {
 					"For best results make sure your is focused on the main content of the receipt. Don't include the information after the payment",
 			});
 		}
-
-		const imgSrc = URL.createObjectURL(e.target.files[0]);
+		var binaryData = [];
+		binaryData.push(e.target.files[0]);
+		const imgSrc = URL.createObjectURL(
+			new Blob(binaryData, { type: "application/zip" }),
+		);
 
 		setValues({ ...values, file: e.target.files[0], imgSrc: imgSrc });
 	};
