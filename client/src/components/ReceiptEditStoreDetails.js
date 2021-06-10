@@ -48,7 +48,6 @@ const ReceiptEditStoreDetails = ({
 					}}
 				/>
 			</span>
-
 			<span>
 				<label htmlFor="contact">Contact: </label>
 				<input
@@ -60,7 +59,6 @@ const ReceiptEditStoreDetails = ({
 					onChange={e => changePurchaseData(e)}
 				></input>
 			</span>
-
 			<span>
 				<label htmlFor="address">Address: </label>
 				<input
@@ -72,20 +70,17 @@ const ReceiptEditStoreDetails = ({
 					onChange={e => changePurchaseData(e)}
 				></input>
 			</span>
-
-			{manager && (
-				<span>
-					<label htmlFor="manager">Manager: </label>
-					<input
-						id="manager"
-						name="manager"
-						type="text"
-						placeholder={manager}
-						defaultValue={manager}
-						onChange={e => changePurchaseData(e)}
-					></input>
-				</span>
-			)}
+			<span>
+				<label htmlFor="manager">Manager: </label>
+				<input
+					id="manager"
+					name="manager"
+					type="text"
+					placeholder={manager}
+					defaultValue={manager}
+					onChange={e => changePurchaseData(e)}
+				></input>
+			</span>
 
 			<span>
 				<label htmlFor="cashier">Cashier: </label>
