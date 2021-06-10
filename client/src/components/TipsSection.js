@@ -19,11 +19,24 @@ const TipsSection = ({ page }) => {
 					more specific.
 				</p>
 			)}
-			<p className="tips__tip">
-				The server may have had some trouble retrieving data from the store. Try
-				searching the item again to see if you can get some new results this time
-				and make sure your internet service is strong.
-			</p>
+			{page === "all" ||
+				page === "capacity" ||
+				(page === "solutions" && (
+					<p className="tips__tip">
+						The server may have had some trouble retrieving data from the store. Try
+						searching the item again to see if you can get some new results this time
+						and make sure your internet service is strong.
+					</p>
+				))}
+			{page === "receiptList" && (
+				<p className="tips__tip">
+					For best results, make sure that the picture of your receipt is not blurry
+					and that starts at the first line and the it ends just above the
+					"Transaction Record" section of the receipt. You can click on the edit icon
+					on the top right of the receipt preview to edit the receipt details
+					manually and save or delete using the buttons at the bottom of the receipt.
+				</p>
+			)}
 		</section>
 	);
 };
