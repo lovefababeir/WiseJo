@@ -15,6 +15,7 @@
 		margin: 2rem 0 1rem 0;
 		color: #609b6d;
 		font-weight: bold;
+
 		@include surface {
 			font-size: 3.2rem;
 			@include desktop {
@@ -35,6 +36,7 @@
 		max-width: 65rem;
 	}
 	&__pages {
+		cursor: pointer;
 		font-size: 2.4rem;
 		color: #609b6d;
 		font-weight: bold;
@@ -44,6 +46,11 @@
 			@include desktop {
 				font-size: 2.8rem;
 			}
+		}
+		&:hover {
+			transition: transform 200ms ease-in-out;
+
+			transform: translateX(2rem);
 		}
 		& > svg {
 			width: 3rem;
