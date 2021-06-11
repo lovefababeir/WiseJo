@@ -167,42 +167,44 @@ m6971 -6 c80 -39 167 -128 201 -204 164 -371 -214 -737 -583 -565 -163 75
 				onClick={() => {
 					open !== "shop" ? setOpen("shop") : setOpen("");
 				}}
-				aria-controls="example-collapse-text"
+				aria-controls="collapse-text-shop"
 				aria-expanded={open === "shop" ? true : false}
 				className="wisejo__pages"
 			>
 				{shop()} Shop
 			</div>
 			<Collapse in={open === "shop" ? true : false}>
-				<div id="example-collapse-text" className="wisejo__pages-description">
+				<div id="collapse-text-shop" className="wisejo__pages-description">
 					When we shop, we want to know where the best place to purchase the things
 					we want. On the SHOP page you can submit a search for the item you would
 					like to purchase. You simply type what you want to search up and the store
 					you are shopping in or are planning to shop in. WiseJo searches up the
 					items for you and retrieves the details of the items available at the
-					stores listed. The search can take up to 30s to get the results from most
-					stores but might take up to 2-3mins to complete for stores like Walmart.
-					Once completed, you will be redirected to the COMPARE page where you will
-					see the search results. You may choose to go to the results page before you
-					are redirected to see which results are available. Just remember to refresh
-					to see any updates.
+					stores listed. Since WiseJo retrieves the up to date prices, the search can
+					take up to 30s to get the results from most stores but might take up to
+					2-3mins to complete for Walmart. Once completed, you will be redirected to
+					the COMPARE page where you will see the search results. If to see which
+					results are available before all the searches are complete you may choose
+					to go to the results page. Just remember to refresh to see any updates.
 				</div>
 			</Collapse>
 			<div
 				onClick={() => {
 					open !== "compare" ? setOpen("compare") : setOpen("");
 				}}
-				aria-controls="example-collapse-text"
+				aria-controls="collapse-text-compare"
 				aria-expanded={open === "compare" ? true : false}
 				className="wisejo__pages"
 			>
 				{compare()} Compare
 			</div>
 			<Collapse in={open === "compare" ? true : false}>
-				<div id="example-collapse-text">
+				<div id="collapse-text-compare">
 					<p className="wisejo__pages-description">
-						This page allows you to see the results 3 different ways. There is a
-						submenu under the title to help you change views.
+						You'll find the results of your most recent search here. The items listed
+						are top 8 items from each store that was able to return some results. This
+						page allows you to see the results 3 different ways. There is a submenu
+						under the title to help you change views.
 					</p>
 					<div className="wisejo__subpages">
 						<img src={stores} alt="" />
@@ -239,14 +241,14 @@ m6971 -6 c80 -39 167 -128 201 -204 164 -371 -214 -737 -583 -565 -163 75
 				onClick={() => {
 					open !== "snap" ? setOpen("snap") : setOpen("");
 				}}
-				aria-controls="example-collapse-text"
+				aria-controls="collapse-text-snap"
 				aria-expanded={open === "snap" ? true : false}
 				className="wisejo__pages"
 			>
 				{snap()} Snap
 			</div>
 			<Collapse in={open === "snap" ? true : false}>
-				<div id="example-collapse-text">
+				<div id="collapse-text-snap">
 					<p className="wisejo__pages-description">
 						No one wants to keep their receipts anymore but we always want to be able
 						to keep track of what we spend. Sometimes we see our bank statements but
@@ -282,14 +284,14 @@ m6971 -6 c80 -39 167 -128 201 -204 164 -371 -214 -737 -583 -565 -163 75
 				onClick={() => {
 					open !== "track" ? setOpen("track") : setOpen("");
 				}}
-				aria-controls="example-collapse-text"
+				aria-controls="collapse-text-track"
 				aria-expanded={open === "track" ? true : false}
 				className="wisejo__pages"
 			>
 				{track()} Track
 			</div>
 			<Collapse in={open === "track" ? true : false}>
-				<p id="example-collapse-text" className="wisejo__pages-description">
+				<p id="collapse-text-track" className="wisejo__pages-description">
 					You'll find a table that summarizes a list of all your expenses. You can
 					select a receipt to see the breakdown of everything within the purchase the
 					details on the store. Click{" "}
