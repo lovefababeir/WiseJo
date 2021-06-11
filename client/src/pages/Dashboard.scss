@@ -7,11 +7,12 @@
 	width: 100vw;
 	background-color: white;
 	padding-top: 0.1rem;
-
+	@include flex(column, center, center, nowrap);
 	&__logo {
 		width: 12rem;
 		height: 12rem;
-		margin: 0 15rem;
+		margin: 0 auto;
+		display: block;
 	}
 	&__icon {
 		fill: white;
@@ -19,20 +20,35 @@
 	&__logo-bg {
 		display: flex;
 		justify-content: center;
-		margin: 8rem auto 3rem auto;
+		margin: 4rem auto 3rem auto;
 		border-radius: 50%;
+		@include surface {
+			margin: 7rem auto 3rem auto;
+		}
 	}
 	&__heading {
-		width: 30rem;
-		margin: 3rem auto;
-		font-size: 3rem;
+		width: 20rem;
+		margin: 0rem auto;
+		font-size: 2rem;
 		text-align: center;
 		font-weight: bold;
 		color: #aabfb2;
+		@include mobileM {
+			font-size: 2.5rem;
+			width: 25rem;
+			@include surface {
+				margin: 0rem auto;
+				font-size: 3rem;
+				width: 30rem;
+			}
+		}
 	}
 	&__nav {
 		@include flex(column, space-around, center);
-		margin: 5rem auto;
+		margin: 3rem auto;
+		@include surface {
+			margin: 5rem auto;
+		}
 	}
 	&__btn {
 		width: 20rem;
