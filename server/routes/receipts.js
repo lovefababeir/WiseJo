@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const walmart = require("../receiptFunctions/walmartReceipt");
 const longos = require("../receiptFunctions/longosReceipt");
+const nofrills = require("../receiptFunctions/nofrillsReceipt");
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
 const ReceiptDoc = require("../models/receipt");
@@ -11,18 +12,21 @@ router.post("/convertImage", (req, res) => {
 	const auth = req.currentUser;
 	if (auth) {
 		const store = req.query.store.toLowerCase();
+		console.log(store);
 		const time = parseInt(req.query.time);
-		const convertedText = fcn.decodeText(req.body.data.regions);
+		const convertedText =
+			store === "no frills"
+				? fcn.decodeText1(req.body.data.regions)
+				: fcn.decodeText2(req.body.data.regions);
 		let purchaseData;
 		if (store === "walmart") {
 			purchaseData = walmart.receipt(convertedText);
 		} else if (store === "longo's") {
 			purchaseData = longos.receipt(convertedText);
 		} else if (store === "no frills") {
-			purchaseData =
-				"Sorry, algorithm for reading No Frills receipts is currently not working";
+			purchaseData = nofrills.receipt(convertedText);
 		} else {
-			purchaseData = `Sorry, algorithm for reading ${store} receipts is currently not working`;
+			purchaseData = `Unforunately, there is no algorithm for the ${store} receipts.  Please stay tuned for updates.`;
 		}
 
 		convertDate = timestamp => {
