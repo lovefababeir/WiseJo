@@ -73,15 +73,19 @@ const receipt = receiptResults => {
 		receiptResults.findIndex(line => {
 			return line.includes("$");
 		}) - 1;
-	const lastItemIndex = receiptResults.findIndex(line => {
+	const subtotalIndex = receiptResults.findIndex(line => {
 		return (
 			(line.includes("Items") && line.includes("Subtotal")) ||
-			(line.includes("$") && line.includes("Items"))
+			line.includes("Subtotal") ||
+			(line.includes("$") && line.includes("Items")) ||
+			(line.includes("Sub") && line.includes("Items")) ||
+			(line.includes("total") && line.includes("Items"))
 		);
 	});
+
 	let itemsList;
-	if (firstItemsIndex + 1 > 0 && lastItemIndex + 1 > 0) {
-		itemsList = receiptResults.slice(firstItemsIndex, lastItemIndex);
+	if (firstItemsIndex + 1 > 0 && subtotalIndex + 1 > 0) {
+		itemsList = receiptResults.slice(firstItemsIndex, subtotalIndex);
 	}
 
 	//======================================
@@ -90,35 +94,32 @@ const receipt = receiptResults => {
 		if (!amount) {
 			return;
 		}
-		const digits = amount?.split("");
-		const numDigits = amount?.length;
+
+		const digits = amount.split("");
+		const numDigits = amount.length;
 		const decimalIndex = digits.indexOf(".");
+
 		if (decimalIndex + 1 > 0) {
 			if (numDigits - decimalIndex === 3) {
-				return digits.join("");
+				return parseFloat(digits.join("")).toFixed(2);
 			} else {
-				digits.push("0", "0");
-				digits.splice(decimalIndex + 3);
-				return digits.join("");
+				return parseFloat(digits).toFixed(2);
 			}
 		} else {
 			digits.splice(numDigits - 2, 0, ".");
-			return digits.join("");
+			return parseFloat(digits.join("")).toFixed(2);
 		}
 	};
 
 	//======================================
 	//SUBTOTAL
 	let subtotal;
-	const subtotalLine = receiptResults
-		.find(text => {
-			return text.includes("Subtotal");
-		})
-		?.split(" ");
+	const subtotalLine = receiptResults[subtotalIndex]?.split(" ");
 
 	if (subtotalLine.length > 0) {
 		const subtotalStr = subtotalLine.pop();
-		subtotal = testAmount(subtotalStr.replace(/[^0-9.-]+/g, ""));
+		subtotal =
+			(subtotalStr && testAmount(subtotalStr.replace(/[^0-9.]+/g, ""))) || "";
 	}
 
 	//======================================
@@ -141,7 +142,7 @@ const receipt = receiptResults => {
 		);
 	});
 
-	const totalNum = totalStr?.replace(/[^0-9.-]+/g, "");
+	const totalNum = totalStr?.replace(/[^0-9.]+/g, "");
 
 	const paymentNum = paymentLine?.replace(/[^0-9.-]+/g, "");
 
