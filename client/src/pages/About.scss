@@ -1,0 +1,118 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.wisejo {
+	width: 90%;
+	margin: 0 auto;
+	padding: 5rem 0;
+	max-width: 80rem;
+	@include surface {
+		width: 80%;
+	}
+	&__title {
+		font-size: 2.8rem;
+		margin: 2rem 0 1rem 0;
+		color: #609b6d;
+		font-weight: bold;
+		@include surface {
+			font-size: 3.2rem;
+			@include desktop {
+				font-size: 3.5rem;
+			}
+		}
+		& > img {
+			width: 3rem;
+			height: 3rem;
+			margin-right: 1rem;
+		}
+	}
+	&__about {
+		text-align: center;
+		font-size: 2rem;
+		line-height: 2.4rem;
+		margin: 3rem auto 2rem auto;
+		max-width: 65rem;
+	}
+	&__pages {
+		font-size: 2.4rem;
+		color: #609b6d;
+		font-weight: bold;
+		margin-top: 3rem;
+		@include surface {
+			font-size: 2.6rem;
+			@include desktop {
+				font-size: 2.8rem;
+			}
+		}
+		& > svg {
+			width: 3rem;
+			height: 3rem;
+			fill: #000;
+			margin-right: 1rem;
+		}
+	}
+	&__pages-description {
+		font-size: 1.4rem;
+		@include surface {
+			font-size: 1.6rem;
+
+			@include desktop {
+				font-size: 1.8rem;
+			}
+		}
+	}
+	&__subpages {
+		font-size: 1.4rem;
+		@include flex(row, flex-start, flex-start, nowrap);
+		margin: 0.5rem 0;
+		& img {
+			width: 2.4rem;
+			margin: 0.3rem 1rem;
+		}
+	}
+	&__message {
+		@extend .wisejo__pages;
+		& + p {
+			@extend .wisejo__pages-description;
+		}
+	}
+}
+
+.store-receipts {
+	& > div {
+		margin: 1rem 0.5rem;
+		font-size: 1.3rem;
+		padding: 0 2rem;
+		@include surface {
+			font-size: 1.5rem;
+		}
+	}
+	& img {
+		height: 2.5rem;
+		margin: 0.3rem 1rem;
+	}
+}
+
+.wisejo-icons {
+	width: 2.4rem;
+	margin: 0.3rem 1rem;
+}
+
+.returnBtn {
+	background-color: #57665a;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	color: #fff;
+	display: block;
+	margin: 5rem auto;
+	padding: 0.7rem 1.2rem;
+	border-radius: 5px;
+	border: #57665a solid 1px;
+	box-shadow: #686868 0px 0px 5px 2px;
+	width: max-content;
+	text-decoration: none;
+	&:hover {
+		color: white;
+	}
+}
