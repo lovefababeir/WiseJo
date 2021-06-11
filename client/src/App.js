@@ -12,6 +12,8 @@ import Results from "./pages/Results";
 import RecordReceipt from "./pages/RecordReceipt";
 import ReceiptsList from "./pages/ReceiptList";
 import { useState, useEffect } from "react";
+import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 const usePageViews = () => {
 	const location = useLocation();
@@ -60,6 +62,8 @@ function App() {
 						<PrivateRoute path="/compare" component={Results} />
 						<PrivateRoute path="/snap" component={RecordReceipt} />
 						<PrivateRoute path="/track" component={ReceiptsList} />
+						<PrivateRoute path="/myprofile" component={Profile} />
+						<PrivateRoute path="/about" component={About} />
 					</Switch>
 				</AuthProvider>
 				{viewMenu && <MenuBar />}
