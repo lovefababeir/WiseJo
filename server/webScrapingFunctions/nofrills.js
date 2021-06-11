@@ -1,7 +1,8 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
-	const options = { headless: true };
+	const args = ["--no-sandbox"];
+	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
 	await page.setDefaultTimeout(120000);
@@ -21,7 +22,7 @@ const store = async function (searchWords) {
 	let result = await page.evaluate(() => {
 		let topResults = [];
 
-		for (var n = 1; n < 7; n++) {
+		for (var n = 1; n < 9; n++) {
 			let path = `#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${n})`;
 
 			if (!document.querySelector(path)) {
@@ -30,21 +31,22 @@ const store = async function (searchWords) {
 
 			const productID = document
 				.querySelector(`${path} > div`)
-				.getAttribute("data-track-article-number");
+				?.getAttribute("data-track-article-number");
 
 			const image = document
 				.querySelector(
 					`${path} > div > div > div.product-tile__thumbnail > div.product-tile__thumbnail__image > img`,
 				)
-				.getAttribute("src");
+				?.getAttribute("src");
 
 			var title1 = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span:nth-child(1)`,
-			).innerText;
-			var title2 = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span:nth-child(2)`,
-			);
-			title2 = title2 ? title2.innerText : "";
+			)?.innerText;
+			const title2 =
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span:nth-child(2)`,
+				)?.innerText || "";
+			// title2 = title2 ? title2.innerText : "";
 			const title = title1 + " " + title2;
 
 			const priceElement =
@@ -54,32 +56,29 @@ const store = async function (searchWords) {
 				document.querySelector(
 					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices.product-prices--product-tile > ul > li > span > span`,
 				);
-			const price = priceElement.innerHTML;
+			const price = priceElement?.innerHTML;
 
-			var size = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
-			);
-			size = size ? size.innerText : "est. each";
+			const size =
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
+				)?.innerText || "est. each";
+			// size = size ? size.innerText : "est. each";
 
 			const unitCost = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
-			)
-				? document.querySelector(
-						`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(1)`,
-				  ).innerText
-				: "";
-			const unitMass = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
-			)
-				? document
-						.querySelector(
-							`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
-						)
-						.innerText.split("/ ")[1]
-				: "";
+			)?.innerText;
+
+			const unitMass = document
+				.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices > ul:nth-child(2) > li:nth-child(1) > span > span:nth-child(2)`,
+				)
+				?.innerText.split("/ ")[1];
 
 			//function to get the capacity of each item as a number
 			const val = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var value;
 
@@ -101,7 +100,7 @@ const store = async function (searchWords) {
 						);
 					});
 
-				const units = unitsString ? unitsString.replace(/[^a-zA-Z ]/g, "") : "";
+				const units = unitsString?.replace(/[^a-zA-Z ]/g, "") || "";
 
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
@@ -117,18 +116,21 @@ const store = async function (searchWords) {
 
 			//function to get the quantity in item
 			const qty = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
 					return parseInt(capacity.split("x")[0]);
 				}
 
-				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
+				const qtyUnits = capacity.slice(0)?.replace(/[^a-zA-Z ]/g, "");
 
 				if (
 					qtyUnits
 						.slice(0)
-						.split(" ")
+						?.split(" ")
 						.find(x => {
 							return (
 								x === "ml" ||
@@ -142,7 +144,7 @@ const store = async function (searchWords) {
 				) {
 					qty = 1;
 				} else {
-					qty = capacity.match(/\d+/g).map(Number)[0];
+					qty = capacity.match(/\d+/g)?.map(Number)[0] || 1;
 				}
 				return qty;
 			};
@@ -158,6 +160,9 @@ const store = async function (searchWords) {
 			}
 
 			const findUnit = str => {
+				if (!str) {
+					return "";
+				}
 				let newStr = str.replace(/[^a-zA-Z ]/g, "");
 				return newStr;
 			};

@@ -1,7 +1,8 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
-	const options = { headless: true };
+	const args = ["--no-sandbox"];
+	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
 	await page.setDefaultTimeout(120000);
@@ -16,30 +17,35 @@ const store = async function (searchWords) {
 	let result = await page.evaluate(async () => {
 		let topResults = [];
 
-		for (var i = 1; i < 7; i++) {
+		for (var i = 1; i < 9; i++) {
 			const path = `ul[class="products-gallery js-quickview-wrapper"] > li:nth-child(${i})`;
 			if (!document.querySelector(path)) {
 				break;
 			}
-			const productID = document.querySelector(`${path}`).getAttribute("data-sku");
-			const image = document.querySelector(`${path} img`).getAttribute("src");
+			const productID = document
+				.querySelector(`${path}`)
+				?.getAttribute("data-sku");
+			const image = document.querySelector(`${path} img`)?.getAttribute("src");
 
 			const title = document.querySelector(
 				`${path}  > div > div > a > strong`,
-			).innerText;
+			)?.innerText;
 
 			const price = document.querySelector(
 				`${path} span[class="cart_reader"]`,
-			).innerText;
+			)?.innerText;
 
 			const m = document.querySelector(
 				`${path} > div > div > div.product-card__bottom-content > span.product-card__price + span`,
-			).innerText;
+			)?.innerText;
 
-			const capacity = m.substr(m.indexOf("/") + 2);
+			const capacity = m && m.substr(m.indexOf("/") + 2);
 
 			//function to get the capacity of each item as a number
 			const val = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var value;
 
@@ -76,17 +82,21 @@ const store = async function (searchWords) {
 
 			//function to get the quantity in item
 			const qty = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var qty;
 				if (capacity.includes("x")) {
 					return parseInt(capacity.split("x")[0]);
 				}
 				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
+
 				if (
 					qtyUnits
-						.slice(0)
-						.split(" ")
-						.find(x => {
+						?.slice(0)
+						?.split(" ")
+						?.find(x => {
 							return (
 								x === "ml" ||
 								x === "l" ||
@@ -99,7 +109,7 @@ const store = async function (searchWords) {
 				) {
 					qty = 1;
 				} else {
-					qty = capacity.match(/\d+/g).map(Number)[0];
+					qty = capacity.match(/\d+/g)?.map(Number)[0] || 1;
 				}
 				return qty;
 			};
@@ -107,13 +117,10 @@ const store = async function (searchWords) {
 			const quantity = qty(capacity);
 			const value = val(capacity);
 
-			const unitMass = value * quantity > 100 ? 100 : 1;
-			const unitCost = (
-				parseFloat(price.slice(1)) /
-				((value * quantity) / unitMass)
-			).toFixed(2);
-
 			const findUnit = str => {
+				if (!str) {
+					return "";
+				}
 				const unitsStr = str
 					.slice(0)
 					.toLowerCase()
@@ -144,7 +151,20 @@ const store = async function (searchWords) {
 				}
 			};
 
+			const unitMass = value * quantity > 100 ? 100 : 1;
+			const unitCost =
+				(price &&
+					value &&
+					quantity &&
+					parseFloat(
+						parseFloat(price.slice(1) / ((value * quantity) / unitMass)).toFixed(2),
+					)) ||
+				"";
+
 			let titleCase = str => {
+				if (!str) {
+					return "";
+				}
 				const newString = [];
 				let space = true;
 				let char;
@@ -171,7 +191,7 @@ const store = async function (searchWords) {
 				value: value,
 				quantity: quantity,
 				unitPrice: {
-					cost: parseFloat(unitCost),
+					cost: unitCost,
 					mass: unitMass,
 					units: findUnit(capacity),
 				},

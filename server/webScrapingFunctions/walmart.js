@@ -4,8 +4,8 @@ require("dotenv").config();
 puppeteer.use(StealthPlugin());
 const Client = require("@infosimples/node_two_captcha");
 
-client = new Client(process.env.API_KEY, {
-	timeout: 120000,
+client = new Client(process.env.CAPTCHA_API_KEY, {
+	timeout: 170000,
 	polling: 5000,
 	throwErrors: false,
 });
@@ -13,6 +13,7 @@ client = new Client(process.env.API_KEY, {
 const store = async function (searchWords) {
 	const args = [
 		'--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
+		"--no-sandbox",
 	];
 
 	const options = {
@@ -28,7 +29,7 @@ const store = async function (searchWords) {
 
 	var browser = await puppeteer.launch(options);
 	const [page] = await browser.pages();
-	await page.setDefaultTimeout(120000);
+	await page.setDefaultTimeout(180000);
 	const cdp = await page.target().createCDPSession();
 
 	try {
@@ -99,11 +100,12 @@ const store = async function (searchWords) {
 		pageurl: captchaParams[0].pageurl,
 	});
 
+	console.log(captcha);
 	await cdp.send("Runtime.evaluate", {
 		expression: `${captchaParams[0].function}('${captcha._text}')`,
 	});
 
-	await page.goto(`https://www.walmart.ca/search?q=${searchWords}`, {
+	await page.goto(`https://www.walmart.ca/search?q=${searchWords}&f=12&p=1`, {
 		waitUntil: "networkidle2",
 	});
 
@@ -112,45 +114,63 @@ const store = async function (searchWords) {
 	let result = await page.evaluate(() => {
 		let topResults = [];
 
-		for (var j = 1; j < 7; j++) {
+		for (var j = 1; j < 9; j++) {
 			const productID = document
 				.querySelector(`#product-results > div:nth-child(${j}) > div`)
-				.getAttribute("data-product-id");
-			const image = document
-				.querySelector(
-					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(1) > img`,
-				)
-				.getAttribute("src");
+				?.getAttribute("data-product-id");
 
-			const grocItem = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > p`,
-			).innerText;
+			const image =
+				document
+					.querySelector(
+						`	#product-results > div:nth-child(${j}) img[data-automation="image"]`,
+					)
+					?.getAttribute("src") ||
+				document
+					.querySelector(
+						`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(1) > img`,
+					)
+					?.getAttribute("src");
 
-			const price = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div > span > span`,
-			).innerText;
+			const grocItem =
+				document.querySelector(
+					`	#product-results > div:nth-child(${j}) p[data-automation="name"]`,
+				)?.innerText ||
+				document.querySelector(
+					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) p`,
+				)?.innerText;
 
-			const capacity = document.querySelector(
-				`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p`,
-			).innerText;
+			const price =
+				document.querySelector(
+					`	#product-results > div:nth-child(${j}) span[data-automation="current-price"]`,
+				)?.innerText ||
+				document.querySelector(
+					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div > span > span`,
+				)?.innerText;
 
-			const unitPriceText = document.querySelector(
-				`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
-			)
-				? document.querySelector(
-						`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
-				  ).innerText
-				: "";
+			const capacity =
+				document.querySelector(
+					`	#product-results > div:nth-child(${j}) p[data-automation="description"]`,
+				)?.innerText ||
+				document.querySelector(
+					`#product-results > div:nth-child(${j}) > div > a > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p`,
+				)?.innerText;
 
+			const unitPriceText =
+				document.querySelector(
+					`#product-results > div:nth-child(${j}) span[data-automation="price-per-unit"]`,
+				)?.innerText || "";
 			//function to get the capacity of each item as a number
 			const val = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var value;
-
-				if (capacity.includes("x")) {
-					capacity = capacity.split("x")[1];
+				if (capacity.includes("x") || capacity.includes(",")) {
+					return capacity.includes("x")
+						? parseFloat(capacity.slice(0).split("x")[1])
+						: parseFloat(capacity.slice(0).split("x")[0]);
 				}
-
 				const unitsString = capacity
 					.slice(0)
 					.split(" ")
@@ -158,17 +178,23 @@ const store = async function (searchWords) {
 						return (
 							word.replace(/[^a-zA-Z ]/g, "") === "kg" ||
 							word.replace(/[^a-zA-Z ]/g, "") === "g" ||
+							word.replace(/[^a-zA-Z ]/g, "") === "gm" ||
 							word.replace(/[^a-zA-Z ]/g, "") === "lb" ||
 							word.replace(/[^a-zA-Z ]/g, "") === "oz" ||
 							word.replace(/[^a-zA-Z ]/g, "") === "l" ||
 							word.replace(/[^a-zA-Z ]/g, "") === "ml"
 						);
 					});
-				const units = unitsString ? unitsString.replace(/[^a-zA-Z ]/g, "") : "";
+				const units = unitsString?.replace(/[^a-zA-Z ]/g, "") || "";
 
 				if (units === "kg" || units === "l") {
 					value = parseFloat(capacity) * 1000;
-				} else if (units === "kg" || units === "ml" || units === "oz") {
+				} else if (
+					units === "g" ||
+					units === "gm" ||
+					units === "ml" ||
+					units === "oz"
+				) {
 					value = parseInt(capacity);
 				} else if (units === "lb") {
 					value = parseFloat(capacity) * 16;
@@ -180,23 +206,36 @@ const store = async function (searchWords) {
 
 			//function to get the quantity in item
 			const qty = C => {
+				if (!C) {
+					return "";
+				}
 				var capacity = C.toLowerCase();
 				var qty;
-				if (capacity.includes("x")) {
-					return parseInt(capacity.split("x")[0]);
+				const capacityWords = capacity.slice(0).split(" ");
+				if (!capacity.includes("x") && capacity.includes(",")) {
+					return parseInt(capacity.split(",")[1]);
 				}
 
+				if (capacity.includes("x")) {
+					const xIndex = capacityWords.findIndex(word => {
+						return word === "x";
+					});
+					//returns the item in the capacityWords array that is a number appearing right before the "x"
+					return (
+						parseInt(capacityWords[xIndex - 1]) || parseInt(capacityWords[xIndex - 2])
+					);
+				}
 				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
-
 				if (
 					qtyUnits
-						.slice(0)
+						?.slice(0)
 						.split(" ")
 						.find(x => {
 							return (
 								x === "ml" ||
 								x === "l" ||
 								x === "g" ||
+								x === "gm" ||
 								x === "kg" ||
 								x === "lb" ||
 								x === "oz"
@@ -205,7 +244,7 @@ const store = async function (searchWords) {
 				) {
 					qty = 1;
 				} else {
-					qty = capacity.match(/\d+/g).map(Number)[0];
+					qty = capacity.match(/\d+/g)?.map(Number)[0] || 1;
 				}
 				return qty;
 			};
@@ -213,8 +252,10 @@ const store = async function (searchWords) {
 			const quantity = qty(capacity);
 
 			const value = val(capacity);
-
 			const getCostFrom = str => {
+				if (!str) {
+					return "";
+				}
 				const costStr = str.slice(0).split("/")[0];
 				if (costStr.includes("¢")) {
 					return parseFloat(costStr) / 100;
@@ -224,24 +265,32 @@ const store = async function (searchWords) {
 			};
 
 			const getMassFrom = str => {
-				const massStr = str.slice(0).split("/")[1];
-				if (parseInt(massStr)) {
-					return parseInt(massStr);
-				} else {
-					return 1;
+				if (!str) {
+					return "";
 				}
+				const massStr = str.slice(0).split("/")[1];
+				return parseInt(massStr) || 1;
 			};
 
 			const getUnitsFrom = str => {
+				if (!str) {
+					return "";
+				}
 				const massStr = str.slice(0).split("/")[1];
 				return massStr.replace(/[^a-zA-Z ]/g, "");
 			};
 
 			const calcCostValue = (costStr, value, quantity) => {
+				if (!costStr || !value || !quantity) {
+					return "";
+				}
 				return parseFloat(costStr.slice(1)) / (value * quantity);
 			};
 
 			const calcMassValue = capacity => {
+				if (!capacity) {
+					return "";
+				}
 				const unitsStr = capacity
 					.slice(0)
 					.toLowerCase()
@@ -253,6 +302,7 @@ const store = async function (searchWords) {
 							textNoNums === "l" ||
 							textNoNums === "kg" ||
 							textNoNums === "g" ||
+							textNoNums === "gm" ||
 							textNoNums === "lb" ||
 							textNoNums === "oz"
 						);
@@ -262,7 +312,7 @@ const store = async function (searchWords) {
 					units = unitsStr.replace(/[^a-zA-Z ]/g, "");
 					return units === "ml" || units === "l"
 						? 100
-						: units === "kg" || units === "g"
+						: units === "kg" || units === "g" || units === "gm"
 						? 100
 						: units === "lb" || units === "oz"
 						? 1
@@ -273,6 +323,9 @@ const store = async function (searchWords) {
 			};
 
 			const getUnitsFromCapacity = capacity => {
+				if (!capacity) {
+					return "";
+				}
 				const unitsStr = capacity
 					.slice(0)
 					.toLowerCase()
@@ -284,6 +337,7 @@ const store = async function (searchWords) {
 							textNoNums === "l" ||
 							textNoNums === "kg" ||
 							textNoNums === "g" ||
+							textNoNums === "gm" ||
 							textNoNums === "lb" ||
 							textNoNums === "oz"
 						);
@@ -293,7 +347,7 @@ const store = async function (searchWords) {
 					units = unitsStr.replace(/[^a-zA-Z ]/g, "");
 					return units === "ml" || units === "l"
 						? "ml"
-						: units === "kg" || units === "g"
+						: units === "kg" || units === "g" || units === "gm"
 						? "g"
 						: units === "lb" || units === "oz"
 						? "oz"
@@ -310,8 +364,8 @@ const store = async function (searchWords) {
 				title: grocItem || "",
 				price: price || "",
 				capacity: capacity || "",
-				value: value,
-				quantity: quantity,
+				value: value || "",
+				quantity: quantity || "",
 				unitPrice: {
 					cost: unitPriceText
 						? getCostFrom(unitPriceText)
