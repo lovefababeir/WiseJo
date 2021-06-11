@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 const receipts = require("./routes/receipts");
 const itemSearch = require("./routes/itemSearch");
-const morgan = require("morgan");
 const mongoose = require("mongoose");
 const decodeIDToken = require("./authenticateToken.js");
 const dotenv = require("dotenv");
@@ -25,15 +24,27 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-//HTTP request logger
-app.use(morgan("tiny"));
-
 //Athenticate token with firebase
 app.use(decodeIDToken);
 
 app.use("/itemSearch", itemSearch);
 app.use("/receipts", receipts);
 
-app.listen(PORT, () => {
-	console.log(`Capstone server is starting at ${PORT}`);
+const server = app.listen(PORT, () => {
+	console.log(`Wisejo server is starting at ${PORT}`);
+});
+
+process.on("unhandledRejection", err => {
+	console.log("Unhandled rejection! FORCING SHUT DOWN");
+	console.log(err.name, err.message);
+	server.close(() => {
+		console.log("Process terminated");
+	});
+});
+
+process.on("SIGTERM", () => {
+	console.log("SIGTERM RECEIVED. Shutting down gracefully");
+	server.close(() => {
+		console.log("Process Terminated!");
+	});
 });
