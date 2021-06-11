@@ -1,0 +1,31 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.profile {
+	height: 100vh;
+	overflow: hidden;
+
+	&__details {
+		margin: 1rem;
+		@include mobileL {
+			margin: 1rem 0 2rem 0;
+		}
+	}
+	&__user {
+		font-size: 1.3rem;
+		margin: 0;
+		@include surface {
+			font-size: 1.5rem;
+		}
+		& > span {
+			color: #f1aa6b;
+
+			font-weight: bold;
+			font-size: 1.4rem;
+			@include surface {
+				font-size: 1.7rem;
+			}
+		}
+	}
+}
