@@ -22,8 +22,8 @@ const usePageViews = () => {
 
 function App() {
 	const [viewMenu, setViewMenu] = useState(false);
-
 	const onPage = usePageViews().pathname;
+
 	useEffect(() => {
 		let mounted = true;
 
@@ -42,6 +42,11 @@ function App() {
 			mounted = false;
 		};
 	}, [onPage]);
+
+	window.addEventListener("resize", () => {
+		let vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty("--vh", `${vh}px`);
+	});
 
 	return (
 		<div

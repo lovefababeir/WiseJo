@@ -4,6 +4,7 @@
 
 .receipt-form {
 	height: calc(100vh - 9rem);
+	height: calc(var(--vh, 1vh) * 100 - 9rem);
 	overflow-y: scroll;
 
 	&__storeSelect {

@@ -4,6 +4,7 @@
 
 .card {
 	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 	width: 100vw;
 	&-body {
 		@include flex(column, center, center);
@@ -27,10 +28,12 @@
 		position: absolute;
 		@include flex(row, center, center);
 		height: 100vh;
+		height: calc(var(--vh, 1vh) * 100);
 		width: 100vw;
 		overflow: hidden;
 		& > img {
 			height: 100vh;
+			height: calc(var(--vh, 1vh) * 100);
 			width: 100vw;
 			max-height: 80rem;
 			max-width: 60rem;
