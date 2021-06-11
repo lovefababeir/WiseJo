@@ -26,12 +26,15 @@ const conductSearch = async (
 		month: dateSubmitted.getMonth() + 1,
 		day: dateSubmitted.getDate(),
 	};
-
 	//Checks if there is already an up to date(same day) result.
 	const responseData = await ItemResults.find({
 		searchItem: item,
 		store: store,
-		date: searchDate,
+		date: {
+			year: searchDate.year,
+			month: searchDate.month,
+			day: searchDate.day,
+		},
 	})
 		.exec()
 		.then(result => {
@@ -41,12 +44,17 @@ const conductSearch = async (
 				return promiseFcn
 					.createUserCopy(data, userid, userlocation, time)
 					.then(result => {
+						console.log("createdUserCopy from db");
 						return {
 							code: 201,
 							jsonData: { message: "Found data already on record", data: result },
 						};
 					})
 					.catch(error => {
+						console.log(
+							store,
+							`Found something from a previous search today but could not log user data: ${error}`,
+						);
 						return {
 							code: 500,
 							jsonData: {
@@ -82,11 +90,9 @@ const conductSearch = async (
 									store,
 									result,
 								)
-								.then(result => {
-									console.log("Recorded in userResults");
-								})
+								.then(result => {})
 								.catch(error => {
-									console.log(`Could not log user data: ${error}`);
+									console.log(store, `Could not log user data: ${error}`);
 								});
 							//add it to the ItemsResults collection
 							return promiseFcn
@@ -101,6 +107,10 @@ const conductSearch = async (
 									};
 								})
 								.catch(error => {
+									console.log(
+										store,
+										"500 Could not created a record of the search results",
+									);
 									return {
 										code: 500,
 										jsonData: {
@@ -112,6 +122,10 @@ const conductSearch = async (
 						}
 					})
 					.catch(error => {
+						console.log(
+							store,
+							`500 Could not complete ${store} search for ${item}. Internal issue with ${store} function: ${error}`,
+						);
 						return {
 							code: 500,
 							jsonData: {
@@ -126,6 +140,10 @@ const conductSearch = async (
 			return response;
 		})
 		.catch(err => {
+			console.log(
+				store,
+				`500 Had problems with checking history of searches for ${item}.`,
+			);
 			return {
 				code: 500,
 				jsonData: {
