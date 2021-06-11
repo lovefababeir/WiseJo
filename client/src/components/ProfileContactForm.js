@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Link } from "react-router-dom";
-import "./EditProfileContactForm.scss";
+import "./ProfileContactForm.scss";
 
 const ContactForm = ({ currentUser }) => {
 	const [state, handleSubmit] = useForm("xayajwyp");

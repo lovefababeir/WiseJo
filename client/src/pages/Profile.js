@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
-import ContactForm from "../components/EditProfileContactForm";
+import ContactForm from "../components/ProfileContactForm";
 import "./Profile.scss";
 
 const EditProfile = () => {
