@@ -6,8 +6,9 @@ import "./ProfileContactForm.scss";
 const ContactForm = ({ currentUser }) => {
 	const [state, handleSubmit] = useForm("xayajwyp");
 	if (state.succeeded) {
-		return <p>Thanks for joining!</p>;
+		return <p>Message sent! We'll get back to you as soon as possible.</p>;
 	}
+
 	return (
 		<>
 			<form onSubmit={handleSubmit} className="connect-form">

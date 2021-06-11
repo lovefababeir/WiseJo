@@ -42,7 +42,7 @@ const RecordReceiptForm = ({
 						<img
 							className="receiptPreview__img"
 							src={imgSrc}
-							alt="A preview of the receipt you selected."
+							alt="Your selected receipt. Can't see your  receipt? Make sure its in jpg form."
 						/>
 					</div>
 				)}
