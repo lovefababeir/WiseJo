@@ -17,6 +17,7 @@ const Results = () => {
 		errorMessageAll: "",
 		errorMessageCapacity: "",
 		errorLoadResults: "",
+		searchWord: "",
 	});
 	const history = useHistory();
 	const { createToken, logout } = useAuth();
@@ -38,6 +39,7 @@ const Results = () => {
 							errorMessageAll: "",
 							errorMessageCapacity: "",
 							errorLoadResults: "",
+							searchWord: result.data.data[0].searchItem,
 						});
 					})
 					.catch(error => {
@@ -50,6 +52,7 @@ const Results = () => {
 								"Error: WiseJo was unable to retrieve your results. Please make sure your have a strong internet connection and try again.",
 							errorMessageCapacity: "",
 							errorLoadResults: "",
+							searchWord: "",
 						});
 					});
 			})
@@ -63,6 +66,7 @@ const Results = () => {
 						"Error: Unable to create access token for the database. Try again later",
 					errorMessageCapacity: "",
 					errorLoadResults: "",
+					searchWord: "",
 				});
 			});
 	}, [createToken]);
@@ -128,6 +132,12 @@ const Results = () => {
 				<h1 className="results__title ">SHOP & COMPARE</h1>
 				<ResultsSubMenu view={values.view} changePageHandler={changePageHandler} />
 				<div className="results__view">
+					{values.searchWord &&
+						(values.view === "All" || values.view === "Capacity") && (
+							<h2 className="results__subtitle">
+								Your results for <span>"{values.searchWord}"</span>:
+							</h2>
+						)}
 					{values.view === "All" && (
 						<ResultsAll
 							list={values.results}

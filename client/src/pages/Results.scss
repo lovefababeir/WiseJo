@@ -12,7 +12,18 @@
 	&__title {
 		@include pageTitle;
 	}
-
+	&__subtitle {
+		font-size: 1.8rem;
+		margin: 2rem 0 0 2rem;
+		font-style: italic;
+		@include fadeIn(ease-in-out, 4s);
+		& span {
+			font-size: 2rem;
+			font-weight: bold;
+			color: rgba(224, 120, 1, 0.6);
+			text-transform: capitalize;
+		}
+	}
 	&__nav {
 		width: 70%;
 		border-radius: 4rem;
