@@ -8,6 +8,9 @@ import TipsSection from "./TipsSection";
 const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 	var listOfStores = [];
 	const storeList = () => {
+		if (!list.length) {
+			return;
+		}
 		const orderedList = list.sort((a, b) => {
 			return a.store < b.store ? -1 : 1;
 		});
@@ -34,7 +37,7 @@ const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 	return (
 		<animated.div style={details}>
 			<section className="store">
-				{listOfStores.map((store, i) => {
+				{listOfStores?.map((store, i) => {
 					return (
 						<ResultsAllGrocerySection
 							store={store.store}

@@ -15,6 +15,10 @@ const ResultsCapacity = ({
 	updateList,
 }) => {
 	const sortByCapacity = itemList => {
+		if (!itemList.length) {
+			return;
+		}
+
 		const capacityList = [];
 		//value refers to the capacity as a number
 		const resultsList = itemList.slice(0).filter(item => {
@@ -57,7 +61,7 @@ const ResultsCapacity = ({
 			<section className="capacity">
 				<animated.div style={animationStyle}>
 					<div className="capacity__carousel">
-						{newList.map(category => {
+						{newList?.map(category => {
 							return (
 								<ResultsCapacityItemCard
 									image={category.image}

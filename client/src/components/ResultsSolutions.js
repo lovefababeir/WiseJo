@@ -8,7 +8,7 @@ const ResultsSolutions = props => {
 
 	//RETURNS AN ALTERED LIST: adds unit rates for all stores
 	const unitRates = list
-		.slice(0)
+		?.slice(0)
 		.filter(item => {
 			return item.unitPrice && item.unitPrice.cost && item.unitPrice.mass;
 		})
