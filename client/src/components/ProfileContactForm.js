@@ -2,6 +2,7 @@ import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Link } from "react-router-dom";
 import "./ProfileContactForm.scss";
+import goback from "../assets/images/arrow.svg";
 
 const ContactForm = ({ currentUser }) => {
 	const [state, handleSubmit] = useForm("xayajwyp");
@@ -43,7 +44,10 @@ const ContactForm = ({ currentUser }) => {
 					Submit
 				</button>
 			</form>
-			<Link to="/">Back to Dashboard</Link>
+			<Link to="/" className="back-to-dashboard">
+				<img src={goback} alt="Click here to go back to the dashboard" />
+				Back to Dashboard
+			</Link>
 		</>
 	);
 };

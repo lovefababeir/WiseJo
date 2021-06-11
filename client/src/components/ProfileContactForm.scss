@@ -8,10 +8,10 @@
 	padding: 2rem;
 	background-color: #fff;
 	max-width: 40rem;
-	margin: 1rem 0;
+	margin: 1rem auto;
 	box-shadow: 0px 0px 5px 2px #8d8d8d;
 	@include surface {
-		margin: 2rem 0rem;
+		margin: 2rem auto;
 		@include desktop {
 			padding-top: 4rem;
 		}
@@ -97,6 +97,29 @@
 	}
 }
 
+.back-to-dashboard {
+	text-align: center;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+	font-size: 1.6rem;
+	color: rgb(56, 87, 56);
+	text-decoration: none;
+	font-weight: bold;
+	&:hover {
+		text-decoration: underline;
+		color: $orange;
+	}
+	& img {
+		height: 2rem;
+		margin: 1rem;
+	}
+}
 .editProfile {
 	flex-wrap: nowrap;
+	&__button {
+		@extend .back-to-dashboard;
+		font-size: 1.4rem;
+		cursor: pointer;
+	}
 }
