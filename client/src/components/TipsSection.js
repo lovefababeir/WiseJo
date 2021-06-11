@@ -4,8 +4,8 @@ import "./TipsSection.scss";
 const TipsSection = ({ page }) => {
 	return (
 		<section className="tips">
-			<h1 className="tips__title">Not the results you want? Here are some tips</h1>
-			{page === "solution" && (
+			<h1 className="tips__title">Tips for best results:</h1>
+			{page === "solutions" && (
 				<p className="tips__tip">
 					Go back to the first page where you saw all the items available in the
 					stores. Delete the items you're not interested in purchasing and come back
@@ -14,20 +14,24 @@ const TipsSection = ({ page }) => {
 			)}
 			{page === "all" && (
 				<p className="tips__tip">
-					The results you see are the top 6 returned from each store according the
-					item you submitted in the Shop form. Try changing your search to something
-					more specific.
+					Missing the results from a store? Walmart and No Frills can sometimes take
+					up to two mins, so check again later if the results show up. If not do a
+					search for the same search word.
 				</p>
 			)}
-			{page === "all" ||
-				page === "capacity" ||
-				(page === "solutions" && (
-					<p className="tips__tip">
-						The server may have had some trouble retrieving data from the store. Try
-						searching the item again to see if you can get some new results this time
-						and make sure your internet service is strong.
-					</p>
-				))}
+			{page === "all" && (
+				<p className="tips__tip">
+					Not the items you're looking for? The results you see are the top 6
+					returned from each store according the item you submitted in the Shop form.
+					Try changing your search to something more specific.
+				</p>
+			)}
+			{(page === "all" || page === "capacity" || page === "solutions") && (
+				<p className="tips__tip">
+					Not seeing any results? Make sure your internet service is strong and try
+					the search again.
+				</p>
+			)}
 			{page === "receiptList" && (
 				<p className="tips__tip">
 					For best results, make sure that the picture of your receipt is not blurry
