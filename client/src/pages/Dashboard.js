@@ -39,6 +39,9 @@ const Dashboard = () => {
 					<button className="home__btn" onClick={() => pageHandler("about")}>
 						Learn About WiseJo
 					</button>
+					<button onClick={() => pageHandler("myprofile")} className="home__btn">
+						Check Profile
+					</button>
 					<button className="home__btn" onClick={() => pageHandler("shop")}>
 						Search an Item
 					</button>
@@ -51,9 +54,7 @@ const Dashboard = () => {
 					<button onClick={() => pageHandler("track")} className="home__btn">
 						Track History
 					</button>
-					<button onClick={() => pageHandler("myprofile")} className="home__btn">
-						Check Profile
-					</button>
+
 					<button onClick={signoutHandler} className="userProfile__signOut">
 						Sign Out
 					</button>

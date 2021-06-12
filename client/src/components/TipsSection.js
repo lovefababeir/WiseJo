@@ -21,7 +21,7 @@ const TipsSection = ({ page }) => {
 			)}
 			{page === "all" && (
 				<p className="tips__tip">
-					Not the items you're looking for? The results you see are the top 6
+					Not the items you're looking for? The results you see are the top 8
 					returned from each store according the item you submitted in the Shop form.
 					Try changing your search to something more specific.
 				</p>
