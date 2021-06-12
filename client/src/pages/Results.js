@@ -132,12 +132,6 @@ const Results = () => {
 				<h1 className="results__title ">SHOP & COMPARE</h1>
 				<ResultsSubMenu view={values.view} changePageHandler={changePageHandler} />
 				<div className="results__view">
-					{values.searchWord &&
-						(values.view === "All" || values.view === "Capacity") && (
-							<h2 className="results__subtitle">
-								Your results for <span>"{values.searchWord}"</span>:
-							</h2>
-						)}
 					{values.view === "All" && (
 						<ResultsAll
 							list={values.results}

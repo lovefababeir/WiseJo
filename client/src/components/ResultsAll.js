@@ -37,6 +37,12 @@ const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 	return (
 		<animated.div style={details}>
 			<section className="store">
+				{values.searchWord &&
+					(values.view === "All" || values.view === "Capacity") && (
+						<h2 className="results__subtitle">
+							Your results for <span>"{values.searchWord}"</span>:
+						</h2>
+					)}
 				{listOfStores?.map((store, i) => {
 					return (
 						<ResultsAllGrocerySection

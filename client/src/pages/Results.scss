@@ -24,6 +24,10 @@
 			color: rgba(224, 120, 1, 0.6);
 			text-transform: capitalize;
 		}
+		&--capacity {
+			@extend .results__subtitle;
+			@include fadeIn(ease-in-out, 1s);
+		}
 	}
 	&__nav {
 		width: 70%;
