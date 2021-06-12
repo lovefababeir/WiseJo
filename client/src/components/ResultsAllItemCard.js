@@ -2,6 +2,7 @@ import React from "react";
 import deleteIcon from "../assets/images/delete.svg";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import notavailable from "../assets/images/notavailable.png";
 
 const ResultsAllItemCard = ({
 	image,
@@ -37,7 +38,7 @@ const ResultsAllItemCard = ({
 		<div className="item">
 			<img
 				className="item__image"
-				src={image}
+				src={image || notavailable}
 				alt={`The item with capacity: (${capacity}) at ${store}`}
 			/>
 			<p className="item__title">{title}</p>
