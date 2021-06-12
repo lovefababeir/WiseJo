@@ -23,7 +23,7 @@ const EditProfile = () => {
 					<h2 className="accountForms__title">Profile</h2>
 
 					<Collapse in={!edit}>
-						<div class="profile__details" id="profile__details">
+						<div className="profile__details" id="profile__details">
 							<p className="profile__user">
 								Username: <span>{currentUser.displayName}</span>
 							</p>
@@ -47,7 +47,7 @@ const EditProfile = () => {
 					<Collapse in={edit}>
 						<Form
 							onSubmit={handleSubmit}
-							className="accountForms__form"
+							className="accountForms__form accountForms__form--profile"
 							id="edit-users-profile"
 						>
 							<Form.Group id="edit__username">

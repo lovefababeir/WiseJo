@@ -9,7 +9,7 @@
 	background-color: #fff;
 	max-width: 40rem;
 	margin: 1rem auto;
-	box-shadow: 0px 0px 5px 2px #8d8d8d;
+	box-shadow: 0px 0px 5px 2px #dcdcdc;
 	@include surface {
 		margin: 2rem auto;
 		@include desktop {
@@ -95,6 +95,10 @@
 		text-align: center;
 		font-weight: 500;
 	}
+}
+
+.accountForms__form--profile {
+	height: auto;
 }
 
 .back-to-dashboard {
