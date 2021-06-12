@@ -61,3 +61,11 @@ form {
 	background-color: #fff;
 	color: red;
 }
+
+select:focus,
+input:focus,
+textarea:focus {
+	@media (max-width: 430px) {
+		font-size: 30px;
+	}
+}
