@@ -41,6 +41,8 @@ router.post("/convertImage", (req, res) => {
 		const receiptData = {
 			_id: mongoose.Types.ObjectId(),
 			user_id: auth.user_id,
+			user_name: auth.name || "",
+			user_email: auth.email || "",
 			time: time,
 			receiptID: time,
 			date: convertDate(time),
