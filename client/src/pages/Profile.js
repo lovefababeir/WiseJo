@@ -25,10 +25,13 @@ const EditProfile = () => {
 					<Collapse in={!edit}>
 						<div className="profile__details" id="profile__details">
 							<p className="profile__user">
-								Username: <span>{currentUser.displayName}</span>
+								Username:{" "}
+								<span>
+									{currentUser.displayName || "Click Edit Profile to add your name"}
+								</span>
 							</p>
 							<p className="profile__user">
-								Email: <span>{currentUser.email}</span>
+								Email: <span>{currentUser.email || "You are signed in as Guest"}</span>
 							</p>
 						</div>
 					</Collapse>
