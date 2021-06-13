@@ -29,24 +29,38 @@ const conductSearch = async (
 		day: dateSubmitted.getDate(),
 	};
 
+	//This counts the number of days since Sunday Midnight.
+	//All items are taken from the record if its from any time the same week since Monday.
+	//Updates on prices are retrieved on the first time it is requested from Monday 00:00am.
+	const daysSince =
+		dateSubmitted.getDay() === 0
+			? dateSubmitted.getDay() + 6
+			: dateSubmitted.getDay() - 1;
+
+	const sundayMidnight = new Date(
+		searchDate.year,
+		searchDate.month - 1,
+		searchDate.day - daysSince,
+	);
+
 	//Checks if there is already an up to date(same day) result.
 	const responseData = await ItemResults.find({
 		searchItem: item,
 		store: store,
-		date: {
-			year: searchDate.year,
-			month: searchDate.month,
-			day: searchDate.day,
-		},
+		searchTime: { $gt: sundayMidnight.getTime() },
 	})
 		.exec()
 		.then(result => {
 			//if there is already something on record, copy it onto the UserResults collection
+			console.log(store, "Got results from database");
+			// console.log(JSON.stringify(result));
 			if (result.length) {
 				const data = result[0];
 				return promiseFcn
 					.createUserCopy(data, userid, username, useremail, userlocation, time)
 					.then(result => {
+						console.log("createdUserCopy from db");
+
 						return {
 							code: 201,
 							jsonData: { message: "Found data already on record", data: result },
@@ -67,9 +81,11 @@ const conductSearch = async (
 					});
 				//if there is nothing on record, conduct a new search
 			} else {
+				console.log("Found no results. Need to get new");
 				return storeFunction
 					.store(item)
 					.then(result => {
+						console.log(store, "Got results from website", JSON.stringify(result));
 						//If there were no results from the search then don't log the research and just return a message.
 						if (!result.length) {
 							return {
@@ -132,6 +148,8 @@ const conductSearch = async (
 							store,
 							`500 Could not complete ${store} search for ${item}. Internal issue with ${store} function: ${error}`,
 						);
+						console.log(error);
+						console.log(JSON.stringify(error));
 						return {
 							code: 500,
 							jsonData: {
