@@ -4,6 +4,8 @@ const { store } = require("../webScrapingFunctions/gateway");
 const userResults = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	user_id: String,
+	user_name: String,
+	user_email: String,
 	userlocation: String,
 	time: Number,
 	searchItem: String,
