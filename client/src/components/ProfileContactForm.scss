@@ -100,30 +100,3 @@
 .accountForms__form--profile {
 	height: auto;
 }
-
-.back-to-dashboard {
-	text-align: center;
-	width: 100%;
-	margin: 0 auto;
-	display: block;
-	font-size: 1.6rem;
-	color: rgb(56, 87, 56);
-	text-decoration: none;
-	font-weight: bold;
-	&:hover {
-		text-decoration: underline;
-		color: $orange;
-	}
-	& img {
-		height: 2rem;
-		margin: 1rem;
-	}
-}
-.editProfile {
-	flex-wrap: nowrap;
-	&__button {
-		@extend .back-to-dashboard;
-		font-size: 1.4rem;
-		cursor: pointer;
-	}
-}
