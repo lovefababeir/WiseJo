@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const receiptDoc = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	user_id: { type: String, required: true },
+	user_name: String,
+	user_email: String,
 	time: { type: Number, required: true },
 	receiptID: { type: Number, required: true },
 	store: { type: String, required: true },
