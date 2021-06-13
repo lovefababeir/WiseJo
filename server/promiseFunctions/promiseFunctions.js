@@ -3,10 +3,19 @@ const express = require("express");
 const UserResults = require("../models/userResults.js");
 const ItemResults = require("../models/itemResults.js");
 
-const createUserCopy = (data, userid, userlocation, time) => {
+const createUserCopy = (
+	data,
+	userid,
+	username,
+	useremail,
+	userlocation,
+	time,
+) => {
 	const userResultsData = {
 		_id: mongoose.Types.ObjectId(),
 		user_id: userid,
+		user_name: username,
+		user_email: useremail,
 		userlocation: userlocation,
 		time: time,
 		searchItem: data.searchItem,
@@ -35,6 +44,8 @@ const recordNewSearch = (item, time, searchDate, store, result) => {
 
 const recordNewSearchUserCopy = (
 	userid,
+	username,
+	useremail,
 	userlocation,
 	item,
 	time,
@@ -44,6 +55,8 @@ const recordNewSearchUserCopy = (
 ) => {
 	const userResultsData = {
 		user_id: userid,
+		user_name: username,
+		user_email: useremail,
 		userlocation: userlocation,
 		time: time,
 		_id: new mongoose.Types.ObjectId(),
