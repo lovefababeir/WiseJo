@@ -17,6 +17,8 @@ const conductSearch = async (
 	time,
 	userlocation,
 	userid,
+	username,
+	useremail,
 	store,
 ) => {
 	//convert timestamp to date
@@ -26,6 +28,7 @@ const conductSearch = async (
 		month: dateSubmitted.getMonth() + 1,
 		day: dateSubmitted.getDate(),
 	};
+
 	//Checks if there is already an up to date(same day) result.
 	const responseData = await ItemResults.find({
 		searchItem: item,
@@ -42,9 +45,8 @@ const conductSearch = async (
 			if (result.length) {
 				const data = result[0];
 				return promiseFcn
-					.createUserCopy(data, userid, userlocation, time)
+					.createUserCopy(data, userid, username, useremail, userlocation, time)
 					.then(result => {
-						console.log("createdUserCopy from db");
 						return {
 							code: 201,
 							jsonData: { message: "Found data already on record", data: result },
@@ -83,6 +85,8 @@ const conductSearch = async (
 							promiseFcn
 								.recordNewSearchUserCopy(
 									userid,
+									username,
+									useremail,
 									userlocation,
 									item,
 									time,
@@ -90,7 +94,9 @@ const conductSearch = async (
 									store,
 									result,
 								)
-								.then(result => {})
+								.then(result => {
+									console.log(store, "Recorded in userResults");
+								})
 								.catch(error => {
 									console.log(store, `Could not log user data: ${error}`);
 								});
@@ -162,6 +168,9 @@ router.get("/:store/:time", async (req, res) => {
 		const userlocation = req.query.userlocation;
 		const item = req.query.item;
 		const userid = auth.user_id;
+		const username = auth.name;
+		const useremail = auth.email;
+
 		const store =
 			req.params.store === "longos"
 				? "Longo's"
@@ -189,6 +198,8 @@ router.get("/:store/:time", async (req, res) => {
 			time,
 			userlocation,
 			userid,
+			username,
+			useremail,
 			store,
 		);
 		res.status(responseData.code).json(responseData.jsonData);
