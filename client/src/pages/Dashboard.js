@@ -23,7 +23,7 @@ const Dashboard = () => {
 		history.push(`/${page}`);
 	};
 	const greeting = userName ? `Hello ${userName}!` : "Hello!";
-	console.log(currentUser);
+
 	return (
 		<div>
 			<section className="home">
