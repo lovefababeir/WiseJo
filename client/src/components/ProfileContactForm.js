@@ -1,15 +1,13 @@
 import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import { Link } from "react-router-dom";
 import "./ProfileContactForm.scss";
-import goback from "../assets/images/arrow.svg";
+import ButtonDashboard from "./ButtonDashboard";
 
 const ContactForm = ({ currentUser }) => {
 	const [state, handleSubmit] = useForm("xayajwyp");
 	if (state.succeeded) {
 		return <p>Message sent! We'll get back to you as soon as possible.</p>;
 	}
-
 	return (
 		<>
 			<form onSubmit={handleSubmit} className="connect-form">
@@ -23,7 +21,7 @@ const ContactForm = ({ currentUser }) => {
 					name="email"
 					defaultValue={currentUser.email}
 					className="connect-form__textbox"
-					disabled={currentUser}
+					disabled={currentUser.email}
 				/>
 				<ValidationError prefix="Email" field="email" errors={state.errors} />
 				<label htmlFor="email" className="connect-form__label">
@@ -44,10 +42,7 @@ const ContactForm = ({ currentUser }) => {
 					Submit
 				</button>
 			</form>
-			<Link to="/" className="back-to-dashboard">
-				<img src={goback} alt="Click here to go back to the dashboard" />
-				Back to Dashboard
-			</Link>
+			<ButtonDashboard />
 		</>
 	);
 };
