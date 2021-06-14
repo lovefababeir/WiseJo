@@ -1,3 +1,10 @@
 @import "../styles/variables.scss";
 @import "../styles/font.scss";
 @import "../styles/mixins.scss";
+
+.form__afterSubmit {
+	height: calc(100vh - 14.8rem - #{$menuBar});
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 3fr 1fr;
+}

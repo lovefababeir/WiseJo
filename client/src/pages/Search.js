@@ -4,6 +4,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
 import { useAuth } from "../contexts/AuthContext";
+import LoadingSpinner from "../components/LoadingSpinner";
+import FormAlert from "../components/FormAlert";
 
 const Search = () => {
 	const history = useHistory();
@@ -105,7 +107,15 @@ const Search = () => {
 
 	return (
 		<>
-			<SearchForm submitHandler={submitHandler} loading={loading} />
+			<h1 className="form__title">SHOP & COMPARE</h1>
+			{!loading && <SearchForm submitHandler={submitHandler} loading={loading} />}
+
+			{loading && (
+				<div className="form__afterSubmit">
+					<FormAlert page="shop" />
+					<LoadingSpinner />
+				</div>
+			)}
 		</>
 	);
 };

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../contexts/AuthContext";
 import RecordReceiptForm from "../components/RecordReceiptForm";
+import FormAlert from "../components/FormAlert";
 
 const RecordReceipt = () => {
 	const history = useHistory();
@@ -60,6 +61,7 @@ const RecordReceipt = () => {
 								token,
 							)
 							.then(result => {
+								// console.log(result)
 								history.push("/track");
 							})
 							.catch(err => {
@@ -80,7 +82,7 @@ const RecordReceipt = () => {
 					});
 			})
 			.catch(err => {
-				console.log(err);
+				// console.log(err);
 				setValues({
 					...values,
 					loading: false,
@@ -119,14 +121,21 @@ const RecordReceipt = () => {
 		<>
 			<div className="receipt-form">
 				<h1 className="form__title">SNAP & TRACK</h1>
-				<RecordReceiptForm
-					onFormChange={onFormChange}
-					onFormSubmit={onFormSubmit}
-					loading={values.loading}
-					errMsg={values.errMsg}
-					imgSrc={values.imgSrc}
-				/>
-				{values.loading && <LoadingSpinner />}
+				{!values.loading && (
+					<RecordReceiptForm
+						onFormChange={onFormChange}
+						onFormSubmit={onFormSubmit}
+						loading={values.loading}
+						errMsg={values.errMsg}
+						imgSrc={values.imgSrc}
+					/>
+				)}
+				{values.loading && (
+					<div className="form__afterSubmit">
+						<FormAlert page="snap" />
+						<LoadingSpinner />
+					</div>
+				)}
 			</div>
 		</>
 	);

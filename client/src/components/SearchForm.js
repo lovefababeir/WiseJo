@@ -1,12 +1,10 @@
 import React from "react";
 import "./SearchForm.scss";
-import LoadingSpinner from "./LoadingSpinner";
 
 const SearchForm = ({ submitHandler, loading }) => {
 	const inputRef = React.createRef();
 	return (
 		<>
-			<h1 className="form__title">SHOP & COMPARE</h1>
 			<form className="form" action="submit" onSubmit={submitHandler}>
 				<div className="form__box">
 					<label className="form__label">Select a grocery store</label>
@@ -29,7 +27,6 @@ const SearchForm = ({ submitHandler, loading }) => {
 					</button>
 				</div>
 			</form>
-			{loading && <LoadingSpinner />}
 		</>
 	);
 };
