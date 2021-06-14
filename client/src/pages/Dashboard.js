@@ -33,35 +33,33 @@ const Dashboard = () => {
 	];
 
 	return (
-		<div>
-			<section className="home">
-				<div className="home__logo-bg">
-					<img className="home__logo" src={jo} alt="Home logo" />
-				</div>
-				<h2 className="home__heading">
-					{greeting}
-					<br />
-					What would you like to do today?
-				</h2>
+		<section className="home">
+			<div className="home__logo-bg">
+				<img className="home__logo" src={jo} alt="Home logo" />
+			</div>
+			<h2 className="home__heading">
+				{greeting}
+				<br />
+				What would you like to do today?
+			</h2>
 
-				<div className="home__nav">
-					{dashboardNav.map(item => {
-						return (
-							<DashboardNavItems
-								page={item.page}
-								text={item.buttonText}
-								key={uuidv4}
-							/>
-						);
-					})}
-					<button onClick={signoutHandler} className="userProfile__signOut">
-						Sign Out
-					</button>
-				</div>
+			<div className="home__nav">
+				{dashboardNav.map((item, i) => {
+					return (
+						<DashboardNavItems
+							page={item.page}
+							text={item.buttonText}
+							key={`${uuidv4}-${i}`}
+						/>
+					);
+				})}
+				<button onClick={signoutHandler} className="userProfile__signOut">
+					Sign Out
+				</button>
+			</div>
 
-				{error && <Alert variant="warning">{error}</Alert>}
-			</section>
-		</div>
+			{error && <Alert variant="warning">{error}</Alert>}
+		</section>
 	);
 };
 
