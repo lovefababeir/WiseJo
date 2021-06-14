@@ -1,31 +1,44 @@
 import React, { useRef, useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
 import ContactForm from "../components/ProfileContactForm";
 import "./Profile.scss";
 import Collapse from "react-bootstrap/Collapse";
+import ProfileUpdate from "../components/ProfileUpdate.js";
 
 const EditProfile = () => {
 	const usernameRef = useRef();
 	const { currentUser } = useAuth();
 	const [edit, setEdit] = useState(false);
+	const [errorMsg, setErrorMsg] = useState("");
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		setEdit(!edit);
+
+		const newName = usernameRef.current.value;
+		currentUser
+			.updateProfile({
+				displayName: newName,
+			})
+			.then(() => {
+				setEdit(!edit);
+			})
+			.catch(error => {
+				setErrorMsg(
+					"Error: We're unable to update your profile name. Please try again later or contact the WiseJo admin.",
+				);
+			});
 	}
 	return (
 		<section className="profile">
-			{" "}
 			<Card>
 				<Card.Body>
 					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Profile</h2>
-
 					<Collapse in={!edit}>
 						<div className="profile__details" id="profile__details">
 							<p className="profile__user">
-								Username:{" "}
+								Name:{" "}
 								<span>
 									{currentUser.displayName || "Click Edit Profile to add your name"}
 								</span>
@@ -36,7 +49,7 @@ const EditProfile = () => {
 						</div>
 					</Collapse>
 					{!edit && (
-						<p
+						<button
 							onClick={() => {
 								setEdit(!edit);
 							}}
@@ -45,39 +58,15 @@ const EditProfile = () => {
 							className="editProfile__button"
 						>
 							Edit Profile
-						</p>
+						</button>
 					)}
-					<Collapse in={edit}>
-						<Form
-							onSubmit={handleSubmit}
-							className="accountForms__form accountForms__form--profile"
-							id="edit-users-profile"
-						>
-							<Form.Group id="edit__username">
-								<Form.Label>Username</Form.Label>
-								<Form.Control
-									type="text"
-									ref={usernameRef}
-									required
-									defaultValue={currentUser.displayName}
-								/>
-							</Form.Group>
-
-							<Button className="w-100" type="submit">
-								Save
-							</Button>
-						</Form>
-					</Collapse>
-					<Collapse in={!edit}>
-						<div
-							id="connect-form"
-							style={{
-								width: "100%",
-							}}
-						>
-							<ContactForm currentUser={currentUser} />
-						</div>
-					</Collapse>
+					<ProfileUpdate
+						usernameRef={usernameRef}
+						handleSubmit={handleSubmit}
+						username={currentUser.displayName}
+						edit={edit}
+					/>
+					<ContactForm currentUser={currentUser} edit={edit} />
 				</Card.Body>
 			</Card>
 		</section>
