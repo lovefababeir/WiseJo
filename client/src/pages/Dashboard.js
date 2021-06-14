@@ -4,11 +4,14 @@ import jo from "../assets/images/WiseJo.png";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Alert } from "react-bootstrap";
+import DashboardNavItems from "../components/DashboardNavItems";
+import { v4 as uuidv4 } from "uuid";
 
 const Dashboard = () => {
 	const { currentUser, logout } = useAuth();
 	const { error, setError } = useState("");
 	const history = useHistory();
+
 	const signoutHandler = async e => {
 		e.preventDefault();
 		try {
@@ -19,10 +22,15 @@ const Dashboard = () => {
 		}
 	};
 	const userName = currentUser.displayName?.split(" ")[0];
-	const pageHandler = page => {
-		history.push(`/${page}`);
-	};
 	const greeting = userName ? `Hello ${userName}!` : "Hello!";
+
+	const dashboardNav = [
+		{ page: "about", buttonText: "Learn About WiseJo" },
+		{ page: "myprofile", buttonText: "	Check Profile" },
+		{ page: "shop", buttonText: "Shop and Compare" },
+		{ page: "snap", buttonText: "Snap and Track" },
+		{ page: "contact-wisejo", buttonText: "Contact WiseJo" },
+	];
 
 	return (
 		<div>
@@ -37,29 +45,20 @@ const Dashboard = () => {
 				</h2>
 
 				<div className="home__nav">
-					<button className="home__btn" onClick={() => pageHandler("about")}>
-						Learn About WiseJo
-					</button>
-					<button onClick={() => pageHandler("myprofile")} className="home__btn">
-						Check Profile
-					</button>
-					<button className="home__btn" onClick={() => pageHandler("shop")}>
-						Search an Item
-					</button>
-					<button className="home__btn" onClick={() => pageHandler("compare")}>
-						Compare Prices
-					</button>
-					<button className="home__btn" onClick={() => pageHandler("snap")}>
-						Log Shopping
-					</button>
-					<button onClick={() => pageHandler("track")} className="home__btn">
-						Track History
-					</button>
-
+					{dashboardNav.map(item => {
+						return (
+							<DashboardNavItems
+								page={item.page}
+								text={item.buttonText}
+								key={uuidv4}
+							/>
+						);
+					})}
 					<button onClick={signoutHandler} className="userProfile__signOut">
 						Sign Out
 					</button>
 				</div>
+
 				{error && <Alert variant="warning">{error}</Alert>}
 			</section>
 		</div>
