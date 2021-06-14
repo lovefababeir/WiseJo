@@ -35,6 +35,8 @@
 	}
 	&__icon {
 		width: 2rem;
+		display: block;
+		margin: auto;
 		@include breakpoint(350px) {
 			width: 3rem;
 			@include surface {
