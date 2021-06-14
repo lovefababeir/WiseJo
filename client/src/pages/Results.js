@@ -4,7 +4,6 @@ import ResultsAll from "../components/ResultsAll";
 import ResultsCapacity from "../components/ResultsCapacity";
 import ResultsSolutions from "../components/ResultsSolutions";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import ResultsSubMenu from "../components/ResultsSubMenu";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -19,8 +18,7 @@ const Results = () => {
 		errorLoadResults: "",
 		searchWord: "",
 	});
-	const history = useHistory();
-	const { createToken, logout } = useAuth();
+	const { createToken } = useAuth();
 
 	useEffect(() => {
 		createToken()
@@ -44,7 +42,7 @@ const Results = () => {
 					})
 					.catch(error => {
 						setValues({
-							results: "",
+							results: [],
 							view: "All",
 							selected: "",
 							currentLocation: "",
@@ -58,7 +56,7 @@ const Results = () => {
 			})
 			.catch(err => {
 				setValues({
-					results: "",
+					results: [],
 					view: "All",
 					selected: "",
 					currentLocation: "",
@@ -111,19 +109,6 @@ const Results = () => {
 		setValues({ ...values, selected: category });
 	};
 
-	const signoutHandler = async e => {
-		e.preventDefault();
-		try {
-			await logout();
-			history.push("/login");
-		} catch {
-			setValues({
-				...values,
-				errorMessageAll: "Error: Failed to sign out.",
-			});
-		}
-	};
-
 	return (
 		<>
 			<div
@@ -156,9 +141,6 @@ const Results = () => {
 							currentLocation={values.currentLocation}
 						/>
 					)}
-					<button className="signoutBtn" onClick={signoutHandler}>
-						Sign Out
-					</button>
 				</div>
 			</div>
 		</>
