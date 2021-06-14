@@ -5,6 +5,7 @@ import receipt from "../assets/images/receipt.svg";
 import camera from "../assets/images/camera.svg";
 import search from "../assets/images/shoppingCart.svg";
 import compare from "../assets/images/tags.svg";
+import home from "../assets/images/home.svg";
 
 const MenuBar = () => {
 	return (
@@ -37,6 +38,21 @@ const MenuBar = () => {
 						/>
 					</NavLink>
 					<h4 className="menu__label">compare</h4>
+				</li>
+				<li>
+					<NavLink
+						to="/"
+						exact
+						className="menu__item"
+						activeClassName="menu-item--selected"
+					>
+						<img
+							src={home}
+							className="menu__icon"
+							alt="Click here to go back to the home page."
+						/>
+					</NavLink>
+					<h4 className="menu__label">home</h4>
 				</li>
 				<li>
 					<NavLink

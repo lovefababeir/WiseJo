@@ -3,42 +3,60 @@
 @import "../styles/mixins.scss";
 
 .menu-bar {
+	height: $menuBarSmall;
 	background-color: hsl(28, 80%, 74%);
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	height: $menuBar;
+	@include breakpoint(350px) {
+		height: $menuBar;
+	}
 }
 
 .menu {
+	height: $menuBarSmall;
 	width: 100vw;
-	height: $menuBar;
 	margin: 0 auto;
 	@include flex(row, space-evenly, center);
 	max-width: 900px;
 	padding: 0;
+	@include breakpoint(350px) {
+		height: $menuBar;
+	}
 	& li {
+		width: 4.4rem;
 		list-style-type: none;
-		@include flex(column, center, center);
-		width: 7rem;
 		height: 100%;
 		position: relative;
+		@include flex(column, center, center);
+		@include breakpoint(350px) {
+			width: 7rem;
+		}
 	}
 	&__icon {
-		width: 3rem;
-		@include surface {
-			width: 4rem;
+		width: 2rem;
+		@include breakpoint(350px) {
+			width: 3rem;
+			@include surface {
+				width: 4rem;
+			}
 		}
 		&--3 {
-			width: 2.5rem;
-			@include surface {
-				width: 3.5rem;
+			width: 1.8rem;
+			@include breakpoint(350px) {
+				width: 2.5rem;
+				@include surface {
+					width: 3.5rem;
+				}
 			}
 		}
 		&--4 {
-			width: 2rem;
-			@include surface {
-				width: 2.5rem;
+			width: 1.5rem;
+			@include breakpoint(350px) {
+				width: 2rem;
+				@include surface {
+					width: 2.5rem;
+				}
 			}
 		}
 	}
@@ -46,31 +64,44 @@
 		text-decoration: none;
 	}
 	&__label {
-		font-size: 1.2rem;
-		color: #fff;
+		font-size: 1rem;
 		font-weight: bold;
 		text-align: center;
-		@include mobileM {
-			font-size: 1.4rem;
+		color: #fff;
+		@include breakpoint(350px) {
+			font-size: 1.2rem;
+			@include mobileM {
+				font-size: 1.4rem;
+			}
 		}
 	}
 	&-item--selected {
 		&::after {
 			content: "";
-			width: 6.8rem;
-			top: -1rem;
-			left: 0rem;
-			height: 150rem;
+			width: 5.1rem;
+			top: -0.8rem;
+			left: -0.3rem;
+			height: 15rem;
 			position: absolute;
 			border-radius: 1rem;
 			background-color: hsl(28, 80%, 74%);
 			z-index: -1;
 			box-shadow: 0px 0px 5px 3px hsl(28, 39%, 58%);
 			animation: shiftUp ease-in-out 0.3s;
-			@include mobileM {
+			@include breakpoint(350px) {
+				width: 6.8rem;
 				top: -1rem;
-				left: -0.5rem;
-				width: 8rem;
+				left: 0rem;
+				@include mobileM {
+					top: -1rem;
+					left: 0rem;
+					width: 7rem;
+					@include surface {
+						top: -1rem;
+						left: -0.5rem;
+						width: 8rem;
+					}
+				}
 			}
 		}
 	}
