@@ -8,7 +8,7 @@
 	}
 	&__form {
 		width: 80vw;
-		height: calc(var(--vh, 1vh) * 80);
+		width: calc(var(--vh, 1vh) * 80);
 		max-width: 30rem;
 		& input,
 		& button {
@@ -27,5 +27,6 @@
 	&__loginLink {
 		margin: 1rem 0;
 		font-size: 1.4rem;
+		text-align: center;
 	}
 }
