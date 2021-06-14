@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
-import ContactForm from "../components/ProfileContactForm";
 import "./Profile.scss";
 import Collapse from "react-bootstrap/Collapse";
 import ProfileUpdate from "../components/ProfileUpdate.js";
+import ButtonDashboard from "../components/ButtonDashboard.js";
 
 const EditProfile = () => {
 	const usernameRef = useRef();
@@ -30,6 +30,7 @@ const EditProfile = () => {
 				console.log(errorMsg);
 			});
 	}
+
 	return (
 		<section className="profile">
 			<Card>
@@ -67,7 +68,7 @@ const EditProfile = () => {
 						username={currentUser.displayName}
 						edit={edit}
 					/>
-					<ContactForm currentUser={currentUser} edit={edit} />
+					<ButtonDashboard />
 				</Card.Body>
 			</Card>
 		</section>
