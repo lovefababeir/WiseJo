@@ -71,3 +71,12 @@ form {
 	border: none !important;
 	overflow-y: scroll;
 }
+
+.link-to-page {
+	text-decoration: none;
+	color: $orange;
+	&:hover {
+		color: $orange;
+		font-weight: bold;
+	}
+}

@@ -59,10 +59,13 @@ const SignUp = () => {
 						<Button disabled={loading} className="w-100" type="submit">
 							Sign Up
 						</Button>
+						<div className="accountForms__loginLink">
+							Already have an account?{" "}
+							<Link to="/login" className="link-to-page">
+								Log In
+							</Link>
+						</div>
 					</Form>
-					<div className="accountForms__loginLink">
-						Already have an account? <Link to="/login">Log In</Link>
-					</div>
 				</Card.Body>
 			</Card>
 		</>

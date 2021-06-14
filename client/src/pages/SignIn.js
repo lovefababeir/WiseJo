@@ -58,12 +58,12 @@ function SignInScreen() {
 					<h1 className="signin__appName">WiseJo</h1>
 					<p className="signin__text">Please sign-in:</p>
 					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-					<Link to="/forgot-password" className="signin__text">
+					<Link to="/forgot-password" className="signin__text link-to-page">
 						Forgot password?
 					</Link>
 					<div className="w-100 text-center mt-2 signin__text">
 						Need an account?{" "}
-						<Link to="/signup" className="signin__text">
+						<Link to="/signup" className="signin__text link-to-page">
 							Sign Up
 						</Link>
 					</div>

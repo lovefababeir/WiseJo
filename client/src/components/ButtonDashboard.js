@@ -6,7 +6,7 @@ import "./ButtonDashboard.scss";
 const ButtonDashboard = () => {
 	return (
 		<div className="button">
-			<Link to="/" className="button__toDashboard">
+			<Link to="/" className="button__toDashboard link-to-page">
 				<img
 					src={backArrow}
 					className="button__backArrow"

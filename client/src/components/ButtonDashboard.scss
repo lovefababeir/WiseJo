@@ -9,17 +9,11 @@
 	&__toDashboard {
 		font-size: 1.6rem;
 		margin: 1rem 0 2rem 0;
-		text-decoration: none;
-		color: $orange;
 		@include surface {
 			font-size: 1.8rem;
 			@include desktop {
 				font-size: 2rem;
 			}
-		}
-		&:hover {
-			color: #58665b;
-			font-weight: bold;
 		}
 	}
 	&__backArrow {

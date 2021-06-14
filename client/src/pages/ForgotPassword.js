@@ -45,10 +45,15 @@ const ForgotPassword = () => {
 						</Button>
 					</Form>
 					<div className="accountForms__loginLink">
-						<Link to="/login">Log In</Link>
+						<Link to="/login" className="link-to-page">
+							Log In
+						</Link>
 					</div>
 					<div className="accountForms__loginLink">
-						Need an account? <Link to="/signup">Sign Up</Link>
+						Need an account?{" "}
+						<Link to="/signup" className="link-to-page">
+							Sign Up
+						</Link>
 					</div>
 				</Card.Body>
 			</Card>

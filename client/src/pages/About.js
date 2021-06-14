@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./About.scss";
 import ButtonDashboard from "../components/ButtonDashboard";
 import AboutShop from "../components/AboutShop";
@@ -21,7 +22,14 @@ const About = () => {
 			<AboutSnap open={open} setOpen={setOpen} />
 			<AboutTrack open={open} setOpen={setOpen} />
 			<h4 className="wisejo__message">Any questions or concerns?</h4>
-			<p>Go to your profile and complete the form to contact the WiseJo admin.</p>
+			<p>
+				On the dashboard you'll find the option{" "}
+				<Link to="/contact-wisejo" className="link-to-page">
+					Contact WiseJo
+				</Link>
+				. Submit your questions or concerns and the WiseJo Admin will get back to
+				you as soon as possible.
+			</p>
 			<ButtonDashboard />
 		</section>
 	);
