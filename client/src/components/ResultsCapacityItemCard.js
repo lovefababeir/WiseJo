@@ -8,6 +8,10 @@ const ResultsCapacityItemCard = ({
 	changeSelected,
 	category,
 }) => {
+	const replaceImage = e => {
+		e.target.src = notavailable;
+	};
+
 	return (
 		<div className="capacity__box">
 			<div
@@ -24,6 +28,7 @@ const ResultsCapacityItemCard = ({
 							? `The item with capacity: ${capacity}`
 							: `Image of the item with description ${capacity} is currently not available`
 					}
+					onError={replaceImage}
 				/>
 			</div>
 			<h1 className="capacity__size-title">Size: {capacity}</h1>

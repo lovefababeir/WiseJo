@@ -34,12 +34,17 @@ const ResultsAllItemCard = ({
 			);
 	};
 
+	const replaceImage = e => {
+		e.target.src = notavailable;
+	};
+
 	return (
 		<div className="item">
 			<img
 				className="item__image"
 				src={image || notavailable}
 				alt={`The item with capacity: (${capacity}) at ${store}`}
+				onError={replaceImage}
 			/>
 			<p className="item__title">{title}</p>
 			<div className="item__details">

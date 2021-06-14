@@ -1,4 +1,5 @@
 import React from "react";
+import notavailable from "../assets/images/noimagefound.png";
 
 const RecordReceiptForm = ({
 	onFormSubmit,
@@ -7,6 +8,10 @@ const RecordReceiptForm = ({
 	errMsg,
 	imgSrc,
 }) => {
+	const replaceImage = e => {
+		e.target.src = notavailable;
+		e.target.alt = "Image not found. Please make sure its in jpg form.";
+	};
 	return (
 		<form onSubmit={e => onFormSubmit(e)}>
 			<div className="form__box">
@@ -42,7 +47,8 @@ const RecordReceiptForm = ({
 						<img
 							className="receiptPreview__img"
 							src={imgSrc}
-							alt="Your selected receipt. Can't see your  receipt? Make sure its in jpg form."
+							alt="Your selected receipt."
+							onError={replaceImage}
 						/>
 					</div>
 				)}
