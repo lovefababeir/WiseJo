@@ -24,8 +24,9 @@ const AboutTrack = ({ open, setOpen }) => {
 			</div>
 			<Collapse in={open === "track"}>
 				<p id="collapse-text-track" className="wisejo__pages-description">
-					You'll find a table that summarizes a list of all your expenses. You can
-					select a receipt to see the breakdown of everything within the purchase the
+					WiseJo keeps a collection of your receipts and constructs a table that
+					summarizes a list of all your expenses. You can select a receipt on the
+					table to see the breakdown of everything within the purchase and the
 					details on the store. Click{" "}
 					<img src={edit} className="wisejo-icons" alt="edit icon" /> to edit the
 					receipt and save the changes or to delete the receipt.

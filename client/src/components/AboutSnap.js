@@ -33,24 +33,22 @@ const AboutSnap = ({ open, setOpen }) => {
 						your grocery expenses using the image of your receipt. On the SNAP page,
 						simply select the store where you made your purchase and submit a photo of
 						your receipt. If you can't see your photo in the preview that means your
-						image is not in jpg format. If you're using your phone, you can take a
-						screenshot of your picture and crop it and it will convert to jpg. For
-						best results:
+						image is not in jpg format. For best results:
 					</p>
 					<div className="store-receipts">
 						<div>
 							<img src={longos} alt="Longo's" /> Take your photo just below the top
-							logo and just below the payment summary and above "Longo's Thank You
+							logo up to just below the payment summary and above "Longo's Thank You
 							Rewards".
 						</div>
 						<div>
 							<img src={nofrills} alt="No Frills" /> Take your photo just below the top
-							logo and just below the "TRANSACTION RECORD", just after "APPROVED".
+							logo up to just below the "TRANSACTION RECORD", just after "APPROVED".
 						</div>
 
 						<div>
 							<img src={walmart} alt="Walmart" /> Take your photo starting at the
-							bottom of the top survey ad, but not to close the STORE #####. Include
+							bottom of the top survey ad, but not too close the STORE #####. Include
 							everything up to and including purchase summary which includes the total
 							and change(if applicable).
 						</div>

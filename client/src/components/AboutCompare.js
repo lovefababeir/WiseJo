@@ -29,14 +29,14 @@ const AboutCompare = ({ open, setOpen }) => {
 				<div id="collapse-text-compare">
 					<p className="wisejo__pages-description">
 						You'll find the results of your most recent search here. The items listed
-						are top 8 items from each store that was able to return some results. This
-						page allows you to see the results 3 different ways. There is a submenu
+						are the top 8 items from each store that was able to return results. This
+						page allows you to see the results in 3 different ways. There is a submenu
 						under the title to help you change views.
 					</p>
 					<div className="wisejo__subpages">
 						<img src={stores} alt="" />
 						<p className="subpage__description">
-							Results sorted by store. Sometimes some of the items returned by the
+							Results sorted by store. Sometimes, some of the items returned by the
 							store are not exactly what you want. Use the{" "}
 							<img src={trash} className="wisejo-icons" alt="trash can" /> to delete
 							the item.
@@ -54,12 +54,13 @@ const AboutCompare = ({ open, setOpen }) => {
 					<div className="wisejo__subpages">
 						<img src={wisejo} alt="" />{" "}
 						<p className="subpage__description">
-							Solutions for what would give you the most for your money. This answer is
-							not the same for everyone and depends what you've kept from the results
-							in the Store and Capacity subpages. If the solution is not something
-							you're interested in buying, go back delete the item under the Store its
-							from or delete all of them under the Capacity category it is in and come
-							back to see the new Solutions.
+							Wisejo provides suggestions for what would give you the most for your
+							money. The advice provided is not the same for everyone. They depend what
+							you've kept from the results in the Store and Capacity subpages. If the
+							product suggested is not something you're interested in buying, go back
+							delete the item under the Store that it is from or delete all of them
+							under the Capacity category it is in and come back to see the new
+							Solutions.
 						</p>
 					</div>{" "}
 				</div>

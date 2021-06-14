@@ -25,15 +25,16 @@ const AboutShop = ({ open, setOpen }) => {
 				<div id="collapse-text-shop" className="wisejo__pages-description">
 					When we shop, we want to know where the best place to purchase the things
 					we want. On the SHOP page you can submit a search for the item you would
-					like to purchase. You simply type what you want to search up and the store
-					you are shopping in or are planning to shop in. WiseJo searches up the
-					items for you and retrieves the details of the items available at the
-					stores listed. Since WiseJo retrieves the up to date prices, the search can
+					like to purchase. You simply type what you want to search up and select the
+					store you are shopping in or are planning to shop in. WiseJo searches up
+					the items for you and retrieves the details of the items available at the
+					stores listed. Since WiseJo retrieves the up-to-date prices, the search can
 					take up to 30s to get the results from most stores but might take up to
 					2-3mins to complete for Walmart. Once completed, you will be redirected to
-					the COMPARE page where you will see the search results. If to see which
-					results are available before all the searches are complete you may choose
-					to go to the results page. Just remember to refresh to see any updates.
+					the COMPARE page where you will see the search results. If you wish to see
+					which results are available before all the searches are complete you may
+					choose to go to the results page. Just remember to refresh to see any
+					updates.
 				</div>
 			</Collapse>
 		</>
