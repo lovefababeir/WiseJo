@@ -52,8 +52,7 @@
 			transition: transform 200ms ease-in-out;
 			transform: translateX(2rem);
 		}
-		& > img,
-		& > svg {
+		& > img {
 			width: 3rem;
 			height: 3rem;
 			fill: #000;
@@ -81,6 +80,10 @@
 	}
 	&__message {
 		@extend .wisejo__pages;
+		cursor: auto;
+		&:hover {
+			transform: none;
+		}
 		& + p {
 			@extend .wisejo__pages-description;
 		}
