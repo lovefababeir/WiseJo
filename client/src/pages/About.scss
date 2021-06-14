@@ -35,6 +35,7 @@
 		margin: 3rem auto 2rem auto;
 		max-width: 65rem;
 	}
+
 	&__pages {
 		cursor: pointer;
 		font-size: 2.4rem;
@@ -51,6 +52,7 @@
 			transition: transform 200ms ease-in-out;
 			transform: translateX(2rem);
 		}
+		& > img,
 		& > svg {
 			width: 3rem;
 			height: 3rem;
