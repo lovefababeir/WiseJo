@@ -3,10 +3,13 @@
 @import "../styles/mixins.scss";
 
 .receipt-form {
-	height: calc(100vh - 9rem);
-	height: calc(var(--vh, 1vh) * 100 - 9rem);
+	height: calc(100vh - #{$menuBarSmall});
+	height: calc(var(--vh, 1vh) * 100 - #{$menuBarSmall});
 	overflow-y: scroll;
-
+	@include breakpoint(321px) {
+		height: calc(100vh - #{$menuBar});
+		height: calc(var(--vh, 1vh) * 100 - #{$menuBar});
+	}
 	&__storeSelect {
 		@include inputBox;
 		&:disabled {
