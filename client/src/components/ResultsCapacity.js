@@ -59,12 +59,11 @@ const ResultsCapacity = ({
 	return (
 		<>
 			<section className="capacity">
-				{values.searchWord &&
-					(values.view === "All" || values.view === "Capacity") && (
-						<h2 className="results__subtitle--capacity">
-							Your results for <span>"{values.searchWord}"</span>:
-						</h2>
-					)}
+				{values.searchWord && (
+					<h2 className="results__subtitle--capacity">
+						Your results for <span>"{values.searchWord}"</span>:
+					</h2>
+				)}
 				<animated.div style={animationStyle}>
 					<div className="capacity__carousel">
 						{newList?.map(category => {
