@@ -27,6 +27,7 @@ const EditProfile = () => {
 				setErrorMsg(
 					"Error: We're unable to update your profile name. Please try again later or contact the WiseJo admin.",
 				);
+				console.log(errorMsg);
 			});
 	}
 	return (
