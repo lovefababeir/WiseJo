@@ -14,6 +14,7 @@ import ReceiptsList from "./pages/ReceiptList";
 import { useState, useEffect } from "react";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import ContactWiseJo from "./pages/ContactWiseJo";
 
 const usePageViews = () => {
 	const location = useLocation();
@@ -69,6 +70,7 @@ function App() {
 						<PrivateRoute path="/track" component={ReceiptsList} />
 						<PrivateRoute path="/myprofile" component={Profile} />
 						<PrivateRoute path="/about" component={About} />
+						<PrivateRoute path="/contact-wisejo" component={ContactWiseJo} />
 					</Switch>
 				</AuthProvider>
 				{viewMenu && <MenuBar />}
