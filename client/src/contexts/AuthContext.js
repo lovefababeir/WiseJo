@@ -14,6 +14,18 @@ export const AuthProvider = ({ children }) => {
 		return firebase.auth().signOut();
 	};
 
+	function signup(email, password) {
+		return firebase.auth().createUserWithEmailAndPassword(email, password);
+	}
+
+	function login(email, password) {
+		return firebase.auth().signInWithEmailAndPassword(email, password);
+	}
+
+	function resetPassword(email) {
+		return firebase.auth().sendPasswordResetEmail(email);
+	}
+
 	//update current user variable one the user signs in
 	useEffect(() => {
 		const unsubscribe = firebase.auth().onAuthStateChanged(user => {
@@ -36,7 +48,14 @@ export const AuthProvider = ({ children }) => {
 		return payloadHeader;
 	};
 
-	const value = { currentUser, logout, createToken };
+	const value = {
+		currentUser,
+		logout,
+		createToken,
+		signup,
+		login,
+		resetPassword,
+	};
 	return (
 		<AuthContext.Provider value={value}>
 			{!loading && children}
