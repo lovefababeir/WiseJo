@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
 import * as firebaseui from "firebaseui";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import "./Signin.scss";
 import wiseJo from "../assets/images/WiseJo.png";
 import { useAuth } from "../contexts/AuthContext";
+import Collapse from "react-bootstrap/Collapse";
+import EmailPasswordLogin from "./EmailPasswordLogin";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -19,11 +21,6 @@ const uiConfig = {
 		firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 		firebase.auth.FacebookAuthProvider.PROVIDER_ID,
 		firebase.auth.GithubAuthProvider.PROVIDER_ID,
-		firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-		{
-			provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-			signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
-		},
 		firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
 	],
 };
@@ -32,7 +29,7 @@ function SignInScreen() {
 	const { currentUser } = useAuth();
 	const history = useHistory();
 	const [logoDisplay, setLogoDisplay] = useState(true);
-
+	const [emailPassword, setEmailPassword] = useState(false);
 	useEffect(() => {
 		let mounted = true;
 		if (currentUser && mounted) {
@@ -57,16 +54,22 @@ function SignInScreen() {
 				<Card.Body className="loginForm">
 					<h1 className="signin__appName">WiseJo</h1>
 					<p className="signin__text">Please sign-in:</p>
-					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-					<Link to="/forgot-password" className="signin__text link-to-page">
-						Forgot password?
-					</Link>
-					<div className="w-100 text-center mt-2 signin__text">
-						Need an account?{" "}
-						<Link to="/signup" className="signin__text link-to-page">
-							Sign Up
-						</Link>
-					</div>
+					<Collapse in={!emailPassword}>
+						<div id="OAuthSignIn">
+							<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+						</div>
+					</Collapse>
+					<button
+						onClick={() => {
+							setEmailPassword(!emailPassword);
+						}}
+						aria-controls="OAuthSignIn emailPassword"
+						aria-expanded={emailPassword}
+						className="emailPassword__button"
+					>
+						{!emailPassword ? "Sign in with Account" : "Sign with Third Party"}
+					</button>
+					<EmailPasswordLogin emailPassword={emailPassword} />
 				</Card.Body>
 			</Card>
 		</section>
