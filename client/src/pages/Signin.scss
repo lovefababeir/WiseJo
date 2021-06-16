@@ -59,11 +59,46 @@
 	}
 	&__text {
 		font-size: 1.4rem;
+		width: 100%;
+		text-align: center !important;
+		&:nth-child(2) {
+			display: block;
+		}
 	}
 }
 
 .firebaseui-card-content {
 	& button {
 		height: 3rem;
+	}
+}
+
+.emailPassword__button {
+	width: 20.3rem;
+	height: 4rem;
+	border: none;
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%),
+		0 1px 5px 0 rgb(0 0 0 / 12%);
+	max-width: 220px;
+	padding: 8px 16px;
+	font-size: 1.4rem;
+	background-color: #6b7d6b;
+	color: #fff;
+	font-weight: 500;
+}
+
+#emailPassword {
+	width: 20.3rem;
+	font-size: 1.4rem;
+	& input {
+		height: 3.6rem;
+		margin-bottom: 1rem;
+	}
+	& button {
+		font-size: 1.4rem;
+		height: 3.6rem;
+		margin: 1rem 0;
+		background-color: #495e51;
+		border: none;
 	}
 }
