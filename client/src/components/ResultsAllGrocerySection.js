@@ -6,6 +6,7 @@ import longosLogo from "../assets/images/longos.png";
 import nofrillsLogo from "../assets/images/nofrills.png";
 import sobeysLogo from "../assets/images/sobeys.png";
 import loblawsLogo from "../assets/images/loblaws.png";
+import superstoreLogo from "../assets/images/superstore.png";
 
 const ResultsAllGrocerySection = ({
 	store,
@@ -15,8 +16,11 @@ const ResultsAllGrocerySection = ({
 	setValues,
 	updateList,
 }) => {
-	const storeName = store.split(" ").join("").toLowerCase();
-	console.log("storename", store, storeName);
+	const storeName =
+		store === "Longo's"
+			? store.split("'").join("").toLowerCase()
+			: store.split(" ").join("").toLowerCase();
+
 	return (
 		<div>
 			<img
@@ -32,6 +36,8 @@ const ResultsAllGrocerySection = ({
 						? sobeysLogo
 						: store === "Loblaws"
 						? loblawsLogo
+						: store === "Superstore"
+						? superstoreLogo
 						: "4"
 				}
 				alt={`Results from ${store}`}
