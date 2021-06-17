@@ -4,6 +4,7 @@ const longos = require("../webScrapingFunctions/gateway");
 const sobeys = require("../webScrapingFunctions/sobeys");
 const walmart = require("../webScrapingFunctions/walmart");
 const nofrills = require("../webScrapingFunctions/nofrills");
+const loblaws = require("../webScrapingFunctions/loblaws");
 const ItemResults = require("../models/itemResults.js");
 const UserResults = require("../models/userResults.js");
 const mongoose = require("mongoose");
@@ -52,15 +53,14 @@ const conductSearch = async (
 		.exec()
 		.then(result => {
 			//if there is already something on record, copy it onto the UserResults collection
-			console.log(store, "Got results from database");
 			// console.log(JSON.stringify(result));
 			if (result.length) {
 				const data = result[0];
+				console.log(data);
 				return promiseFcn
 					.createUserCopy(data, userid, username, useremail, userlocation, time)
 					.then(result => {
-						console.log("createdUserCopy from db");
-
+						console.log(`${store}: createdUserCopy from db`);
 						return {
 							code: 201,
 							jsonData: { message: "Found data already on record", data: result },
@@ -198,7 +198,10 @@ router.get("/:store/:time", async (req, res) => {
 				? "Walmart"
 				: req.params.store === "nofrills"
 				? "No Frills"
+				: req.params.store === "loblaws"
+				? "Loblaws"
 				: "n/a";
+
 		const storeFunction =
 			req.params.store === "longos"
 				? longos
@@ -208,6 +211,8 @@ router.get("/:store/:time", async (req, res) => {
 				? walmart
 				: req.params.store === "nofrills"
 				? nofrills
+				: req.params.store === "loblaws"
+				? loblaws
 				: "n/a";
 
 		const responseData = await conductSearch(
