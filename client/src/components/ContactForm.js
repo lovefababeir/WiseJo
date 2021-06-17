@@ -6,7 +6,15 @@ import ButtonDashboard from "./ButtonDashboard";
 const ContactForm = ({ currentUser, edit }) => {
 	const [state, handleSubmit] = useForm("xayajwyp");
 	if (state.succeeded) {
-		return <p>Message sent! We'll get back to you as soon as possible.</p>;
+		return (
+			<>
+				<p className="connect-form__success-msg">
+					<span class="connect-form__success-msg-1">Message sent!</span> <br />
+					We'll get back to you as soon as possible.
+				</p>
+				<ButtonDashboard />
+			</>
+		);
 	}
 	return (
 		<div

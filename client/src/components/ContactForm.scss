@@ -77,17 +77,22 @@
 		font-size: 1.5rem;
 		text-transform: uppercase;
 		color: #fff;
-
 		@include surface {
 			font-size: 2rem;
 		}
 	}
 	&__success-msg {
-		height: auto;
-		font-size: 3rem;
-		font-weight: 500;
+		font-size: 2rem;
 		text-align: center;
-		color: #fff;
+		color: #58665b;
+		@extend .connect-form;
+		&-1 {
+			font-weight: 500;
+			@extend .connect-form__success-msg;
+			font-size: 3rem;
+			text-transform: uppercase;
+			box-shadow: none;
+		}
 	}
 	&__error-msg {
 		@extend .connect-form__textbox;
