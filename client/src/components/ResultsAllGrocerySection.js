@@ -5,6 +5,7 @@ import walmartLogo from "../assets/images/walmart.png";
 import longosLogo from "../assets/images/longos.png";
 import nofrillsLogo from "../assets/images/nofrills.png";
 import sobeysLogo from "../assets/images/sobeys.png";
+import loblawsLogo from "../assets/images/loblaws.png";
 
 const ResultsAllGrocerySection = ({
 	store,
@@ -14,20 +15,12 @@ const ResultsAllGrocerySection = ({
 	setValues,
 	updateList,
 }) => {
+	const storeName = store.split(" ").join("").toLowerCase();
+	console.log("storename", store, storeName);
 	return (
 		<div>
 			<img
-				className={`store__logo store__logo--${
-					store === "Walmart"
-						? "0"
-						: store === "Longo's"
-						? "1"
-						: store === "No Frills"
-						? "2"
-						: store === "Sobeys"
-						? "3"
-						: "4"
-				}`}
+				className={`store__logo store__logo--${storeName}`}
 				src={
 					store === "Walmart"
 						? walmartLogo
@@ -37,6 +30,8 @@ const ResultsAllGrocerySection = ({
 						? nofrillsLogo
 						: store === "Sobeys"
 						? sobeysLogo
+						: store === "Loblaws"
+						? loblawsLogo
 						: "4"
 				}
 				alt={`Results from ${store}`}
