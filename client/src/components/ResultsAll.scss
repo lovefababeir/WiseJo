@@ -98,15 +98,17 @@
 	object-position: center;
 	object-fit: contain;
 	margin: 3rem 0 0 1rem;
-	&--0 {
+	&--walmart {
 		width: 18rem;
 		height: 4rem;
+		background-image: url("../assets/images/walmart.png");
+
 		@include mobileM {
 			width: 22rem;
 			height: 5rem;
 		}
 	}
-	&--1 {
+	&--longos {
 		width: 16rem;
 		height: 5.6rem;
 		@include mobileM {
@@ -114,7 +116,7 @@
 			height: 7rem;
 		}
 	}
-	&--2 {
+	&--nofrills {
 		width: 17.6rem;
 		height: 7.2rem;
 		@include mobileM {
@@ -122,12 +124,20 @@
 			height: 9rem;
 		}
 	}
-	&--3 {
+	&--sobeys {
 		width: 17.6rem;
 		height: 7.2rem;
 		@include mobileM {
 			width: 22rem;
 			height: 9rem;
+		}
+	}
+	&--loblaws {
+		width: 18rem;
+		height: 4rem;
+		@include mobileM {
+			width: 22rem;
+			height: 5rem;
 		}
 	}
 }
