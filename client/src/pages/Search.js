@@ -15,7 +15,7 @@ const Search = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		if (loaded === 4 && mounted) {
+		if (loaded === 6 && mounted) {
 			history.push("/compare");
 			setLoading(false);
 			setLoaded(0);
@@ -87,6 +87,38 @@ const Search = () => {
 				axios
 					.get(
 						`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/loblaws/${time}?userlocation=${currentStore}&item=${item}`,
+						token,
+					)
+					.then(result => {
+						if (result) {
+							setLoaded(loaded => loaded + 1);
+						}
+					})
+					.catch(err => {
+						if (err) {
+							setLoaded(loaded => loaded + 1);
+						}
+					});
+
+				axios
+					.get(
+						`${process.env.REACT_APP_BASE_URL}itemSearch/superstore/${time}?userlocation=${currentStore}&item=${item}`,
 						token,
 					)
 					.then(result => {
