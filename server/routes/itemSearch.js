@@ -5,6 +5,7 @@ const sobeys = require("../webScrapingFunctions/sobeys");
 const walmart = require("../webScrapingFunctions/walmart");
 const nofrills = require("../webScrapingFunctions/nofrills");
 const loblaws = require("../webScrapingFunctions/loblaws");
+const superstore = require("../webScrapingFunctions/superstore");
 const ItemResults = require("../models/itemResults.js");
 const UserResults = require("../models/userResults.js");
 const mongoose = require("mongoose");
@@ -200,6 +201,8 @@ router.get("/:store/:time", async (req, res) => {
 				? "No Frills"
 				: req.params.store === "loblaws"
 				? "Loblaws"
+				: req.params.store === "superstore"
+				? "Superstore"
 				: "n/a";
 
 		const storeFunction =
@@ -213,6 +216,8 @@ router.get("/:store/:time", async (req, res) => {
 				? nofrills
 				: req.params.store === "loblaws"
 				? loblaws
+				: req.params.store === "superstore"
+				? superstore
 				: "n/a";
 
 		const responseData = await conductSearch(
