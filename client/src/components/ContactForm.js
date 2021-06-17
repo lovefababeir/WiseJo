@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import "./ProfileContactForm.scss";
+import "./ContactForm.scss";
 import ButtonDashboard from "./ButtonDashboard";
 
 const ContactForm = ({ currentUser, edit }) => {

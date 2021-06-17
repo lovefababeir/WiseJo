@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
-import ContactForm from "../components/ProfileContactForm";
+import ContactForm from "../components/ContactForm";
 import "./Profile.scss";
 
 const ContactWiseJo = () => {
