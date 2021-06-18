@@ -9,9 +9,11 @@ const SearchForm = ({ submitHandler, loading }) => {
 				<div className="form__box">
 					<label className="form__label">Select a grocery store</label>
 					<select name="groceryStore" id="storeList" disabled={loading}>
+						<option value="Loblaws">Loblaws</option>
 						<option value="Longo's">Longo's</option>
 						<option value="No Frills">No Frills</option>
 						<option value="Sobeys">Sobeys</option>
+						<option value="Superstore">Superstore</option>
 						<option value="Walmart">Walmart</option>
 					</select>
 					<label className="form__label">Search an item</label>
