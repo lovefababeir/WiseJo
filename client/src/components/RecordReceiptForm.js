@@ -24,6 +24,7 @@ const RecordReceiptForm = ({
 					id="receiptStore"
 					disabled={loading}
 				>
+					<option value="Dollarama">Dollarama</option>
 					<option value="Longo's">Longo's</option>
 					<option value="No Frills">No Frills</option>
 					<option value="Walmart">Walmart</option>
