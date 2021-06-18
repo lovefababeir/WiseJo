@@ -3,6 +3,7 @@ const router = express.Router();
 const walmart = require("../receiptFunctions/walmartReceipt");
 const longos = require("../receiptFunctions/longosReceipt");
 const nofrills = require("../receiptFunctions/nofrillsReceipt");
+const dollarama = require("../receiptFunctions/dollaramaReceipt");
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
 const ReceiptDoc = require("../models/receipt");
@@ -25,6 +26,8 @@ router.post("/convertImage", (req, res) => {
 			purchaseData = longos.receipt(convertedText);
 		} else if (store === "no frills") {
 			purchaseData = nofrills.receipt(convertedText);
+		} else if (store === "dollarama") {
+			purchaseData = dollarama.receipt(convertedText);
 		} else {
 			purchaseData = `Unforunately, there is no algorithm for the ${store} receipts.  Please stay tuned for updates.`;
 		}
