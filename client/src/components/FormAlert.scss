@@ -3,19 +3,17 @@
 @import "../styles/mixins.scss";
 
 .submission-msg {
+	grid-column: 2/3;
+	grid-row: 2/3;
 	width: 80vw;
 	max-width: 30rem;
 	margin: 0 auto;
-
-	background-color: rgba(242, 185, 136, 0.4);
-	border: solid 1px rgb(221, 197, 175);
 	padding: 1.5rem;
-	color: #fff;
+	border: solid 1px rgb(221, 197, 175);
 	border-radius: 3px;
-	color: rgb(43, 56, 43);
+	background-color: rgba(242, 185, 136, 0.4);
 	font-size: 1.3rem;
-	grid-column: 2/3;
-	grid-row: 2/3;
+	color: rgb(43, 56, 43);
 	& > h3 {
 		color: rgb(43, 56, 43);
 	}
