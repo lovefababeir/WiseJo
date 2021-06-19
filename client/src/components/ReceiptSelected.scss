@@ -7,30 +7,29 @@
 	margin: 0 auto;
 	& label {
 		width: 18rem;
+		padding-right: 1rem;
 		font-size: 1.5rem;
 		font-weight: bold;
-		color: rgb(107, 80, 55);
 		text-align: right;
-		padding-right: 1rem;
+		color: rgb(107, 80, 55);
 	}
 	& span {
 		display: flex;
-		align-items: center;
 		width: 100%;
+		align-items: center;
 		&.button-container {
 			justify-content: space-around;
 			margin: 3.5rem auto 2rem auto;
 		}
 	}
 	& input {
-		font-size: 1.5rem;
-		padding-left: 1rem;
 		width: 100%;
 		max-width: 95%;
-
 		margin: 0.3rem 1rem;
+		padding-left: 1rem;
 		border: #e7e7e7 solid 2px;
 		border-radius: 3px;
+		font-size: 1.5rem;
 		&:focus,
 		&:focus-within {
 			outline: seagreen solid 2px;
@@ -39,29 +38,27 @@
 }
 
 .storeDetails {
-	border: #e0e0e0 solid 3px;
-	border-radius: 1.5rem;
 	margin-top: 2rem;
 	padding: 1rem 0.5rem;
 	border-bottom-style: dashed;
+	border: #e0e0e0 solid 3px;
+	border-radius: 1.5rem;
 	@include mobileM {
 		padding: 1.5rem;
 	}
 	&__store {
+		margin-bottom: 0.5rem;
 		font-size: 1.8rem;
 		font-weight: bold;
 		text-transform: capitalize;
 		color: $orange;
-		margin-bottom: 0.5rem;
 		@include surface {
 			font-size: 2.3rem;
 		}
 	}
 	&__detail {
-		font-size: 1.5rem;
-		// display: flex;
-		// justify-content: space-between;
 		margin-bottom: 0;
+		font-size: 1.5rem;
 		@include surface {
 			font-size: 1.6rem;
 		}
@@ -71,26 +68,26 @@
 	}
 }
 .purchaseDetails {
-	border: #e0e0e0 solid 3px;
-	border-radius: 1.5rem;
 	margin-top: 0;
 	padding: 1rem 0.5rem;
+	border: #e0e0e0 solid 3px;
+	border-radius: 1.5rem;
 	border-top-style: none;
 	@include mobileM {
 		padding: 1.5rem;
 	}
 	&__item {
-		font-size: 1.4rem;
-		padding-top: 0.3rem;
 		height: 3rem;
 		margin-bottom: 0;
+		padding-top: 0.3rem;
+		font-size: 1.4rem;
 		@include mobileM {
 			padding-left: 1rem;
 			@include surface {
-				font-size: 1.6rem;
-				padding-top: 0.3rem;
 				height: 3.2rem;
+				padding-top: 0.3rem;
 				padding-left: 2rem;
+				font-size: 1.6rem;
 			}
 		}
 		&:nth-child(even) {
@@ -106,19 +103,19 @@
 		}
 	}
 	&__subtotal {
-		font-weight: bold;
-		font-size: 1.5rem;
-		padding-top: 0.3rem;
 		height: 3rem;
 		margin-bottom: 0;
+		padding-top: 0.3rem;
+		font-weight: bold;
+		font-size: 1.5rem;
 		text-align: right;
 		@include mobileM {
 			padding-right: 1rem;
 			@include surface {
-				font-size: 2rem;
-				padding-top: 0.3rem;
 				height: 3.2rem;
+				padding-top: 0.3rem;
 				padding-right: 2rem;
+				font-size: 2rem;
 			}
 		}
 	}
@@ -137,11 +134,9 @@
 }
 .edit {
 	border: none;
+	outline: none;
 	background-color: #fff;
 	font-size: 1.4rem;
-	outline: none;
-	border: none;
-	background-color: #fff;
 	&-icon {
 		width: 3rem;
 	}
