@@ -3,39 +3,39 @@
 @import "../styles/mixins.scss";
 
 .menu-bar {
-	height: $menuBarSmall;
-	background-color: hsl(28, 80%, 74%);
 	position: fixed;
-	bottom: 0;
+	height: $menuBarSmall;
 	width: 100%;
+	background-color: hsl(28, 80%, 74%);
+	bottom: 0;
 	@include breakpoint(350px) {
 		height: $menuBar;
 	}
 }
 
 .menu {
+	@include flex(row, space-evenly, center);
 	height: $menuBarSmall;
 	width: 100vw;
-	margin: 0 auto;
-	@include flex(row, space-evenly, center);
 	max-width: 900px;
+	margin: 0 auto;
 	padding: 0;
 	@include breakpoint(350px) {
 		height: $menuBar;
 	}
 	& li {
-		width: 4.4rem;
-		list-style-type: none;
-		height: 100%;
-		position: relative;
 		@include flex(column, center, center);
+		position: relative;
+		width: 4.4rem;
+		height: 100%;
+		list-style-type: none;
 		@include breakpoint(350px) {
 			width: 7rem;
 		}
 	}
 	&__icon {
-		width: 2rem;
 		display: block;
+		width: 2rem;
 		margin: auto;
 		@include breakpoint(350px) {
 			width: 3rem;
@@ -79,29 +79,29 @@
 	}
 	&-item--selected {
 		&::after {
+			position: absolute;
 			content: "";
-			width: 5.1rem;
 			top: -0.8rem;
 			left: -0.3rem;
+			width: 5.1rem;
 			height: 15rem;
-			position: absolute;
 			border-radius: 1rem;
+			box-shadow: 0px 0px 5px 3px hsl(28, 39%, 58%);
 			background-color: hsl(28, 80%, 74%);
 			z-index: -1;
-			box-shadow: 0px 0px 5px 3px hsl(28, 39%, 58%);
 			animation: shiftUp ease-in-out 0.3s;
 			@include breakpoint(350px) {
 				width: 6.8rem;
 				top: -1rem;
 				left: 0rem;
 				@include mobileM {
+					width: 7rem;
 					top: -1rem;
 					left: 0rem;
-					width: 7rem;
 					@include surface {
+						width: 8rem;
 						top: -1rem;
 						left: -0.5rem;
-						width: 8rem;
 					}
 				}
 			}
@@ -119,6 +119,6 @@
 }
 
 .shoppingcart {
-	fill: #fff;
 	width: 4rem;
+	fill: #fff;
 }
