@@ -8,10 +8,10 @@
 	overflow-x: hidden;
 	&__box {
 		display: flex;
-		margin-right: 2rem;
 		width: 100vw;
-		overflow-x: scroll;
+		margin-right: 2rem;
 		padding-left: 0.5rem;
+		overflow-x: scroll;
 	}
 }
 
@@ -33,44 +33,43 @@
 }
 
 .item {
+	@include flex(column, space-between, flex-start);
+	position: relative;
 	width: 40%;
 	min-width: 11rem;
 	max-width: 18rem;
-	border-radius: 2rem;
 	margin: 2rem 1rem;
+	border-radius: 2rem;
 	background-color: rgba(256, 256, 256, 0.7);
-	position: relative;
-	@include flex(column, space-between, flex-start);
 	@include mobileM {
 		min-width: 15rem;
 	}
 	&__details {
-		padding: 0.5rem;
 		@include flex(row, space-between, flex-end, nowrap);
 		width: 100%;
+		padding: 0.5rem;
 		@include mobileM {
 			padding: 1rem;
 		}
 	}
 	&__title {
-		font-size: 1.2rem;
 		width: 100%;
 		padding: 0 0.5rem;
+		font-size: 1.2rem;
 		@include mobileM {
 			padding: 0 1rem;
 			font-size: 1.5rem;
 		}
 	}
 	&__image {
-		width: 100%;
-		border-radius: 2rem;
-		object-fit: contain;
-		object-position: center;
 		height: 12rem;
 		width: 12rem;
-		background-color: white;
-		box-shadow: 0px 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.15);
 		margin-bottom: 1rem;
+		object-fit: contain;
+		object-position: center;
+		border-radius: 2rem;
+		box-shadow: 0px 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.15);
+		background-color: white;
 		@include mobileM {
 			height: 15rem;
 			width: 15rem;
@@ -81,13 +80,13 @@
 		font-size: 1.5rem;
 	}
 	&__price {
+		margin: 0;
 		font-size: 1.4rem;
 		font-weight: bold;
-		margin: 0;
 	}
 	&__capacity {
-		font-size: 1.4rem;
 		margin: 0;
+		font-size: 1.4rem;
 	}
 	&__delete {
 		height: 2.5rem;
@@ -102,7 +101,6 @@
 		width: 18rem;
 		height: 5rem;
 		background-image: url("../assets/images/walmart.png");
-
 		@include mobileM {
 			width: 26rem;
 			height: 6rem;
