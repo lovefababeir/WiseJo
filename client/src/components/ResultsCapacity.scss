@@ -5,13 +5,13 @@
 .capacity {
 	&__carousel {
 		display: flex;
-		align-items: flex-start;
 		height: 100%;
 		width: 100vw;
-		overflow-x: scroll;
 		margin: 3rem auto;
 		padding: 1.5rem 0;
 		padding-left: 2rem;
+		align-items: flex-start;
+		overflow-x: scroll;
 	}
 	&__box {
 		@include flex(column, center, center);
@@ -19,11 +19,11 @@
 		padding: 0 0.3rem;
 	}
 	&__size {
-		flex-grow: 1;
 		margin: 0 1rem;
-		border-radius: 3rem;
 		padding: 0.5rem;
+		border-radius: 3rem;
 		box-shadow: 0px 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.15);
+		flex-grow: 1;
 		&:nth-child(3n) {
 			background-color: rgba(248, 200, 158, 0.6);
 		}
@@ -34,9 +34,9 @@
 			background-color: rgba(191, 107, 107, 0.6);
 		}
 		&-title {
+			margin-top: 2rem;
 			font-size: 1.3rem;
 			text-align: center;
-			margin-top: 2rem;
 			@include mobileM {
 				font-size: 1.6rem;
 			}
@@ -45,10 +45,10 @@
 	&__image {
 		width: 8rem;
 		height: 13.6rem;
-		border-radius: 2rem;
+		margin: 0.6rem;
 		object-fit: cover;
 		object-position: left;
-		margin: 0.6rem;
+		border-radius: 2rem;
 		box-shadow: 0px -3px 6px 4px rgba(0, 0, 0, 0.15);
 		background-color: white;
 		@include mobileM {
@@ -61,14 +61,14 @@
 		margin: 0 auto 2rem auto;
 	}
 	&__details {
-		font-size: 1.3rem;
 		@include flex(row, space-between);
 		max-width: 50rem;
+		font-size: 1.3rem;
 	}
 	&__optionsNum {
 		font-size: 1.2rem;
-		color: $orange;
 		font-style: italic;
+		color: $orange;
 		@include mobileM {
 			font-size: 1.3rem;
 		}
@@ -86,16 +86,16 @@
 	}
 
 	&__options {
+		display: flex;
 		font-size: 1.3rem;
 		text-transform: capitalize;
-		display: flex;
 		& > p:first-child {
 			margin-right: 0.6rem;
+			font-weight: 600;
+			font-size: 1.4rem;
 			white-space: nowrap;
 			flex-basis: fit-content;
 			color: $orange;
-			font-weight: 600;
-			font-size: 1.4rem;
 			@include mobileM {
 				font-size: 1.8rem;
 			}
