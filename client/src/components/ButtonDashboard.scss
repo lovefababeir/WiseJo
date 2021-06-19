@@ -3,12 +3,12 @@
 @import "../styles/mixins.scss";
 
 .button {
-	margin: 0 auto;
-	max-width: 80rem;
 	@include flex(row, center, center);
+	max-width: 80rem;
+	margin: 0 auto;
 	&__toDashboard {
-		font-size: 1.6rem;
 		margin: 1rem 0 2rem 0;
+		font-size: 1.6rem;
 		@include surface {
 			font-size: 1.8rem;
 			@include desktop {
