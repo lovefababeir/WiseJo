@@ -5,10 +5,10 @@
 .connect-form {
 	@include flex(column, center, center, nowrap);
 	width: 90%;
-	padding: 2rem;
-	background-color: #fff;
 	max-width: 40rem;
+	padding: 2rem;
 	margin: 1rem auto;
+	background-color: #fff;
 	box-shadow: 0px 0px 5px 2px #dcdcdc;
 	@include surface {
 		margin: 2rem auto;
@@ -21,7 +21,6 @@
 		font-size: 1.7rem;
 		text-align: center;
 		color: #526957;
-
 		@include breakpoint(380px) {
 			font-size: 2.1rem;
 			@include surface {
@@ -33,9 +32,9 @@
 		}
 	}
 	&__label {
-		text-align: left;
 		width: 100%;
 		font-size: 1.2rem;
+		text-align: left;
 		text-transform: uppercase;
 		@include surface {
 			font-size: 1.4rem;
@@ -87,8 +86,8 @@
 		color: #58665b;
 		@extend .connect-form;
 		&-1 {
-			font-weight: 500;
 			@extend .connect-form__success-msg;
+			font-weight: 500;
 			font-size: 3rem;
 			text-transform: uppercase;
 			box-shadow: none;
