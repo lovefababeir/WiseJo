@@ -27,27 +27,3 @@
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
-
-@mixin font(
-	$size: 1.3rem,
-	$height: 1.8rem,
-	$weight: normal,
-	$color: $primary-color
-) {
-	font-family: "Avenir", Arial, Helvetica, sans-serif;
-	font-size: $size;
-	line-height: $height;
-	font-weight: $weight;
-	color: $color;
-}
-
-//Did not do mixin for breakpoint since it takes the same number of key strokes
-
-//FONT MIXINS:
-
-// only need to pass on font parameter if you want $bold
-@mixin font($size, $line-height, $weight: $regular) {
-	font-size: $size;
-	line-height: $line-height;
-	font-family: $weight;
-}
