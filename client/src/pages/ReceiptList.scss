@@ -3,17 +3,16 @@
 @import "../styles/mixins.scss";
 
 .receiptsList {
+	overflow: hidden;
+	overflow-y: scroll;
 	height: calc(100vh - 9rem);
 	height: calc(var(--vh, 1vh) * 100 - 9rem);
-	overflow: hidden;
-	padding: 0 1rem;
-	background-color: white;
+	padding: 0 1rem 2rem 1rem;
 	margin-bottom: 10rem;
-	overflow-y: scroll;
-	padding-bottom: 2rem;
+	background-color: white;
 	&__title {
+		margin: 1rem auto;
 		font-size: 2rem;
 		color: #f2b988;
-		margin: 1rem auto;
 	}
 }
