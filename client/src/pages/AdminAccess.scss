@@ -1,0 +1,11 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.admin {
+	@include flex(column, center, center);
+	width: 90%;
+	margin: 2rem auto;
+	max-width: 60rem;
+	padding: 2rem 0;
+}
