@@ -3,9 +3,9 @@
 @import "../styles/mixins.scss";
 
 .profile {
+	overflow: hidden;
 	height: 100vh;
 	height: calc(var(--vh, 1vh) * 100);
-	overflow: hidden;
 	&.card {
 		overflow-y: scroll;
 	}
@@ -16,8 +16,8 @@
 		}
 	}
 	&__user {
-		font-size: 1.3rem;
 		margin: 0;
+		font-size: 1.3rem;
 		@include surface {
 			font-size: 1.5rem;
 		}
@@ -35,17 +35,16 @@
 .editProfile {
 	flex-wrap: nowrap;
 	&__button {
-		text-align: center;
+		display: block;
 		width: 100%;
 		margin: 0 auto 5rem auto;
-		display: block;
-		font-size: 1.6rem;
-		color: rgb(56, 87, 56);
-		text-decoration: none;
-		font-size: 1.4rem;
-		cursor: pointer;
 		border: none;
 		background-color: #fff;
+		text-align: center;
+		text-decoration: none;
+		font-size: 1.4rem;
+		color: rgb(56, 87, 56);
+		cursor: pointer;
 		&:hover {
 			font-weight: bold;
 			text-decoration: underline;
@@ -57,7 +56,3 @@
 #profile__details {
 	margin: 2rem auto 1rem auto;
 }
-
-// #connect-form {
-// 	@include flex(column, center, center);
-// }
