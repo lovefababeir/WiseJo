@@ -4,18 +4,17 @@
 
 .wisejo {
 	width: 90%;
+	max-width: 80rem;
 	margin: 0 auto;
 	padding: 5rem 0;
-	max-width: 80rem;
 	@include surface {
 		width: 80%;
 	}
 	&__title {
-		font-size: 2.8rem;
 		margin: 2rem 0 1rem 0;
-		color: #609b6d;
+		font-size: 2.8rem;
 		font-weight: bold;
-
+		color: #609b6d;
 		@include surface {
 			font-size: 3.2rem;
 			@include desktop {
@@ -29,19 +28,19 @@
 		}
 	}
 	&__about {
+		max-width: 65rem;
+		margin: 3rem auto 2rem auto;
 		text-align: center;
 		font-size: 2rem;
 		line-height: 2.4rem;
-		margin: 3rem auto 2rem auto;
-		max-width: 65rem;
 	}
 
 	&__pages {
 		cursor: pointer;
-		font-size: 2.4rem;
-		color: #609b6d;
-		font-weight: bold;
 		margin-top: 3rem;
+		font-size: 2.4rem;
+		font-weight: bold;
+		color: #609b6d;
 		@include surface {
 			font-size: 2.6rem;
 			@include desktop {
@@ -55,8 +54,8 @@
 		& > img {
 			width: 3rem;
 			height: 3rem;
-			fill: #000;
 			margin-right: 1rem;
+			fill: #000;
 		}
 	}
 	&__pages-description {
@@ -70,9 +69,9 @@
 		}
 	}
 	&__subpages {
-		font-size: 1.4rem;
 		@include flex(row, flex-start, flex-start, nowrap);
 		margin: 0.5rem 0;
+		font-size: 1.4rem;
 		& img {
 			width: 2.4rem;
 			margin: 0.3rem 1rem;
@@ -93,8 +92,8 @@
 .store-receipts {
 	& > div {
 		margin: 1rem 0.5rem;
-		font-size: 1.3rem;
 		padding: 0 2rem;
+		font-size: 1.3rem;
 		@include surface {
 			font-size: 1.5rem;
 		}
@@ -111,18 +110,18 @@
 }
 
 .returnBtn {
-	background-color: #57665a;
-	font-size: 1.5rem;
-	text-transform: uppercase;
-	color: #fff;
 	display: block;
+	width: max-content;
 	margin: 5rem auto;
 	padding: 0.7rem 1.2rem;
 	border-radius: 5px;
 	border: #57665a solid 1px;
 	box-shadow: #686868 0px 0px 5px 2px;
-	width: max-content;
+	background-color: #57665a;
+	font-size: 1.5rem;
 	text-decoration: none;
+	text-transform: uppercase;
+	color: #fff;
 	&:hover {
 		color: white;
 	}
