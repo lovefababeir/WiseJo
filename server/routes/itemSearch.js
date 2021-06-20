@@ -23,12 +23,14 @@ const conductSearch = async (
 	useremail,
 	store,
 ) => {
-	//convert timestamp to date
+	//convert EST timestamp to date
 	const dateSubmitted = new Date(time);
+	const dateSumittedEST = new Date(time - 14400000);
+
 	const searchDate = {
 		year: dateSubmitted.getFullYear(),
 		month: dateSubmitted.getMonth() + 1,
-		day: dateSubmitted.getDate(),
+		day: dateSumittedEST.getDate(),
 	};
 
 	//This counts the number of days since Sunday Midnight.
@@ -182,6 +184,7 @@ const conductSearch = async (
 
 router.get("/:store/:time", async (req, res) => {
 	const auth = req.currentUser;
+	res.set("Access-Control-Allow-Origin", "*");
 	if (auth) {
 		const time = parseInt(req.params.time);
 		const userlocation = req.query.userlocation;
@@ -381,6 +384,45 @@ router.delete("/items/:value/:quantity", async (req, res) => {
 				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
 			);
 	}
+});
+
+router.delete("/olditems", async (req, res) => {
+	const auth = req.currentUser;
+	if (!auth) {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+		return;
+	}
+
+	//This counts the number of days since Sunday Midnight.
+	//All items are taken from the record if its from any time the same week since Monday.
+	//Updates on prices are retrieved on the first time it is requested from Monday 00:00am.
+	const today = new Date(2021, 05, 10);
+
+	console.log(today, today.getTime());
+
+	const daysSince =
+		today.getDay() === 0 ? today.getDay() + 6 : today.getDay() - 1;
+
+	const sundayMidnight = new Date(
+		today.getFullYear(),
+		today.getMonth() - 1,
+		today.getDate() - daysSince - 1,
+	);
+
+	console.log(sundayMidnight.getTime());
+	//Checks if there is already an up to date(same day) result.
+	ItemResults.deleteMany({
+		searchTime: { $lt: today.getTime() },
+	})
+		.exec()
+		.then(result => {
+			console.log(result);
+		})
+		.catch(err => console.log(err));
 });
 
 module.exports = router;
