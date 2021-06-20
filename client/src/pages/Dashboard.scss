@@ -3,18 +3,18 @@
 @import "../styles/mixins.scss";
 
 .home {
+	@include flex(column, center, center, nowrap);
+	overflow-y: scroll;
 	height: 100vh;
 	height: calc(var(--vh, 1vh) * 100);
-	overflow-y: scroll;
 	width: 100vw;
-	background-color: white;
 	padding-top: 0.1rem;
-	@include flex(column, center, center, nowrap);
+	background-color: white;
 	&__logo {
+		display: block;
 		width: 12rem;
 		height: 12rem;
 		margin: 0 auto;
-		display: block;
 	}
 	&__icon {
 		fill: white;
@@ -32,16 +32,16 @@
 		width: 20rem;
 		margin: 0rem auto;
 		font-size: 2rem;
-		text-align: center;
 		font-weight: bold;
+		text-align: center;
 		color: #aabfb2;
 		@include mobileM {
-			font-size: 2.5rem;
 			width: 25rem;
+			font-size: 2.5rem;
 			@include surface {
+				width: 30rem;
 				margin: 0rem auto;
 				font-size: 3rem;
-				width: 30rem;
 			}
 		}
 	}
@@ -69,23 +69,22 @@
 }
 
 .userProfile {
-	width: 30rem;
-	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 30rem;
+	margin: 0 auto;
 	&__email {
 		font-size: 1.3rem;
 	}
 	&__signOut {
 		width: 11rem;
 		height: 2.8rem;
-		border-radius: 2rem;
-		background-color: rgba(242, 185, 136, 0.8);
-		color: black;
-		border: none;
-		// font-weight: bold;
-		font-size: 1.4rem;
 		margin: 1rem;
+		border-radius: 2rem;
+		border: none;
+		background-color: rgba(242, 185, 136, 0.8);
+		font-size: 1.4rem;
+		color: black;
 	}
 }
