@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 			headers: {
 				"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "https://wisejo.netlify.app",
-				"	Access-Control-Allow-Credentials": true,
+				"Access-Control-Allow-Credentials": true,
 				Authorization: `Bearer ${token}`,
 			},
 		};
