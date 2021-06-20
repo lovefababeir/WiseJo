@@ -23,12 +23,12 @@
 		}
 	}
 	&__errMsg {
-		color: red;
-		font-size: 1.7rem;
 		width: 70%;
 		max-width: 33rem;
 		margin: 2rem auto;
+		font-size: 1.7rem;
 		text-align: center;
+		color: red;
 	}
 	&__fileUpload {
 		margin-bottom: 2rem;
@@ -54,15 +54,15 @@
 }
 
 .receiptPreview {
-	height: 15rem;
 	overflow-y: scroll;
+	height: 15rem;
 	margin-bottom: 2rem;
 	@include mobileL {
 		height: 18rem;
 	}
 	&__img {
+		display: block;
 		width: 100%;
 		margin: 0 auto;
-		display: block;
 	}
 }
