@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.scss";
 import jo from "../assets/images/WiseJo.png";
 import { useHistory } from "react-router-dom";
@@ -6,11 +6,33 @@ import { useAuth } from "../contexts/AuthContext";
 import { Alert } from "react-bootstrap";
 import DashboardNavItems from "../components/DashboardNavItems";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const Dashboard = () => {
-	const { currentUser, logout } = useAuth();
+	const { currentUser, logout, createToken } = useAuth();
 	const { error, setError } = useState("");
+	const [adminAccess, setAdminAccess] = useState(false);
 	const history = useHistory();
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted) {
+			createToken()
+				.then(token => {
+					return axios.get(`${process.env.REACT_APP_BASE_URL}login`, token);
+				})
+				.then(result => {
+					console.log(result.data);
+				})
+				.catch(err => console.log(err));
+		}
+
+		if (currentUser.uid === process.env.REACT_APP_ADMIN_UID) {
+			setAdminAccess(true);
+		}
+
+		return () => (mounted = false);
+	}, [createToken, adminAccess, currentUser.uid]);
 
 	const signoutHandler = async e => {
 		e.preventDefault();
@@ -49,10 +71,17 @@ const Dashboard = () => {
 						<DashboardNavItems
 							page={item.page}
 							text={item.buttonText}
-							key={`${uuidv4}-${i}`}
+							key={`${uuidv4()}-${i}`}
 						/>
 					);
 				})}
+				{adminAccess && (
+					<DashboardNavItems
+						page={"admin-access"}
+						text={"Admin Access"}
+						key={uuidv4()}
+					/>
+				)}
 				<button onClick={signoutHandler} className="userProfile__signOut">
 					Sign Out
 				</button>
