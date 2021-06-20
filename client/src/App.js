@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import ContactWiseJo from "./pages/ContactWiseJo";
+import AdminAccess from "./pages/AdminAccess";
 
 const usePageViews = () => {
 	const location = useLocation();
@@ -71,6 +72,7 @@ function App() {
 						<PrivateRoute path="/myprofile" component={Profile} />
 						<PrivateRoute path="/about" component={About} />
 						<PrivateRoute path="/contact-wisejo" component={ContactWiseJo} />
+						<PrivateRoute path="/admin-access" component={AdminAccess} />
 					</Switch>
 				</AuthProvider>
 				{viewMenu && <MenuBar />}
