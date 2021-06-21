@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
-	const args = ["--no-sandbox"];
+	const args = ["--no-sandbox", "--disable-web-security"];
 	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
@@ -16,10 +16,6 @@ const store = async function (searchWords) {
 
 	await page.click(
 		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(4) > button",
-	);
-
-	await page.waitForSelector(
-		"#site-content > div > div > div > div.with-tab-view > div > div.product-grid > div.product-grid__results > div.product-grid__results__products > div > ul",
 	);
 
 	let result = await page.evaluate(async () => {

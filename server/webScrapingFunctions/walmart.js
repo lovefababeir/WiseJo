@@ -14,6 +14,7 @@ const store = async function (searchWords) {
 	const args = [
 		'--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
 		"--no-sandbox",
+		"--disable-web-security",
 	];
 
 	const options = {
@@ -29,7 +30,7 @@ const store = async function (searchWords) {
 
 	var browser = await puppeteer.launch(options);
 	const [page] = await browser.pages();
-	await page.setDefaultTimeout(180000);
+	await page.setDefaultTimeout(120000);
 	const cdp = await page.target().createCDPSession();
 
 	try {

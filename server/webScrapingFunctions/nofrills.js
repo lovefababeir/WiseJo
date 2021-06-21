@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
-	const args = ["--no-sandbox"];
+	const args = ["--no-sandbox", "--disable-web-security"];
 	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
