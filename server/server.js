@@ -27,6 +27,19 @@ app.use(cors());
 //Athenticate token with firebase
 app.use(decodeIDToken);
 
+//Set CORS headers
+app.use(function (req, res, next) {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept",
+	);
+	next();
+});
+
+app.use("/login", (req, res) => {
+	res.send("Server on");
+});
 app.use("/itemSearch", itemSearch);
 app.use("/receipts", receipts);
 
