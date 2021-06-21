@@ -184,7 +184,6 @@ const conductSearch = async (
 
 router.get("/:store/:time", async (req, res) => {
 	const auth = req.currentUser;
-	res.set("Access-Control-Allow-Origin", "*");
 	if (auth) {
 		const time = parseInt(req.params.time);
 		const userlocation = req.query.userlocation;
