@@ -55,61 +55,6 @@ const Search = () => {
 					return;
 				} else {
 					const token = ready;
-
-					//WALMART
-					axios
-						.get(
-							`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
-							token,
-						)
-						.then(result => {
-							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
-						});
-					//SOBEYS
-					axios
-						.get(
-							`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
-							token,
-						)
-						.then(result => {
-							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
-						});
-					//NO FRILLS
-					axios
-						.get(
-							`${process.env.REACT_APP_BASE_URL}items/nofrills/${time}?item=${item}`,
-							token,
-						)
-						.then(result => {
-							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
-						});
 					//LONGOS
 					axios
 						.get(
@@ -128,6 +73,26 @@ const Search = () => {
 								setLoaded(loaded => loaded + 1);
 							}
 						});
+
+					//SOBEYS
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+
 					// LOBLAWS;
 					axios
 						.get(
@@ -150,6 +115,44 @@ const Search = () => {
 					axios
 						.get(
 							`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+
+					//NO FRILLS
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/nofrills/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+
+					//WALMART
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
 							token,
 						)
 						.then(result => {
