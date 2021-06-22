@@ -19,15 +19,41 @@ const ResultsAllItemCard = ({
 
 	//Handler that deletes the item
 	const deleteItemHandler = (store, productID) => {
-		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/item/${store}/${productID}`;
+		let storeName;
+		switch (store) {
+			case "Loblaws":
+				storeName = "loblaws";
+				break;
+			case "Longo's":
+				storeName = "longos";
+				break;
+			case "No Frills":
+				storeName = "nofrills";
+				break;
+			case "Sobeys":
+				storeName = "sobeys";
+				break;
+			case "Superstore":
+				storeName = "superstore";
+				break;
+			case "Walmart":
+				storeName = "walmart";
+				break;
+			default:
+				break;
+		}
+
+		const url = `${process.env.REACT_APP_BASE_URL}items/item/${storeName}/${productID}`;
 		createToken()
 			.then(token => {
 				axios
 					.delete(url, token)
-					.then(() => {
+					.then(res => {
 						updateList();
 					})
-					.catch(function (error) {});
+					.catch(function (error) {
+						console.log(error);
+					});
 			})
 			.catch(err =>
 				setValues({ ...values, errorMessageAll: "Failed to delete item" }),
