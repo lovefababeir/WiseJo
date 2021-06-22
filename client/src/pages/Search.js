@@ -15,7 +15,7 @@ const Search = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		if (loaded === 2 && mounted) {
+		if (loaded === 1 && mounted) {
 			history.push("/compare");
 			setLoading(false);
 			setLoaded(0);
@@ -55,24 +55,24 @@ const Search = () => {
 					return;
 				} else {
 					const token = ready;
-					//LONGOS
-					axios
-						.get(
-							`${process.env.REACT_APP_BASE_URL}items/longos/${time}?item=${item}`,
-							token,
-						)
-						.then(result => {
-							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
-						});
+					// //LONGOS
+					// axios
+					// 	.get(
+					// 		`${process.env.REACT_APP_BASE_URL}items/longos/${time}?item=${item}`,
+					// 		token,
+					// 	)
+					// 	.then(result => {
+					// 		console.log(result);
+					// 		if (result) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
+					// 	})
+					// 	.catch(err => {
+					// 		console.log(err);
+					// 		if (err) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
+					// 	});
 
 					//SOBEYS
 					axios
