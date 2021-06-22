@@ -17,13 +17,13 @@ const ResultsCapacitySelected = ({
 }) => {
 	const { createToken } = useAuth();
 	const deleteCapacityHandler = (value, quantity) => {
-		const url = `${process.env.REACT_APP_BASE_URL}itemSearch/items/${value}/${quantity}`;
+		const url = `${process.env.REACT_APP_BASE_URL}items/capacity/${value}/${quantity}`;
 
 		createToken()
 			.then(token => {
 				axios
 					.delete(url, token)
-					.then(() => {
+					.then(res => {
 						updateList();
 					})
 					.catch(function (error) {
