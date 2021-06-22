@@ -15,7 +15,7 @@ const Search = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		if (loaded === 2 && mounted) {
+		if (loaded === 1 && mounted) {
 			history.push("/compare");
 			setLoading(false);
 			setLoaded(0);
@@ -93,31 +93,31 @@ const Search = () => {
 					// 		}
 					// 	});
 
-					// LOBLAWS;
+					// // LOBLAWS;
+					// axios
+					// 	.get(
+					// 		`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
+					// 		token,
+					// 	)
+					// 	.then(result => {
+					// 		console.log(result);
+					// 		if (result) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
+					// 	})
+					// 	.catch(err => {
+					// 		console.log(err);
+					// 		if (err) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
+					// 	})
+					// 	.finally(() => {
+					//SUPERSTORE
 					axios
 						.get(
-							`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
+							`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
 							token,
 						)
-						.then(result => {
-							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
-						})
-						.finally(() => {
-							//SUPERSTORE
-							return axios.get(
-								`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
-								token,
-							);
-						})
 						.then(result => {
 							console.log(result);
 							if (result) {
