@@ -24,23 +24,26 @@ const Results = () => {
 		createToken()
 			.then(token => {
 				axios
-					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+					.get(`${process.env.REACT_APP_BASE_URL}items/searchresults`, token)
 					.then(result => {
-						const lastSearchResults = result.data.data.map(record => {
-							return record.searchResults;
-						});
+						const lastSearchResults = [].concat.apply(
+							[],
+							result.data.data.searchResults,
+						);
+
 						setValues({
-							results: [].concat.apply([], lastSearchResults),
+							results: lastSearchResults,
 							view: "All",
 							selected: "",
-							currentLocation: result.data.data[0].userlocation,
+							currentLocation: result.data.data.userlocation,
 							errorMessageAll: "",
 							errorMessageCapacity: "",
 							errorLoadResults: "",
-							searchWord: result.data.data[0].searchItem,
+							searchWord: result.data.data.searchItem,
 						});
 					})
 					.catch(error => {
+						console.log(error);
 						setValues({
 							results: [],
 							view: "All",
@@ -73,15 +76,18 @@ const Results = () => {
 		createToken()
 			.then(token => {
 				axios
-					.get(`${process.env.REACT_APP_BASE_URL}itemSearch/searchresults`, token)
+					.get(`${process.env.REACT_APP_BASE_URL}items/searchresults`, token)
 					.then(result => {
-						const lastSearchResults = result.data.data.map(record => {
-							return record.searchResults;
-						});
+						const lastSearchResults = [].concat.apply(
+							[],
+							result.data.data.searchResults,
+						);
+
 						setValues({
 							...values,
-							results: [].concat.apply([], lastSearchResults),
-							currentLocation: result.data.data[0].userlocation,
+							results: lastSearchResults,
+							selected: "",
+							currentLocation: result.data.data.userlocation,
 						});
 					})
 					.catch(error => {
