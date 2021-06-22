@@ -35,103 +35,138 @@ const Search = () => {
 		}
 		setLoading(true);
 		createToken()
-			.then(token => {
-				axios
+			.then(async token => {
+				return axios
 					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/walmart/${time}?userlocation=${currentStore}&item=${item}`,
+						`${process.env.REACT_APP_BASE_URL}items/initaterecord/${time}?userlocation=${currentStore}&item=${item}`,
 						token,
 					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
+					.then(() => {
+						return token;
 					})
 					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
-					});
-
-				axios
-					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/sobeys/${time}?userlocation=${currentStore}&item=${item}`,
-						token,
-					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
-					})
-					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
-					});
-
-				axios
-					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/nofrills/${time}?userlocation=${currentStore}&item=${item}`,
-						token,
-					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
-					})
-					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
-					});
-
-				axios
-					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/longos/${time}?userlocation=${currentStore}&item=${item}`,
-						token,
-					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
-					})
-					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
-					});
-
-				axios
-					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/loblaws/${time}?userlocation=${currentStore}&item=${item}`,
-						token,
-					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
-					})
-					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
-					});
-
-				axios
-					.get(
-						`${process.env.REACT_APP_BASE_URL}itemSearch/superstore/${time}?userlocation=${currentStore}&item=${item}`,
-						token,
-					)
-					.then(result => {
-						if (result) {
-							setLoaded(loaded => loaded + 1);
-						}
-					})
-					.catch(err => {
-						if (err) {
-							setLoaded(loaded => loaded + 1);
-						}
+						console.log(err);
+						return 0;
 					});
 			})
+			.then(ready => {
+				if (!ready) {
+					console.log(`need error message`, ready);
+					return;
+				} else {
+					const token = ready;
+
+					//WALMART
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+					//SOBEYS
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+					//NO FRILLS
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/nofrills/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+					//LONGOS
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/longos/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+					// LOBLAWS;
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+					//SUPERSTORE
+					axios
+						.get(
+							`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
+							token,
+						)
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
+						});
+				}
+			})
+
 			.catch(err => {
 				console.log("Could not create access token");
 			});
