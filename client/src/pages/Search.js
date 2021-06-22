@@ -15,7 +15,7 @@ const Search = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		if (loaded === 1 && mounted) {
+		if (loaded === 2 && mounted) {
 			history.push("/compare");
 			setLoading(false);
 			setLoaded(0);
@@ -72,12 +72,31 @@ const Search = () => {
 					// 		if (err) {
 					// 			setLoaded(loaded => loaded + 1);
 					// 		}
+					// 	})
+					// 	.finally(() => {
+					// 		//SOBEYS
+					// 		return axios.get(
+					// 			`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
+					// 			token,
+					// 		);
+					// 	})
+					// 	.then(result => {
+					// 		console.log(result);
+					// 		if (result) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
+					// 	})
+					// 	.catch(err => {
+					// 		console.log(err);
+					// 		if (err) {
+					// 			setLoaded(loaded => loaded + 1);
+					// 		}
 					// 	});
 
-					//SOBEYS
+					// LOBLAWS;
 					axios
 						.get(
-							`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
+							`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
 							token,
 						)
 						.then(result => {
@@ -91,44 +110,26 @@ const Search = () => {
 							if (err) {
 								setLoaded(loaded => loaded + 1);
 							}
+						})
+						.finally(() => {
+							//SUPERSTORE
+							return axios.get(
+								`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
+								token,
+							);
+						})
+						.then(result => {
+							console.log(result);
+							if (result) {
+								setLoaded(loaded => loaded + 1);
+							}
+						})
+						.catch(err => {
+							console.log(err);
+							if (err) {
+								setLoaded(loaded => loaded + 1);
+							}
 						});
-
-					// // LOBLAWS;
-					// axios
-					// 	.get(
-					// 		`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
-					// 		token,
-					// 	)
-					// 	.then(result => {
-					// 		console.log(result);
-					// 		if (result) {
-					// 			setLoaded(loaded => loaded + 1);
-					// 		}
-					// 	})
-					// 	.catch(err => {
-					// 		console.log(err);
-					// 		if (err) {
-					// 			setLoaded(loaded => loaded + 1);
-					// 		}
-					// 	});
-					// //SUPERSTORE
-					// axios
-					// 	.get(
-					// 		`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
-					// 		token,
-					// 	)
-					// 	.then(result => {
-					// 		console.log(result);
-					// 		if (result) {
-					// 			setLoaded(loaded => loaded + 1);
-					// 		}
-					// 	})
-					// 	.catch(err => {
-					// 		console.log(err);
-					// 		if (err) {
-					// 			setLoaded(loaded => loaded + 1);
-					// 		}
-					// 	});
 
 					// //NO FRILLS
 					// axios
@@ -169,7 +170,6 @@ const Search = () => {
 					// 	});
 				}
 			})
-
 			.catch(err => {
 				console.log("Could not create access token");
 			});
