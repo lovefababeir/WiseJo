@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const receipts = require("./routes/receipts");
-const itemSearch = require("./routes/itemSearch");
+const items = require("./routes/items");
 const mongoose = require("mongoose");
 const decodeIDToken = require("./authenticateToken.js");
 const dotenv = require("dotenv");
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 app.use("/login", (req, res) => {
 	res.send("Server on");
 });
-app.use("/itemSearch", itemSearch);
+app.use("/items", items);
 app.use("/receipts", receipts);
 
 const server = app.listen(PORT, () => {
