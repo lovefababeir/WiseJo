@@ -105,8 +105,8 @@ const store = async function (searchWords) {
 	await cdp.send("Runtime.evaluate", {
 		expression: `${captchaParams[0].function}('${captcha._text}')`,
 	});
-
-	await page.goto(`https://www.walmart.ca/search?q=${searchWords}&f=12&p=1`, {
+	const searchText = searchWords.split(" ").join("%20");
+	await page.goto(`https://www.walmart.ca/search?q=${searchText}&f=12&p=1`, {
 		waitUntil: "networkidle2",
 	});
 
