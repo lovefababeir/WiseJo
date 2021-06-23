@@ -80,3 +80,23 @@ form {
 		font-weight: bold;
 	}
 }
+
+.formBtn {
+	background-color: #495e51;
+	width: 100%;
+	max-width: 25rem;
+	height: 3.2rem;
+	font-size: 1.4rem;
+	color: #fff;
+	font-weight: 400;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	border-radius: 0.25rem;
+	margin-bottom: 2rem;
+	border: none;
+	&:hover,
+	&:focus-within {
+		cursor: pointer;
+	}
+}
