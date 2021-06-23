@@ -22,7 +22,7 @@ const Search = () => {
 				setLoading(false);
 				setLoaded(0);
 				history.push("/compare");
-			}, 4000);
+			}, 3000);
 		}
 		return () => (mounted = false);
 	}, [loaded, history]);
