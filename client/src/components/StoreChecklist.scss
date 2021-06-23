@@ -1,0 +1,23 @@
+@import "../styles/variables.scss";
+@import "../styles/font.scss";
+@import "../styles/mixins.scss";
+
+.loadinglist {
+	grid-row: 3/4;
+	grid-column: 2/3;
+	width: 16rem;
+	margin: 0 auto;
+	&__list {
+		padding: 2rem 0;
+		list-style: none;
+		height: 17rem;
+	}
+	&__item {
+		font-size: 2rem;
+		text-transform: capitalize;
+	}
+	&__icon {
+		height: 2.2rem;
+		margin: 0.5rem;
+	}
+}
