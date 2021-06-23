@@ -10,10 +10,19 @@ const itemCollection = require("../models/itemRecord.js");
 const mongoose = require("mongoose");
 const promiseFcn = require("../promiseFunctions/promiseFunctions2");
 const userCollection = require("../models/userRecord");
+const cors = require("cors");
 
 mongoose.set("useFindAndModify", false);
 
-router.get("/initaterecord/:time", async (req, res) => {
+const options = {
+	origin: "https://wisejo.netlify.app",
+	optionsSuccessStatus: 200,
+	methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
+	credentials: true,
+};
+
+express().options("/initaterecord/:time", cors(options));
+router.get("/initaterecord/:time", cors(options), async (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
@@ -257,7 +266,8 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 	return responseData;
 };
 
-router.get("/:store/:time", async (req, res) => {
+express().options("/initaterecord/:time", cors(options));
+router.get("/:store/:time", cors(options), async (req, res) => {
 	const auth = req.currentUser;
 	if (auth) {
 		const time = parseInt(req.params.time);
