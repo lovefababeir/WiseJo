@@ -5,7 +5,6 @@ import fail from "../assets/images/fail.png";
 import box from "../assets/images/box.png";
 
 const StoreChecklist = ({ storelist }) => {
-	console.log(storelist);
 	const stores = Object.keys(storelist);
 
 	return (
@@ -23,6 +22,9 @@ const StoreChecklist = ({ storelist }) => {
 										? success
 										: fail
 								}
+								alt={`Results from ${x} are ${
+									storelist[x] === "success" ? "available" : "not available"
+								}`}
 							/>
 							{x === "longos" ? "Longo's" : x === "nofrills" ? "No Frills" : x}{" "}
 						</li>
