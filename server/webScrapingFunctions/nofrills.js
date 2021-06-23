@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const store = async function (searchWords) {
+	const searchText = searchWords.split(" ").join("%20");
 	const args = ["--no-sandbox", "--disable-web-security"];
 	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
@@ -8,16 +9,15 @@ const store = async function (searchWords) {
 	await page.setDefaultTimeout(120000);
 	await page.setViewport({ height: 1200, width: 960 });
 
-	await page.goto(`https://www.nofrills.ca/`);
+	await page.goto(`https://www.nofrills.ca/search?search-bar=${searchText}`);
 	await page.waitForSelector(
 		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(7) > button",
 	);
 	await page.click(
 		"#site-layout > div.modal-dialog.modal-dialog--region-selector > div.modal-dialog__content > div > div > ul > li:nth-child(7) > button",
 	);
-	await page.goto(`https://www.nofrills.ca/search?search-bar=${searchWords}`, {
-		waitUntil: "networkidle2",
-	});
+
+	await page.waitForNavigation({ waitUntil: "networkidle0" });
 
 	let result = await page.evaluate(() => {
 		let topResults = [];
