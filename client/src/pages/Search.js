@@ -6,19 +6,23 @@ import SearchForm from "../components/SearchForm";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import FormAlert from "../components/FormAlert";
+import StoreChecklist from "../components/StoreChecklist";
 
 const Search = () => {
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
 	const [loaded, setLoaded] = useState(0);
 	const { createToken } = useAuth();
+	const [storelist, setStoreList] = useState({});
 
 	useEffect(() => {
 		let mounted = true;
 		if (loaded === 6 && mounted) {
-			history.push("/compare");
-			setLoading(false);
-			setLoaded(0);
+			setTimeout(() => {
+				setLoading(false);
+				setLoaded(0);
+				history.push("/compare");
+			}, 4000);
 		}
 		return () => (mounted = false);
 	}, [loaded, history]);
@@ -52,22 +56,40 @@ const Search = () => {
 			.then(ready => {
 				if (!ready) {
 					console.log(`need error message`, ready);
-					return;
 				} else {
 					const token = ready;
 					//LONGOS
+					setStoreList({ longos: "loading" });
+
 					axios
 						.get(
 							`${process.env.REACT_APP_BASE_URL}items/longos/${time}?item=${item}`,
 							token,
 						)
 						.then(result => {
-							console.log(result);
+							console.log(result, result.data.data.longos.searchResults.length);
+							if (result.data.data.longos.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, longos: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, longos: "fails" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, longos: "fail" };
+							});
 						})
 						.then(() => {
+							const newState = { ...storelist, sobeys: "loading" };
+							console.log(newState);
+							setStoreList(storelist => {
+								return { ...storelist, sobeys: "loading" };
+							});
 							setLoaded(loaded => loaded + 1);
 							//SOBEYS
 							return axios.get(
@@ -76,12 +98,27 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result);
+							console.log(result, result.data.data.sobeys.searchResults.length);
+							if (result.data.data.sobeys.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, sobeys: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, sobeys: "fail" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, sobeys: "fail" };
+							});
 						})
 						.then(() => {
+							setStoreList(storelist => {
+								return { ...storelist, loblaws: "loading" };
+							});
 							setLoaded(loaded => loaded + 1);
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
@@ -89,12 +126,28 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result);
+							console.log(result, result.data.data.loblaws.searchResults.length);
+							if (result.data.data.loblaws.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, loblaws: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, loblaws: "fail" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, loblaws: "fail" };
+							});
 						})
 						.then(() => {
+							setStoreList(storelist => {
+								return { ...storelist, superstore: "loading" };
+							});
+
 							setLoaded(loaded => loaded + 1);
 							//SUPERSTORE
 							return axios.get(
@@ -103,13 +156,33 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result);
+							setStoreList(storelist => {
+								return { ...storelist, superstore: "loading" };
+							});
+
+							console.log(result, result.data.data.superstore.searchResults.length);
+							if (result.data.data.superstore.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, superstore: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, superstore: "fail" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, superstore: "fail" };
+							});
 						})
 						.then(() => {
 							setLoaded(loaded => loaded + 1);
+							setStoreList(storelist => {
+								return { ...storelist, nofrills: "loading" };
+							});
+
 							//NO FRILLS
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/nofrills/${time}?item=${item}`,
@@ -117,12 +190,28 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result);
+							console.log(result, result.data.data.nofrills.searchResults.length);
+							if (result.data.data.nofrills.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, nofrills: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, nofrills: "fail" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, nofrills: "fail" };
+							});
 						})
 						.then(() => {
+							setStoreList(storelist => {
+								return { ...storelist, walmart: "loading" };
+							});
+
 							setLoaded(loaded => loaded + 1);
 							//WALMART
 							return axios.get(
@@ -131,10 +220,22 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result);
+							console.log(result, result.data.data.walmart.searchResults.length);
+							if (result.data.data.walmart.searchResults.length) {
+								setStoreList(storelist => {
+									return { ...storelist, walmart: "success" };
+								});
+							} else {
+								setStoreList(storelist => {
+									return { ...storelist, walmart: "fail" };
+								});
+							}
 						})
 						.catch(err => {
 							console.log(err);
+							setStoreList(storelist => {
+								return { ...storelist, walmart: "fail" };
+							});
 						})
 						.finally(() => {
 							setLoaded(loaded => loaded + 1);
@@ -147,6 +248,7 @@ const Search = () => {
 	};
 
 	console.log(loaded);
+
 	return (
 		<>
 			<h1 className="form__title">SHOP & COMPARE</h1>
@@ -155,6 +257,7 @@ const Search = () => {
 			{loading && (
 				<div className="form__afterSubmit">
 					<FormAlert page="shop" />
+					<StoreChecklist storelist={storelist} />
 					<LoadingSpinner />
 				</div>
 			)}
