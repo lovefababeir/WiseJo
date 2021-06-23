@@ -43,27 +43,23 @@ const ResultsAllGrocerySection = ({
 				alt={`Results from ${store}`}
 			/>
 			<div className={`store__box store__box--${store}`}>
-				{listOfItems
-					.sort((a, b) => {
-						return a.value * a.quantity - b.value * b.quantity;
-					})
-					.map(item => {
-						return (
-							<ResultsAllItemCard
-								image={item.image}
-								store={item.store}
-								capacity={item.capacity}
-								price={item.price}
-								title={item.title}
-								productID={item.productID}
-								deleteHandler={deleteHandler}
-								key={uuidv4()}
-								values={values}
-								setValues={setValues}
-								updateList={updateList}
-							/>
-						);
-					})}
+				{listOfItems.map(item => {
+					return (
+						<ResultsAllItemCard
+							image={item.image}
+							store={item.store}
+							capacity={item.capacity}
+							price={item.price}
+							title={item.title}
+							productID={item.productID}
+							deleteHandler={deleteHandler}
+							key={uuidv4()}
+							values={values}
+							setValues={setValues}
+							updateList={updateList}
+						/>
+					);
+				})}
 			</div>
 		</div>
 	);
