@@ -23,6 +23,8 @@ const SearchForm = ({ submitHandler, loading }) => {
 						ref={inputRef}
 						autoComplete="off"
 						disabled={loading}
+						spellCheck="true"
+						autoCorrect="on"
 					></input>
 					<button type="submit" id="submitBtn" disabled={loading}>
 						search
