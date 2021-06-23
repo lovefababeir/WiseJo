@@ -2,6 +2,7 @@ import React from "react";
 import "./ResultsSolutions.scss";
 import { useSpring, animated } from "react-spring";
 import TipsSection from "./TipsSection";
+import notavailable from "../assets/images/notavailable.png";
 
 const ResultsSolutions = props => {
 	const { list, currentLocation } = props;
@@ -88,6 +89,9 @@ const ResultsSolutions = props => {
 		config: { delay: 600, duration: 1000 },
 	});
 
+	const replaceImage = e => {
+		e.target.src = notavailable;
+	};
 	return (
 		<>
 			{optionsInStore(currentLocation) && (
@@ -96,8 +100,9 @@ const ResultsSolutions = props => {
 						<div className="solution">
 							<img
 								className="solution__picture"
-								src={BEST.image}
+								src={BEST.image || notavailable}
 								alt="Item of overall best choice"
+								onError={replaceImage}
 							/>
 							<div className="solution__details">
 								<p className="solution__advice">
@@ -135,8 +140,9 @@ const ResultsSolutions = props => {
 							<div className="solution">
 								<img
 									className="solution__picture"
-									src={BESTinLocation.image}
+									src={BESTinLocation.image || notavailable}
 									alt="Best option in current location"
+									onError={replaceImage}
 								/>
 								<div className="solution__details">
 									<p className="solution__advice">
@@ -169,8 +175,9 @@ const ResultsSolutions = props => {
 							<div className="solution">
 								<img
 									className="solution__picture"
-									src={curLocationOptions[1].image}
+									src={curLocationOptions[1].image || notavailable}
 									alt="Second best option in current lcoation"
+									onError={replaceImage}
 								/>
 								<div className="solution__details">
 									<p className="solution__advice">
@@ -202,6 +209,7 @@ const ResultsSolutions = props => {
 									className="solution__picture"
 									src={unitRates[1].image}
 									alt="Second best option in current lcoation"
+									onError={replaceImage}
 								/>
 								<div className="solution__details">
 									<p className="solution__advice">This is the second best option.</p>
