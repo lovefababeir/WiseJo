@@ -11,16 +11,26 @@ const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 		if (!list.length) {
 			return;
 		}
-		const orderedList = list.sort((a, b) => {
+		const orderedList = list.slice(0).sort((a, b) => {
 			return a.store < b.store ? -1 : 1;
 		});
 		orderedList.forEach(item => {
 			if (!listOfStores.find(i => item.store === i.store)) {
+				const newList = list
+					.filter(n => {
+						return n.store === item.store;
+					})
+					.sort((a, b) => {
+						return Number(a.price.slice(1)) - Number(b.price.slice(1));
+					});
+
+				const test = newList.map(a => {
+					return { [a.price]: a.title };
+				});
+				console.log(test);
 				const details = {
 					store: item.store,
-					listOfItems: list.filter(n => {
-						return n.store === item.store;
-					}),
+					listOfItems: newList,
 				};
 				listOfStores.push(details);
 			}

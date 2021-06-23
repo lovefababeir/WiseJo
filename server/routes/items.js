@@ -266,7 +266,7 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 	return responseData;
 };
 
-express().options("/initaterecord/:time", cors(options));
+express().options("/:store/:time", cors(options));
 router.get("/:store/:time", cors(options), async (req, res) => {
 	const auth = req.currentUser;
 	if (auth) {
