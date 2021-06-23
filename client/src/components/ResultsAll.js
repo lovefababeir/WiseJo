@@ -24,10 +24,6 @@ const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 						return Number(a.price.slice(1)) - Number(b.price.slice(1));
 					});
 
-				const test = newList.map(a => {
-					return { [a.price]: a.title };
-				});
-				console.log(test);
 				const details = {
 					store: item.store,
 					listOfItems: newList,
