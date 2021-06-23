@@ -63,17 +63,12 @@ const Search = () => {
 						)
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
-						.finally(() => {
+						.then(() => {
+							setLoaded(loaded => loaded + 1);
 							//SOBEYS
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/sobeys/${time}?item=${item}`,
@@ -82,17 +77,12 @@ const Search = () => {
 						})
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
-						.finally(() => {
+						.then(() => {
+							setLoaded(loaded => loaded + 1);
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/loblaws/${time}?item=${item}`,
 								token,
@@ -100,17 +90,12 @@ const Search = () => {
 						})
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
-						.finally(() => {
+						.then(() => {
+							setLoaded(loaded => loaded + 1);
 							//SUPERSTORE
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/superstore/${time}?item=${item}`,
@@ -119,17 +104,12 @@ const Search = () => {
 						})
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
-						.finally(() => {
+						.then(() => {
+							setLoaded(loaded => loaded + 1);
 							//NO FRILLS
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/nofrills/${time}?item=${item}`,
@@ -138,17 +118,12 @@ const Search = () => {
 						})
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
-						.finally(() => {
+						.then(() => {
+							setLoaded(loaded => loaded + 1);
 							//WALMART
 							return axios.get(
 								`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
@@ -157,15 +132,12 @@ const Search = () => {
 						})
 						.then(result => {
 							console.log(result);
-							if (result) {
-								setLoaded(loaded => loaded + 1);
-							}
 						})
 						.catch(err => {
 							console.log(err);
-							if (err) {
-								setLoaded(loaded => loaded + 1);
-							}
+						})
+						.finally(() => {
+							setLoaded(loaded => loaded + 1);
 						});
 				}
 			})
@@ -174,6 +146,7 @@ const Search = () => {
 			});
 	};
 
+	console.log(loaded);
 	return (
 		<>
 			<h1 className="form__title">SHOP & COMPARE</h1>
