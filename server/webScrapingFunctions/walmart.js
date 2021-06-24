@@ -5,7 +5,7 @@ puppeteer.use(StealthPlugin());
 const Client = require("@infosimples/node_two_captcha");
 
 client = new Client(process.env.CAPTCHA_API_KEY, {
-	timeout: 170000,
+	timeout: 60000,
 	polling: 5000,
 	throwErrors: false,
 });
@@ -30,7 +30,7 @@ const store = async function (searchWords) {
 
 	var browser = await puppeteer.launch(options);
 	const [page] = await browser.pages();
-	await page.setDefaultTimeout(120000);
+	await page.setDefaultTimeout(60000);
 	const cdp = await page.target().createCDPSession();
 
 	try {
@@ -110,7 +110,7 @@ const store = async function (searchWords) {
 		waitUntil: "networkidle2",
 	});
 
-	await page.waitForSelector("#product-results > div:nth-child(1)");
+	await page.waitForSelector("#product-results");
 
 	let result = await page.evaluate(() => {
 		let topResults = [];
