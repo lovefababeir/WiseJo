@@ -5,7 +5,7 @@ const store = async function (searchWords) {
 	const options = { args, headless: true };
 	var browser = await puppeteer.launch(options);
 	var page = await browser.newPage();
-	await page.setDefaultTimeout(120000);
+	await page.setDefaultTimeout(30000);
 	await page.setViewport({ height: 1200, width: 960 });
 	await page.goto(`https://voila.ca/products/search?q=${searchWords}`, {
 		waitUntil: "networkidle2",
