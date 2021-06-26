@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { store } = require("../webScrapingFunctions/gateway");
 
 const userResults = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
