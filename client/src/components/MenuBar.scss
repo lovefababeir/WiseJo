@@ -43,7 +43,7 @@
 				width: 4rem;
 			}
 		}
-		&--3 {
+		&--snap {
 			width: 1.8rem;
 			@include breakpoint(350px) {
 				width: 2.5rem;
@@ -52,7 +52,7 @@
 				}
 			}
 		}
-		&--4 {
+		&--track {
 			width: 1.5rem;
 			@include breakpoint(350px) {
 				width: 2rem;
