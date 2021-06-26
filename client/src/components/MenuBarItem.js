@@ -10,7 +10,11 @@ const MenuBarItem = ({ img, description, page }) => {
 				className="menu__item"
 				activeClassName="menu-item--selected"
 			>
-				<img src={img} className="menu__icon" alt={description} />
+				<img
+					src={img}
+					className={`menu__icon menu__icon--${page}`}
+					alt={description}
+				/>
 				<h4 className="menu__label">{page}</h4>
 			</NavLink>
 		</li>
