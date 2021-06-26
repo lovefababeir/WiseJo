@@ -23,14 +23,13 @@
 		}
 	}
 	&__logo {
+		@include flex(row, center, center);
+		position: absolute;
 		overflow: hidden;
 		z-index: 2;
-		position: absolute;
-		@include flex(row, center, center);
 		height: 100vh;
 		height: calc(var(--vh, 1vh) * 100);
 		width: 100vw;
-		overflow: hidden;
 		& > img {
 			height: 100vh;
 			height: calc(var(--vh, 1vh) * 100);
@@ -47,19 +46,19 @@
 		}
 	}
 	&__appName {
+		margin: 0.3rem auto;
 		color: #415049;
 		font-family: "Kaushan Script", cursive;
 		text-align: center;
 		font-size: 7rem;
-		margin: 0.3rem auto;
 		@include mobileM {
 			margin: 1rem auto;
 			font-size: 10rem;
 		}
 	}
 	&__text {
-		font-size: 1.4rem;
 		width: 100%;
+		font-size: 1.4rem;
 		text-align: center !important;
 		&:nth-child(2) {
 			display: block;
@@ -76,15 +75,15 @@
 .emailPassword__button {
 	width: 20.3rem;
 	height: 4rem;
-	border: none;
-	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%),
-		0 1px 5px 0 rgb(0 0 0 / 12%);
 	max-width: 220px;
 	padding: 8px 16px;
-	font-size: 1.4rem;
+	border: none;
 	background-color: #6b7d6b;
-	color: #fff;
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%),
+		0 1px 5px 0 rgb(0 0 0 / 12%);
+	font-size: 1.4rem;
 	font-weight: 500;
+	color: #fff;
 }
 
 #emailPassword {
@@ -96,10 +95,10 @@
 		font-size: 1.4rem;
 	}
 	& button {
-		font-size: 1.4rem;
 		height: 3.6rem;
 		margin: 1rem 0;
-		background-color: #495e51;
 		border: none;
+		background-color: #495e51;
+		font-size: 1.4rem;
 	}
 }
