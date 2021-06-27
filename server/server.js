@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const receipts = require("./routes/receipts");
 const items = require("./routes/items");
+const admin = require("./routes/admin");
 const mongoose = require("mongoose");
 const decodeIDToken = require("./authenticateToken.js");
 const dotenv = require("dotenv");
@@ -32,6 +33,7 @@ app.use("/login", (req, res) => {
 });
 app.use("/items", items);
 app.use("/receipts", receipts);
+app.use("/admin", admin);
 
 const server = app.listen(PORT, () => {
 	console.log(`Wisejo server is starting at ${PORT}`);
