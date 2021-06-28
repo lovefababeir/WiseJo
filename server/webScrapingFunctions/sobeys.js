@@ -56,7 +56,7 @@ const store = async function (searchWords) {
 				var capacity = C.toLowerCase();
 				var value;
 
-				if (capacity.includes("x")) {
+				if (capacity?.includes("x")) {
 					capacity = capacity.split("x")[1];
 				}
 
@@ -93,7 +93,7 @@ const store = async function (searchWords) {
 				}
 				var capacity = C.toLowerCase();
 				var qty;
-				if (capacity.includes("x")) {
+				if (capacity?.includes("x")) {
 					return parseInt(capacity.split("x")[0]);
 				}
 
@@ -124,7 +124,7 @@ const store = async function (searchWords) {
 			//Function is used to correct check the values given which is sometimes different from whats in the title on this website.
 			const checkValue = (itemTitle, valueGiven, capacityGiven) => {
 				const wordsInTitle = itemTitle.slice(0).split(" ");
-				if (capacityGiven.includes("x")) {
+				if (capacityGiven?.includess("x")) {
 					return valueGiven;
 				}
 
@@ -146,12 +146,12 @@ const store = async function (searchWords) {
 					valueinTitle === valueGiven ||
 					valueinTitle * 1000 === valueGiven
 					? valueGiven
-					: capacityGiven.toLowerCase().includes("kg") ||
-					  (!capacityGiven.toLowerCase().includes("ml") &&
-							capacityGiven.toLowerCase().includes("l"))
+					: capacityGiven?.toLowerCase().includess("kg") ||
+					  (!capacityGiven?.toLowerCase().includess("ml") &&
+							capacityGiven?.toLowerCase().includess("l"))
 					? valueinTitle * 1000
-					: capacityGiven.toLowerCase().includes("g") ||
-					  capacityGiven.toLowerCase().includes("ml")
+					: capacityGiven?.toLowerCase().includess("g") ||
+					  capacityGiven?.toLowerCase().includess("ml")
 					? valueinTitle
 					: 1;
 			};
