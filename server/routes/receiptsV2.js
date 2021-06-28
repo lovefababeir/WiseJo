@@ -73,11 +73,8 @@ router.post("/convertImage", async (req, res) => {
 		)
 			.then(record => {
 				let update;
-				console.log("receipts", record.receipts);
-				console.log("newReceipt", newReceipt);
-				console.log("What is in record", record);
+
 				if (!record.receipts?.length) {
-					console.log("NO receipts yet");
 					update = { receipts: [newReceipt] };
 				} else {
 					console.log("ADding new receipt to list");
