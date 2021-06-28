@@ -9,6 +9,8 @@ const fcn = require("../receiptFunctions/decodeText");
 const UserRecord = require("../models/receipts");
 const ReceiptRecord = require("../models/receiptRecord");
 const mongoose = require("mongoose");
+const receipt = require("../models/receipt");
+const itemRecord = require("../models/itemRecord");
 
 router.post("/convertImage", async (req, res) => {
 	const auth = req.currentUser;
@@ -133,4 +135,41 @@ router.get("/list", (req, res) => {
 	}
 });
 
+router.patch("/receiptData", (req, res) => {
+	const auth = req.currentUser;
+
+	if (auth) {
+		const updatedReceipt = new ReceiptRecord(req.body.receiptData);
+		UserRecord.find({ user_id: auth.user_id })
+			.exec()
+			.then(result => {
+				const list = result[0].receipts;
+				const receiptIndex = list.findIndex(item => {
+					return item.receiptID === updatedReceipt.receiptID;
+				});
+
+				list.splice(receiptIndex, 1, updatedReceipt);
+				return list;
+			})
+			.then(list => {
+				return UserRecord.findOneAndUpdate(
+					{ user_id: auth.user_id },
+					{ receipts: list },
+					{ new: true },
+				);
+			})
+			.then(newDoc => {
+				res.status(200).json(newDoc);
+			})
+			.catch(() => {
+				res.status(400).json(error);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
+});
 module.exports = router;
