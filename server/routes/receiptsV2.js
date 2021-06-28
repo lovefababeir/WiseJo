@@ -9,15 +9,13 @@ const fcn = require("../receiptFunctions/decodeText");
 const UserRecord = require("../models/receipts");
 const ReceiptRecord = require("../models/receiptRecord");
 const mongoose = require("mongoose");
-const receipt = require("../models/receipt");
-const itemRecord = require("../models/itemRecord");
 
 router.post("/convertImage", async (req, res) => {
 	const auth = req.currentUser;
-	console.log("In new version");
+
 	if (auth) {
 		const store = req.query.store.toLowerCase();
-		console.log(store);
+
 		const time = parseInt(req.query.time);
 		const convertedText =
 			store === "no frills"
@@ -57,7 +55,6 @@ router.post("/convertImage", async (req, res) => {
 		const newReceipt = await new ReceiptRecord(receiptData)
 			.save()
 			.then(receipt => {
-				console.log("receipt", receipt);
 				return receipt;
 			})
 			.catch(err => {
@@ -75,22 +72,18 @@ router.post("/convertImage", async (req, res) => {
 		)
 			.then(record => {
 				let update;
-				console.log("What is in record", record);
+
 				if (!record.receipts?.length) {
-					console.log("NO receipts yet");
 					update = { receipts: [newReceipt] };
 				} else {
-					console.log("ADding new receipt to list");
 					const receiptList = record.receipts;
 					receiptList.push(newReceipt);
 					update = { receipts: receiptList };
 				}
-				console.log("update to add", update);
 				return UserRecord.findOneAndUpdate({ user_id: auth.user_id }, update, {
 					new: true,
 				})
 					.then(result => {
-						console.log("updated", result);
 						return result;
 					})
 					.catch(err => {
@@ -98,7 +91,6 @@ router.post("/convertImage", async (req, res) => {
 					});
 			})
 			.then(result => {
-				console.log(result);
 				res.status(200).json(result);
 			})
 			.catch(err => {
@@ -172,4 +164,41 @@ router.patch("/receiptData", (req, res) => {
 			);
 	}
 });
+
+router.delete("/receipt/:id", (req, res) => {
+	const deleteReceiptID = req.params.id;
+	const auth = req.currentUser;
+	if (auth) {
+		UserRecord.find({ user_id: auth.user_id })
+			.exec()
+			.then(result => {
+				const receiptIndex = result[0].receipts.findIndex(
+					r => r.receiptID === deleteReceiptID,
+				);
+				const list = result[0].receipts;
+				list.splice(receiptIndex, 1);
+				return list;
+			})
+			.then(list => {
+				return UserRecord.findOneAndUpdate(
+					{ user_id: auth.user_id },
+					{ receipts: list },
+					{ new: true },
+				);
+			})
+			.then(result => {
+				res.status(200).json(result.receipts);
+			})
+			.catch(err => {
+				res.status(500).json(err);
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
+});
+
 module.exports = router;
