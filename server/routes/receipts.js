@@ -6,14 +6,16 @@ const nofrills = require("../receiptFunctions/nofrillsReceipt");
 const dollarama = require("../receiptFunctions/dollaramaReceipt");
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
-const ReceiptDoc = require("../models/receipt");
+const UserRecord = require("../models/receipts");
+const ReceiptRecord = require("../models/receiptRecord");
 const mongoose = require("mongoose");
 
-router.post("/convertImage", (req, res) => {
+router.post("/convertImage", async (req, res) => {
 	const auth = req.currentUser;
+
 	if (auth) {
 		const store = req.query.store.toLowerCase();
-		console.log(store);
+
 		const time = parseInt(req.query.time);
 		const convertedText =
 			store === "no frills"
@@ -42,10 +44,6 @@ router.post("/convertImage", (req, res) => {
 		};
 
 		const receiptData = {
-			_id: mongoose.Types.ObjectId(),
-			user_id: auth.user_id,
-			user_name: auth.name || "",
-			user_email: auth.email || "",
 			time: time,
 			receiptID: time,
 			date: convertDate(time),
@@ -54,10 +52,51 @@ router.post("/convertImage", (req, res) => {
 			results: convertedText,
 		};
 
-		const newReceipt = new ReceiptDoc(receiptData);
-		newReceipt.save().then(result => {
-			res.status(200).json(result);
-		});
+		const newReceipt = await new ReceiptRecord(receiptData)
+			.save()
+			.then(receipt => {
+				return receipt;
+			})
+			.catch(err => {
+				console.log("could not create receipt record");
+			});
+
+		UserRecord.findOneAndUpdate(
+			{ user_id: auth.user_id },
+			{
+				user_id: auth.user_id,
+				user_name: auth.name || "",
+				user_email: auth.email || "",
+			},
+			{ upsert: true, new: true },
+		)
+			.then(record => {
+				let update;
+
+				if (!record.receipts?.length) {
+					update = { receipts: [newReceipt] };
+				} else {
+					const receiptList = record.receipts;
+					receiptList.push(newReceipt);
+					update = { receipts: receiptList };
+				}
+				return UserRecord.findOneAndUpdate({ user_id: auth.user_id }, update, {
+					new: true,
+				})
+					.then(result => {
+						return result;
+					})
+					.catch(err => {
+						console.log("Could not update array", err);
+					});
+			})
+			.then(result => {
+				res.status(200).json(result);
+			})
+			.catch(err => {
+				console.log("Could not update", err);
+				res.status(500).send("Sorry could not add your receipt");
+			});
 	} else {
 		res
 			.status(403)
@@ -67,14 +106,14 @@ router.post("/convertImage", (req, res) => {
 	}
 });
 
-router.get("/history", (req, res) => {
+router.get("/list", (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
-		ReceiptDoc.find({ user_id: auth.user_id })
+		UserRecord.find({ user_id: auth.user_id })
 			.exec()
 			.then(result => {
-				res.status(200).json(result);
+				res.status(200).json(result[0].receipts);
 			})
 			.catch(err => {
 				res.status(400).json(err);
@@ -92,24 +131,27 @@ router.patch("/receiptData", (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
-		const updatedReceipt = new ReceiptDoc(req.body.receiptData);
-		ReceiptDoc.findOneAndUpdate(
-			{ receiptID: updatedReceipt.receiptID, user_id: auth.user_id },
-			updatedReceipt,
-			{ new: true },
-		)
-			.then(() => {
-				return ReceiptDoc.find({ user_id: auth.user_id })
-					.exec()
-					.then(result => {
-						return result;
-					})
-					.catch(err => {
-						res.status(400).json(err);
-					});
-			})
+		const updatedReceipt = new ReceiptRecord(req.body.receiptData);
+		UserRecord.find({ user_id: auth.user_id })
+			.exec()
 			.then(result => {
-				res.status(200).json(result);
+				const list = result[0].receipts;
+				const receiptIndex = list.findIndex(item => {
+					return item.receiptID === updatedReceipt.receiptID;
+				});
+
+				list.splice(receiptIndex, 1, updatedReceipt);
+				return list;
+			})
+			.then(list => {
+				return UserRecord.findOneAndUpdate(
+					{ user_id: auth.user_id },
+					{ receipts: list },
+					{ new: true },
+				);
+			})
+			.then(newDoc => {
+				res.status(200).json(newDoc);
 			})
 			.catch(() => {
 				res.status(400).json(error);
@@ -127,16 +169,25 @@ router.delete("/receipt/:id", (req, res) => {
 	const deleteReceiptID = req.params.id;
 	const auth = req.currentUser;
 	if (auth) {
-		ReceiptDoc.deleteOne({ receiptID: deleteReceiptID, user_id: auth.user_id })
+		UserRecord.find({ user_id: auth.user_id })
+			.exec()
 			.then(result => {
-				return ReceiptDoc.find({ user_id: auth.user_id })
-					.exec()
-					.then(result => {
-						return result;
-					});
+				const receiptIndex = result[0].receipts.findIndex(
+					r => r.receiptID === deleteReceiptID,
+				);
+				const list = result[0].receipts;
+				list.splice(receiptIndex, 1);
+				return list;
+			})
+			.then(list => {
+				return UserRecord.findOneAndUpdate(
+					{ user_id: auth.user_id },
+					{ receipts: list },
+					{ new: true },
+				);
 			})
 			.then(result => {
-				res.status(200).json(result);
+				res.status(200).json(result.receipts);
 			})
 			.catch(err => {
 				res.status(500).json(err);
@@ -149,4 +200,5 @@ router.delete("/receipt/:id", (req, res) => {
 			);
 	}
 });
+
 module.exports = router;
