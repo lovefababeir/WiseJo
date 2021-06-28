@@ -55,8 +55,16 @@
 	&__summary {
 		text-transform: capitalize;
 		font-size: 1.4rem;
+		width: 33%;
+		text-align: right;
 		@include surface {
 			font-size: 1.7rem;
+		}
+		&:nth-child(3n + 1) {
+			text-align: left;
+		}
+		&:nth-child(3n + 2) {
+			text-align: center;
 		}
 	}
 }
