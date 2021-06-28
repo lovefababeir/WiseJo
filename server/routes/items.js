@@ -15,7 +15,7 @@ const cors = require("cors");
 mongoose.set("useFindAndModify", false);
 
 const options = {
-	origin: "https://wisejo.netlify.app",
+	origin: "*",
 	optionsSuccessStatus: 200,
 	methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
 	credentials: true,
