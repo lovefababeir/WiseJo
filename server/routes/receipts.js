@@ -7,7 +7,6 @@ const dollarama = require("../receiptFunctions/dollaramaReceipt");
 require("dotenv").config();
 const fcn = require("../receiptFunctions/decodeText");
 const UserRecord = require("../models/receipts");
-const ReceiptRecord = require("../models/receiptRecord");
 const mongoose = require("mongoose");
 
 router.post("/convertImage", async (req, res) => {
@@ -15,7 +14,6 @@ router.post("/convertImage", async (req, res) => {
 
 	if (auth) {
 		const store = req.query.store.toLowerCase();
-
 		const time = parseInt(req.query.time);
 		const convertedText =
 			store === "no frills"
@@ -43,7 +41,7 @@ router.post("/convertImage", async (req, res) => {
 			};
 		};
 
-		const receiptData = {
+		const newReceipt = {
 			time: time,
 			receiptID: time,
 			date: convertDate(time),
@@ -51,15 +49,6 @@ router.post("/convertImage", async (req, res) => {
 			purchaseData: purchaseData,
 			results: convertedText,
 		};
-
-		const newReceipt = await new ReceiptRecord(receiptData)
-			.save()
-			.then(receipt => {
-				return receipt;
-			})
-			.catch(err => {
-				console.log("could not create receipt record");
-			});
 
 		UserRecord.findOneAndUpdate(
 			{ user_id: auth.user_id },
@@ -131,7 +120,7 @@ router.patch("/receiptData", (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
-		const updatedReceipt = new ReceiptRecord(req.body.receiptData);
+		const updatedReceipt = req.body.receiptData;
 		UserRecord.find({ user_id: auth.user_id })
 			.exec()
 			.then(result => {
