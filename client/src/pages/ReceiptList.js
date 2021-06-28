@@ -16,7 +16,7 @@ const ReceiptList = () => {
 		let mounted = true;
 		createToken().then(headers => {
 			axios
-				.get(`${process.env.REACT_APP_BASE_URL}receipts/history`, headers)
+				.get(`${process.env.REACT_APP_BASE_URL}receipts/list`, headers)
 				.then(result => {
 					if (mounted) {
 						setReceiptList(result.data);
@@ -127,10 +127,10 @@ const ReceiptList = () => {
 						token,
 					)
 					.then(result => {
-						const newReceiptSelected = result.data.find(receipt => {
+						const newReceiptSelected = result.data.receipts.find(receipt => {
 							return receipt.receiptID === receiptSelected.receiptID;
 						});
-						setReceiptList(result.data);
+						setReceiptList(result.data.receipts);
 						setReceiptSelected(newReceiptSelected);
 						setTimeout(() => {
 							setEditMode(!editMode);
@@ -148,7 +148,7 @@ const ReceiptList = () => {
 			return r.receiptID === id;
 		});
 		await setReceiptSelected(unchangedReceipt);
-		await console.log("receipt selected", unchangedReceipt);
+		// await console.log("receipt selected", unchangedReceipt);
 		await setEditMode(!editMode);
 	};
 
