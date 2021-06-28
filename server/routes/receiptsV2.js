@@ -81,7 +81,6 @@ router.post("/convertImage", async (req, res) => {
 					receiptList.push(newReceipt);
 					update = { receipts: receiptList };
 				}
-				console.log("update to add", update);
 				return UserRecord.findOneAndUpdate({ user_id: auth.user_id }, update, {
 					new: true,
 				})
