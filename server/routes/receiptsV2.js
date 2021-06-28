@@ -73,14 +73,17 @@ router.post("/convertImage", async (req, res) => {
 		)
 			.then(record => {
 				let update;
-
+				console.log("What is in record", record);
 				if (!record.receipts?.length) {
+					console.log("NO receipts yet");
 					update = { receipts: [newReceipt] };
 				} else {
+					console.log("ADding new receipt to list");
 					const receiptList = record.receipts;
 					receiptList.push(newReceipt);
 					update = { receipts: receiptList };
 				}
+				console.log("update to add", update);
 				return UserRecord.findOneAndUpdate({ user_id: auth.user_id }, update, {
 					new: true,
 				})
@@ -99,6 +102,27 @@ router.post("/convertImage", async (req, res) => {
 			.catch(err => {
 				console.log("Could not update", err);
 				res.status(500).send("Sorry could not add your receipt");
+			});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
+});
+
+router.get("/list", (req, res) => {
+	const auth = req.currentUser;
+
+	if (auth) {
+		UserRecord.find({ user_id: auth.user_id })
+			.exec()
+			.then(result => {
+				res.status(200).json(result[0].receipts);
+			})
+			.catch(err => {
+				res.status(400).json(err);
 			});
 	} else {
 		res
