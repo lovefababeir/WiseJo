@@ -3,6 +3,7 @@ import "./StoreChecklist.scss";
 import success from "../assets/images/success.png";
 import fail from "../assets/images/fail.png";
 import box from "../assets/images/box.png";
+import { v4 as uuidv4 } from "uuid";
 
 const StoreChecklist = ({ storelist }) => {
 	const stores = Object.keys(storelist);
@@ -12,7 +13,7 @@ const StoreChecklist = ({ storelist }) => {
 			<ul className="loadinglist__list">
 				{stores?.map(x => {
 					return (
-						<li className="loadinglist__item">
+						<li className="loadinglist__item" key={uuidv4()}>
 							<img
 								className="loadinglist__icon"
 								src={
