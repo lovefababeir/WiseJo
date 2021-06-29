@@ -18,35 +18,57 @@ const store = async function (searchWords) {
 			let path = `#main > div:nth-child(2) > div > div > div.Col-sc-3u3i8h-0.hrgMkx > div > div > div:nth-child(${i})`;
 
 			if (!document.querySelector(path)) {
+				path = `div[data-synthetics="product-list"] div:nth-child(${i})`;
+			}
+			if (!document.querySelector(path)) {
 				break;
 			}
 			if (!document.querySelector(`${path} > div:nth-child(2)`)) {
 				continue;
 			}
-			const productID = document
-				.querySelector(
-					`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > h3 > a`,
-				)
-				?.getAttribute("href")
-				?.split("/")[2];
+			const productID =
+				document
+					.querySelector(
+						`${path} > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > h3 > a`,
+					)
+					?.getAttribute("href")
+					?.split("/")[2] ||
+				document
+					.querySelector(`${path} a[data-test='fop-product-link']`)
+					?.getAttribute("href")
+					?.split("/")[2];
 
-			const image = document
-				.querySelector(
-					`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.base__Header-sc-7vdzdx-12.KaBIU > div > a > img`,
-				)
-				?.getAttribute("src");
+			const image =
+				document
+					.querySelector(
+						`${path} > div:nth-child(2) > div:nth-child(1) > div > a > img`,
+					)
+					?.getAttribute("src") ||
+				document
+					.querySelector(`${path} a[data-synthetics='bop-link'] img`)
+					?.getAttribute("src");
 
-			const title = document.querySelector(
-				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > h3 > a`,
-			)?.innerText;
+			const title =
+				document.querySelector(
+					`${path} > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > h3 > a`,
+				)?.innerText ||
+				document.querySelector(`${path} a[data-test='fop-product-link']`)
+					?.innerText;
 
-			const price = document.querySelector(
-				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div.base__PriceWrapper-sc-7vdzdx-23.iLTTFP > strong`,
-			)?.innerText;
+			const price =
+				document.querySelector(
+					`${path} > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > strong`,
+				)?.innerText ||
+				document.querySelector(`${path} div[data-test="fop-price"] > strong`)
+					?.innerText;
 
-			const capacity = document.querySelector(
-				`${path} > div.box__Box-sc-1i88g6n-0.base__BoxCard-sc-7vdzdx-5.cawmbv.ikFYmE > div.flex__Flex-sc-1gp968g-0.base__BodyContainer-sc-7vdzdx-28.kZQYJv.dQDdqx > div.base__Body-sc-7vdzdx-29.bOIIDq > div:nth-child(3) > div > span.text__Text-x7sj8-0.base__SizeText-sc-7vdzdx-34.gzMqij.fHaaeW`,
-			)?.innerText;
+			const capacity =
+				document.querySelector(
+					`${path} > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div > span:nth-child(1)`,
+				)?.innerText ||
+				document.querySelector(
+					`${path} div[data-test="fop-size"] > div > span:nth-child(1)`,
+				)?.innerText;
 
 			//function to get the capacity of each item as a number
 			const val = C => {
@@ -55,7 +77,6 @@ const store = async function (searchWords) {
 				}
 				var capacity = C.toLowerCase();
 				var value;
-
 				if (capacity?.includes("x")) {
 					capacity = capacity.split("x")[1];
 				}
@@ -97,7 +118,7 @@ const store = async function (searchWords) {
 					return parseInt(capacity.split("x")[0]);
 				}
 
-				const qtyUnits = capacity.slice(0).replace(/[^a-zA-Z ]/g, "");
+				const qtyUnits = capacity?.slice(0).replace(/[^a-zA-Z ]/g, "");
 
 				if (
 					qtyUnits
@@ -124,7 +145,7 @@ const store = async function (searchWords) {
 			//Function is used to correct check the values given which is sometimes different from whats in the title on this website.
 			const checkValue = (itemTitle, valueGiven, capacityGiven) => {
 				const wordsInTitle = itemTitle.slice(0).split(" ");
-				if (capacityGiven?.includess("x")) {
+				if (capacityGiven?.includes("x")) {
 					return valueGiven;
 				}
 
@@ -146,12 +167,12 @@ const store = async function (searchWords) {
 					valueinTitle === valueGiven ||
 					valueinTitle * 1000 === valueGiven
 					? valueGiven
-					: capacityGiven?.toLowerCase().includess("kg") ||
-					  (!capacityGiven?.toLowerCase().includess("ml") &&
-							capacityGiven?.toLowerCase().includess("l"))
+					: capacityGiven?.toLowerCase().includes("kg") ||
+					  (!capacityGiven?.toLowerCase().includes("ml") &&
+							capacityGiven?.toLowerCase().includes("l"))
 					? valueinTitle * 1000
-					: capacityGiven?.toLowerCase().includess("g") ||
-					  capacityGiven?.toLowerCase().includess("ml")
+					: capacityGiven?.toLowerCase().includes("g") ||
+					  capacityGiven?.toLowerCase().includes("ml")
 					? valueinTitle
 					: 1;
 			};
