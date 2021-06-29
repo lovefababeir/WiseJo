@@ -17,7 +17,7 @@ const Search = () => {
 
 	useEffect(() => {
 		let mounted = true;
-		if (loaded === 6 && mounted) {
+		if (loaded === 5 && mounted) {
 			setTimeout(() => {
 				setLoading(false);
 				setLoaded(0);
@@ -207,36 +207,36 @@ const Search = () => {
 								return { ...storelist, nofrills: "fail" };
 							});
 						})
-						.then(() => {
-							setStoreList(storelist => {
-								return { ...storelist, walmart: "loading" };
-							});
+						// .then(() => {
+						// 	setStoreList(storelist => {
+						// 		return { ...storelist, walmart: "loading" };
+						// 	});
 
-							setLoaded(loaded => loaded + 1);
-							//WALMART
-							return axios.get(
-								`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
-								token,
-							);
-						})
-						.then(result => {
-							console.log(result, result.data.data.walmart.searchResults.length);
-							if (result.data.data.walmart.searchResults.length) {
-								setStoreList(storelist => {
-									return { ...storelist, walmart: "success" };
-								});
-							} else {
-								setStoreList(storelist => {
-									return { ...storelist, walmart: "fail" };
-								});
-							}
-						})
-						.catch(err => {
-							console.log(err);
-							setStoreList(storelist => {
-								return { ...storelist, walmart: "fail" };
-							});
-						})
+						// 	setLoaded(loaded => loaded + 1);
+						// 	//WALMART
+						// 	return axios.get(
+						// 		`${process.env.REACT_APP_BASE_URL}items/walmart/${time}?item=${item}`,
+						// 		token,
+						// 	);
+						// })
+						// .then(result => {
+						// 	console.log(result, result.data.data.walmart.searchResults.length);
+						// 	if (result.data.data.walmart.searchResults.length) {
+						// 		setStoreList(storelist => {
+						// 			return { ...storelist, walmart: "success" };
+						// 		});
+						// 	} else {
+						// 		setStoreList(storelist => {
+						// 			return { ...storelist, walmart: "fail" };
+						// 		});
+						// 	}
+						// })
+						// .catch(err => {
+						// 	console.log(err);
+						// 	setStoreList(storelist => {
+						// 		return { ...storelist, walmart: "fail" };
+						// 	});
+						// })
 						.finally(() => {
 							setLoaded(loaded => loaded + 1);
 						});
