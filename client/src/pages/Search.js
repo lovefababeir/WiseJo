@@ -49,7 +49,6 @@ const Search = () => {
 						return token;
 					})
 					.catch(err => {
-						console.log(err);
 						return 0;
 					});
 			})
@@ -67,7 +66,6 @@ const Search = () => {
 							token,
 						)
 						.then(result => {
-							console.log(result, result.data.data.longos.searchResults.length);
 							if (result.data.data.longos.searchResults.length) {
 								setStoreList(storelist => {
 									return { ...storelist, longos: "success" };
@@ -79,14 +77,11 @@ const Search = () => {
 							}
 						})
 						.catch(err => {
-							console.log(err);
 							setStoreList(storelist => {
 								return { ...storelist, longos: "fail" };
 							});
 						})
 						.then(() => {
-							const newState = { ...storelist, sobeys: "loading" };
-							console.log(newState);
 							setStoreList(storelist => {
 								return { ...storelist, sobeys: "loading" };
 							});
@@ -98,7 +93,6 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result, result.data.data.sobeys.searchResults.length);
 							if (result.data.data.sobeys.searchResults.length) {
 								setStoreList(storelist => {
 									return { ...storelist, sobeys: "success" };
@@ -110,7 +104,6 @@ const Search = () => {
 							}
 						})
 						.catch(err => {
-							console.log(err);
 							setStoreList(storelist => {
 								return { ...storelist, sobeys: "fail" };
 							});
@@ -126,7 +119,6 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result, result.data.data.loblaws.searchResults.length);
 							if (result.data.data.loblaws.searchResults.length) {
 								setStoreList(storelist => {
 									return { ...storelist, loblaws: "success" };
@@ -138,7 +130,6 @@ const Search = () => {
 							}
 						})
 						.catch(err => {
-							console.log(err);
 							setStoreList(storelist => {
 								return { ...storelist, loblaws: "fail" };
 							});
@@ -159,8 +150,6 @@ const Search = () => {
 							setStoreList(storelist => {
 								return { ...storelist, superstore: "loading" };
 							});
-
-							console.log(result, result.data.data.superstore.searchResults.length);
 							if (result.data.data.superstore.searchResults.length) {
 								setStoreList(storelist => {
 									return { ...storelist, superstore: "success" };
@@ -172,7 +161,6 @@ const Search = () => {
 							}
 						})
 						.catch(err => {
-							console.log(err);
 							setStoreList(storelist => {
 								return { ...storelist, superstore: "fail" };
 							});
@@ -190,7 +178,6 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							console.log(result, result.data.data.nofrills.searchResults.length);
 							if (result.data.data.nofrills.searchResults.length) {
 								setStoreList(storelist => {
 									return { ...storelist, nofrills: "success" };
@@ -202,7 +189,6 @@ const Search = () => {
 							}
 						})
 						.catch(err => {
-							console.log(err);
 							setStoreList(storelist => {
 								return { ...storelist, nofrills: "fail" };
 							});
@@ -242,12 +228,10 @@ const Search = () => {
 						});
 				}
 			})
-			.catch(err => {
+			.catch(() => {
 				console.log("Could not create access token");
 			});
 	};
-
-	console.log(loaded);
 
 	return (
 		<>
