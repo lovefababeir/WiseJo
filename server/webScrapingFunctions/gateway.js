@@ -151,7 +151,7 @@ const store = async function (searchWords) {
 				}
 			};
 
-			const unitMass = value * quantity > 100 ? 100 : 1;
+			const unitMass = value * quantity < 70 ? 1 : 100;
 			const unitCost =
 				(price &&
 					value &&
