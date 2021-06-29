@@ -5,11 +5,15 @@
 .receiptsList {
 	overflow: hidden;
 	overflow-y: scroll;
-	height: calc(100vh - 9rem);
-	height: calc(var(--vh, 1vh) * 100 - 9rem);
+	height: calc(100vh - #{$menuBarSmall});
+	height: calc(var(--vh, 1vh) * 100 - #{$menuBarSmall});
 	padding: 0 1rem 2rem 1rem;
 	margin-bottom: 10rem;
 	background-color: white;
+	@include mobileM {
+		height: calc(100vh - #{$menuBar});
+		height: calc(var(--vh, 1vh) * 100 - #{$menuBar});
+	}
 	&__title {
 		margin: 1rem auto;
 		font-size: 2rem;
