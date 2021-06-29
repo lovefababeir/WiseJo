@@ -155,16 +155,16 @@ router.patch("/receiptData", (req, res) => {
 });
 
 router.delete("/receipt/:id", (req, res) => {
-	const deleteReceiptID = req.params.id;
+	const deleteReceiptID = parseInt(req.params.id);
 	const auth = req.currentUser;
 	if (auth) {
 		UserRecord.find({ user_id: auth.user_id })
 			.exec()
 			.then(result => {
-				const receiptIndex = result[0].receipts.findIndex(
-					r => r.receiptID === deleteReceiptID,
-				);
 				const list = result[0].receipts;
+				const receiptIndex = list.findIndex(r => {
+					return r.receiptID === deleteReceiptID;
+				});
 				list.splice(receiptIndex, 1);
 				return list;
 			})
