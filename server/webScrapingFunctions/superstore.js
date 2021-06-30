@@ -32,9 +32,15 @@ const store = async function (searchWords) {
 
 			const image = document.querySelector(`${path} img`)?.getAttribute("src");
 
-			const title = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
-			)?.innerText;
+			const title = `${
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--brand`,
+				)?.innerText
+			} ${
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
+				)?.innerText
+			}`;
 
 			const price = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices.product-prices--product-tile > div > div > span > span:nth-child(1)`,
