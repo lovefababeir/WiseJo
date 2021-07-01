@@ -96,7 +96,7 @@ const receipt = receiptResults => {
 		subtotalIndex + 1 === hstIndex
 			? receiptResults[subtotalIndex]
 			: receiptResults[hstIndex - 1];
-	const subtotal = testAmount(subtotalLine.replace(/[^0-9.]+/g, ""));
+	const subtotal = testAmount(subtotalLine?.replace(/[^0-9.]+/g, ""));
 
 	//======================================
 	//TOTAL
@@ -122,7 +122,7 @@ const receipt = receiptResults => {
 	});
 
 	let total;
-	const totalNum = totalStr.replace(/[^0-9.]+/g, "");
+	const totalNum = totalStr?.replace(/[^0-9.]+/g, "");
 	const paymentNum = paymentLine?.replace(/[^0-9.]+/g, "");
 
 	if (totalStr && paymentLine && totalNum !== paymentNum) {
