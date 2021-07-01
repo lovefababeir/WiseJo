@@ -41,6 +41,35 @@ router.get("/items", async (req, res) => {
 	}
 });
 
+router.get("/items/stores", async (req, res) => {
+	const storesList = [
+		"loblaws",
+		"longos",
+		"nofrills",
+		"sobeys",
+		"superstore",
+		"walmart",
+	];
+	const totalDocs = await ItemResults.countDocuments();
+
+	const storeResults = await Promise.all(
+		storesList.map(async store => {
+			const resultsCount = await ItemResults.where({
+				[store]: { $size: 0 },
+			}).countDocuments();
+			return { store: store, num_of_results: totalDocs - resultsCount };
+		}),
+	)
+		.then(result => {
+			return result;
+		})
+		.catch(err => console.log(err));
+
+	res.send({
+		storeResults,
+	});
+});
+
 router.get("/items/users", async (req, res) => {
 	const itemsUsersID = await UserResults.distinct("user_id");
 	const itemsUsersEmail = await UserResults.distinct("user_email");
