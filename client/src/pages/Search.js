@@ -66,7 +66,7 @@ const Search = () => {
 							token,
 						)
 						.then(result => {
-							if (result.data.data.longos.searchResults.length) {
+							if (result.data.data.longos.length) {
 								setStoreList(storelist => {
 									return { ...storelist, longos: "success" };
 								});
@@ -93,7 +93,7 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							if (result.data.data.sobeys.searchResults.length) {
+							if (result.data.data.sobeys.length) {
 								setStoreList(storelist => {
 									return { ...storelist, sobeys: "success" };
 								});
@@ -119,7 +119,7 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							if (result.data.data.loblaws.searchResults.length) {
+							if (result.data.data.loblaws.length) {
 								setStoreList(storelist => {
 									return { ...storelist, loblaws: "success" };
 								});
@@ -150,7 +150,7 @@ const Search = () => {
 							setStoreList(storelist => {
 								return { ...storelist, superstore: "loading" };
 							});
-							if (result.data.data.superstore.searchResults.length) {
+							if (result.data.data.superstore.length) {
 								setStoreList(storelist => {
 									return { ...storelist, superstore: "success" };
 								});
@@ -178,7 +178,7 @@ const Search = () => {
 							);
 						})
 						.then(result => {
-							if (result.data.data.nofrills.searchResults.length) {
+							if (result.data.data.nofrills.length) {
 								setStoreList(storelist => {
 									return { ...storelist, nofrills: "success" };
 								});
@@ -206,8 +206,8 @@ const Search = () => {
 						// 	);
 						// })
 						// .then(result => {
-						// 	console.log(result, result.data.data.walmart.searchResults.length);
-						// 	if (result.data.data.walmart.searchResults.length) {
+						// 	console.log(result, result.data.data.walmart.length);
+						// 	if (result.data.data.walmart.length) {
 						// 		setStoreList(storelist => {
 						// 			return { ...storelist, walmart: "success" };
 						// 		});
