@@ -41,4 +41,13 @@ router.get("/items", async (req, res) => {
 	}
 });
 
+router.get("/receipts/users", async (req, res) => {
+	const receiptUsersID = await ReceiptCollection.distinct("user_id");
+	const receiptUsersEmail = await ReceiptCollection.distinct("user_email");
+
+	res.send({
+		receipt: { IDs: receiptUsersID.length, emails: receiptUsersEmail },
+	});
+});
+
 module.exports = router;
