@@ -15,7 +15,7 @@ const cors = require("cors");
 mongoose.set("useFindAndModify", false);
 
 const options = {
-	origin: "*",
+	origin: "https://wisejo.netlify.app",
 	optionsSuccessStatus: 200,
 	methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"],
 	credentials: true,
@@ -161,7 +161,7 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 		.exec()
 		.then(existingRecord => {
 			// console.log(store, "ITEM IN RECORD:");
-			if (existingRecord[0][store].searchResults.length) {
+			if (existingRecord[0][store].length) {
 				// console.log(store, "already has results=======");
 				return existingRecord[0];
 			} else {
@@ -176,7 +176,7 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 								searchItem: existingRecord[0].searchItem,
 								searchTime: existingRecord[0].searchTime,
 							},
-							{ [store]: { searchResults: storeResult, time: time } },
+							{ [store]: storeResult },
 							{ new: true },
 						);
 					})
@@ -202,8 +202,8 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 					const userRecord = results[0];
 					if (
 						updatedRecord.code === 404 ||
-						!updatedRecord[store].searchResults.length ||
-						userRecord[store].searchResults.length
+						!updatedRecord[store].length ||
+						userRecord[store].length
 					) {
 						// console.log(store, "YAY, User results is already updated");
 						return userRecord;
@@ -216,10 +216,7 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 								time: userRecord.time,
 							},
 							{
-								[store]: {
-									searchResults: updatedRecord[store].searchResults,
-									time: time,
-								},
+								[store]: updatedRecord[store],
 							},
 							{ new: true },
 						);
@@ -332,7 +329,7 @@ router.get("/searchresults", async (req, res) => {
 		];
 
 		const searchResults = stores.map(store => {
-			return record[store].searchResults;
+			return record[store];
 		});
 		const data = { ...record._doc, searchResults };
 		res.status(200).json({
@@ -363,7 +360,7 @@ router.delete("/item/:store/:id", async (req, res) => {
 			.exec()
 			.then(result => {
 				//Copies the searchResults from the store and removes the item with the itemID.
-				const listofItems = result[0][store].searchResults;
+				const listofItems = result[0][store];
 				const itemToRemove = listofItems.findIndex(item => {
 					return item.productID === itemID;
 				});
@@ -378,7 +375,7 @@ router.delete("/item/:store/:id", async (req, res) => {
 				//Replaces the old array in the document with the new array wherein the item with itemID no longer exists in.
 				return userCollection.findOneAndUpdate(
 					{ user_id: auth.user_id },
-					{ [store]: { searchResults: result } },
+					{ [store]: result },
 					{ new: true },
 				);
 			})
@@ -421,14 +418,14 @@ router.delete("/capacity/:value/:quantity", async (req, res) => {
 
 		await Promise.all(
 			stores.map(async store => {
-				const list = resultList[0][store].searchResults;
+				const list = resultList[0][store];
 				const newList = list.slice(0).filter(item => {
 					return item.value !== itemValue || item.quantity !== itemQuantity;
 				});
 				return userCollection
 					.findOneAndUpdate(
 						{ user_id: auth.user_id },
-						{ [store]: { searchResults: newList } },
+						{ [store]: newList },
 						{ new: true },
 					)
 					.then(result => {
