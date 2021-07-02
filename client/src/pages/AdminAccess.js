@@ -10,11 +10,11 @@ const AdminAccess = () => {
 
 	const deleteOldEntries = () => {
 		createToken().then(token => {
-			axios.delete(`${process.env.REACT_APP_BASE_URL}itemSearch/olditems`, token);
+			axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
 		});
 	};
 
-	const statisticsUpdate = () => {
+	const itemStats = () => {
 		createToken().then(token => {
 			axios
 				.get(`${process.env.REACT_APP_BASE_URL}admin/items`, token)
@@ -26,6 +26,20 @@ const AdminAccess = () => {
 				});
 		});
 	};
+
+	const storeStats = () => {
+		createToken().then(token => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		});
+	};
+
 	return (
 		<>
 			<Card>
@@ -36,8 +50,11 @@ const AdminAccess = () => {
 						<button className="formBtn" onClick={deleteOldEntries}>
 							Delete Old Entries{" "}
 						</button>
-						<button className="formBtn" onClick={statisticsUpdate}>
-							Get Statistics{" "}
+						<button className="formBtn" onClick={itemStats}>
+							Get item stats{" "}
+						</button>
+						<button className="formBtn" onClick={storeStats}>
+							Get store stats{" "}
 						</button>
 					</div>
 					<ButtonDashboard />
