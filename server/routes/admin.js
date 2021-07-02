@@ -88,4 +88,44 @@ router.get("/receipts/users", async (req, res) => {
 	});
 });
 
+router.delete("/olditems", async (req, res) => {
+	const auth = req.currentUser;
+	if (!auth) {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+		return;
+	}
+
+	//This counts the number of days since Sunday Midnight.
+	//All items are taken from the record if its from any time the same week since Monday.
+	//Updates on prices are retrieved on the first time it is requested from Monday 00:00am.
+	const today = new Date();
+	const timeStamp = today.getTime();
+	const sundayStamp = timeStamp - today.getDay() * 86400000;
+	console.log(sundayStamp);
+	const sunday = new Date(sundayStamp);
+	console.log(sunday.getTime());
+	// const daysSince =
+	// 	today.getUTCDay() === 0 ? today.getUTCDay() + 6 : today.getUTCDay();
+	// console.log(daysSince);
+	const sundayMidnight = new Date(
+		sunday.getFullYear(),
+		sunday.getUTCMonth(),
+		sunday.getUTCDate(),
+	);
+	console.log(sundayMidnight.getTime());
+	//Checks if there is already an up to date(same day) result.
+	ItemResults.deleteMany({
+		searchTime: { $lt: sundayMidnight.getTime() },
+	})
+		.exec()
+		.then(result => {
+			console.log(result);
+		})
+		.catch(err => console.log(err));
+});
+
 module.exports = router;
