@@ -77,14 +77,14 @@
 		padding: 1.5rem;
 	}
 	&__item {
-		height: 3rem;
+		min-height: 3rem;
 		margin-bottom: 0;
 		padding-top: 0.3rem;
 		font-size: 1.4rem;
 		@include mobileM {
 			padding-left: 1rem;
 			@include surface {
-				height: 3.2rem;
+				min-height: 3.2rem;
 				padding-top: 0.3rem;
 				padding-left: 2rem;
 				font-size: 1.6rem;
