@@ -150,11 +150,11 @@ const AdminAccess = () => {
 											);
 										})}
 								</ul>
+								<button className="formBtn" onClick={storeStats}>
+									Get store stats{" "}
+								</button>
 							</div>
 						</Collapse>
-						<button className="formBtn" onClick={storeStats}>
-							Get store stats{" "}
-						</button>
 					</div>
 					<ButtonDashboard />
 				</Card.Body>
