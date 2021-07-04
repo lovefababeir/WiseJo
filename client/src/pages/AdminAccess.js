@@ -93,9 +93,6 @@ const AdminAccess = () => {
 								</button>
 							</div>
 						</Collapse>
-						<button className="formBtn" onClick={itemStats}>
-							Get item stats{" "}
-						</button>
 
 						<div
 							onClick={() => {
@@ -119,6 +116,9 @@ const AdminAccess = () => {
 											return <li>{item}</li>;
 										})}
 								</ul>
+								<button className="formBtn" onClick={itemStats}>
+									Get item stats{" "}
+								</button>
 							</div>
 						</Collapse>
 
