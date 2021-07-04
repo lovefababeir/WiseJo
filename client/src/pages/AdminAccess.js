@@ -53,7 +53,7 @@ const AdminAccess = () => {
 				});
 		});
 	};
-	console.log(itemList);
+
 	return (
 		<>
 			<Card>
@@ -64,15 +64,44 @@ const AdminAccess = () => {
 						<button className="formBtn" onClick={deleteOldEntries}>
 							Delete Old Entries{" "}
 						</button>
+						<div
+							onClick={() => {
+								setOpenOldItemsInfo(!openOldItemsInfo);
+							}}
+							aria-controls="appData"
+							aria-expanded={openOldItemsInfo}
+							className="appData__title"
+						>
+							<img
+								src={arrow}
+								className={`collapse-arrow ${
+									openOldItemsInfo ? "collapse-arrow--open" : ""
+								}`}
+							/>
+							List of Items Searched
+						</div>
+						<Collapse in={openOldItemsInfo}>
+							<div id="appData" className="appData__stats">
+								<h4>List of outdated items:</h4>
+								<ul>
+									{oldItems.itemList &&
+										oldItems.itemList.map(item => {
+											return <li>{item}</li>;
+										})}
+								</ul>
+								<h4>Number of Outdate Docs: {oldItems.num_of_old_docs}</h4>
+							</div>
+						</Collapse>
 						<button className="formBtn" onClick={itemStats}>
 							Get item stats{" "}
 						</button>
+
 						<div
 							onClick={() => {
 								setOpenList(!openList);
 							}}
 							aria-controls="appData"
-							aria-expanded={openList === "shop"}
+							aria-expanded={openList}
 							className="appData__title"
 						>
 							<img
@@ -91,6 +120,7 @@ const AdminAccess = () => {
 								</ul>
 							</div>
 						</Collapse>
+
 						<button className="formBtn" onClick={storeStats}>
 							Get store stats{" "}
 						</button>
