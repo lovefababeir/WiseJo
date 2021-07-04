@@ -54,6 +54,7 @@ const AdminAccess = () => {
 		});
 	};
 
+	console.log(storeData);
 	return (
 		<>
 			<Card>
@@ -108,7 +109,7 @@ const AdminAccess = () => {
 								src={arrow}
 								className={`collapse-arrow ${openList ? "collapse-arrow--open" : ""}`}
 							/>
-							List of Items Searched
+							Items Searched
 						</div>
 						<Collapse in={openList}>
 							<div id="appData" className="appData__stats">
@@ -121,6 +122,36 @@ const AdminAccess = () => {
 							</div>
 						</Collapse>
 
+						<div
+							onClick={() => {
+								setOpenStoreData(!openStoreData);
+							}}
+							aria-controls="appData"
+							aria-expanded={openStoreData}
+							className="appData__title"
+						>
+							<img
+								src={arrow}
+								className={`collapse-arrow ${
+									openStoreData ? "collapse-arrow--open" : ""
+								}`}
+							/>
+							Results on Store Performances
+						</div>
+						<Collapse in={openStoreData}>
+							<div id="appData" className="appData__stats">
+								<ul>
+									{storeData.length &&
+										storeData.map(item => {
+											return (
+												<li>
+													{item.store}: {item.num_of_results}
+												</li>
+											);
+										})}
+								</ul>
+							</div>
+						</Collapse>
 						<button className="formBtn" onClick={storeStats}>
 							Get store stats{" "}
 						</button>
