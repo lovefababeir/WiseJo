@@ -4,12 +4,17 @@ import { useAuth } from "../contexts/AuthContext.js";
 import ButtonDashboard from "../components/ButtonDashboard.js";
 import axios from "axios";
 import "./AdminAccess.scss";
+import Collapse from "react-bootstrap/Collapse";
+import arrow from "../assets/images/collapsearrow.png";
 
 const AdminAccess = () => {
 	const { createToken } = useAuth();
 	const [itemList, setItemList] = useState("");
 	const [oldItems, setOldItems] = useState("");
-	const [storeInfo, setStoreInfo] = useState("");
+	const [storeData, setStoreData] = useState("");
+	const [openList, setOpenList] = useState(false);
+	const [openOldItemsInfo, setOpenOldItemsInfo] = useState(false);
+	const [openStoreData, setOpenStoreData] = useState(false);
 
 	useEffect(() => {
 		itemStats();
@@ -27,7 +32,7 @@ const AdminAccess = () => {
 			axios
 				.get(`${process.env.REACT_APP_BASE_URL}admin/items`, token)
 				.then(res => {
-					setItemList(res.data.items);
+					setItemList(res.data.items.searchWords);
 					setOldItems(res.data.oldItems);
 				})
 				.catch(err => {
@@ -41,14 +46,14 @@ const AdminAccess = () => {
 			axios
 				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
 				.then(res => {
-					setStoreInfo(res.data.storeResults);
+					setStoreData(res.data.storeResults);
 				})
 				.catch(err => {
 					console.log(err);
 				});
 		});
 	};
-
+	console.log(itemList);
 	return (
 		<>
 			<Card>
@@ -62,6 +67,30 @@ const AdminAccess = () => {
 						<button className="formBtn" onClick={itemStats}>
 							Get item stats{" "}
 						</button>
+						<div
+							onClick={() => {
+								setOpenList(!openList);
+							}}
+							aria-controls="appData"
+							aria-expanded={openList === "shop"}
+							className="appData__title"
+						>
+							<img
+								src={arrow}
+								className={`collapse-arrow ${openList ? "collapse-arrow--open" : ""}`}
+							/>
+							List of Items Searched
+						</div>
+						<Collapse in={openList}>
+							<div id="appData" className="appData__stats">
+								<ul>
+									{itemList.length &&
+										itemList.map(item => {
+											return <li>{item}</li>;
+										})}
+								</ul>
+							</div>
+						</Collapse>
 						<button className="formBtn" onClick={storeStats}>
 							Get store stats{" "}
 						</button>
