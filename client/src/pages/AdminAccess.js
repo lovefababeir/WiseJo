@@ -61,9 +61,6 @@ const AdminAccess = () => {
 					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Adminstrator</h2>
 					<div className="admin">
-						<button className="formBtn" onClick={deleteOldEntries}>
-							Delete Old Entries{" "}
-						</button>
 						<div
 							onClick={() => {
 								setOpenOldItemsInfo(!openOldItemsInfo);
@@ -78,7 +75,7 @@ const AdminAccess = () => {
 									openOldItemsInfo ? "collapse-arrow--open" : ""
 								}`}
 							/>
-							List of Items Searched
+							Outdated Documents of Items
 						</div>
 						<Collapse in={openOldItemsInfo}>
 							<div id="appData" className="appData__stats">
@@ -90,6 +87,9 @@ const AdminAccess = () => {
 										})}
 								</ul>
 								<h4>Number of Outdate Docs: {oldItems.num_of_old_docs}</h4>
+								<button className="formBtn" onClick={deleteOldEntries}>
+									Delete Old Entries{" "}
+								</button>
 							</div>
 						</Collapse>
 						<button className="formBtn" onClick={itemStats}>
