@@ -14,7 +14,7 @@ const SearchForm = ({ submitHandler, loading }) => {
 						<option value="No Frills">No Frills</option>
 						<option value="Sobeys">Sobeys</option>
 						<option value="Superstore">Superstore</option>
-						<option value="Walmart">Walmart</option>
+						{/* <option value="Walmart">Walmart</option> */}
 					</select>
 					<label className="form__label">Search an item</label>
 					<input
