@@ -1,6 +1,8 @@
 import React from "react";
 import Collapse from "react-bootstrap/Collapse";
 import shop from "../assets/images/shop.svg";
+import success from "../assets/images/success.png";
+import fail from "../assets/images/fail.png";
 
 const AboutShop = ({ open, setOpen }) => {
 	return (
@@ -29,11 +31,13 @@ const AboutShop = ({ open, setOpen }) => {
 					store you are shopping in or are planning to shop in. WiseJo searches up
 					the items for you and retrieves the details of the items available at the
 					stores listed. Since WiseJo retrieves the up-to-date prices, the search can
-					take up to 30s to get the results from most stores but might take up to
-					2-3mins to complete for Walmart. Once completed, you will be redirected to
-					the COMPARE page where you will see the search results. If you wish to see
+					take up to 30s. <img src={success} className="wisejo-icons" /> means that
+					the store successfully returns results and{" "}
+					<img src={fail} className="wisejo-icons" /> means that it was unable to and
+					that you can try again after. Once completed, you will be redirected to the
+					COMPARE page where you will see the search results. If you wish to see
 					which results are available before all the searches are complete you may
-					choose to go to the results page. Just remember to refresh to see any
+					choose to go to the COMPARE page. Just remember to refresh to see any
 					updates.
 				</div>
 			</Collapse>
