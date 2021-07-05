@@ -12,20 +12,10 @@ const AdminAccess = () => {
 	const [itemList, setItemList] = useState("");
 	const [oldItems, setOldItems] = useState("");
 	const [storeData, setStoreData] = useState("");
+	const [errMsg, setErrMsg] = useState("");
 	const [openList, setOpenList] = useState(false);
 	const [openOldItemsInfo, setOpenOldItemsInfo] = useState(false);
 	const [openStoreData, setOpenStoreData] = useState(false);
-
-	useEffect(() => {
-		itemStats();
-		storeStats();
-	}, [createToken]);
-
-	const deleteOldEntries = () => {
-		createToken().then(token => {
-			axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
-		});
-	};
 
 	const itemStats = () => {
 		createToken().then(token => {
@@ -35,8 +25,8 @@ const AdminAccess = () => {
 					setItemList(res.data.items.searchWords);
 					setOldItems(res.data.oldItems);
 				})
-				.catch(err => {
-					console.log(err);
+				.catch(() => {
+					setErrMsg("Could not get an update on the item stats.");
 				});
 		});
 	};
@@ -48,13 +38,42 @@ const AdminAccess = () => {
 				.then(res => {
 					setStoreData(res.data.storeResults);
 				})
-				.catch(err => {
-					console.log(err);
+				.catch(() => {
+					setErrMsg("Could not get an update on the store stats.");
 				});
 		});
 	};
 
-	console.log(storeData);
+	useEffect(() => {
+		createToken().then(token => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}admin/items`, token)
+				.then(res => {
+					setItemList(res.data.items.searchWords);
+					setOldItems(res.data.oldItems);
+				})
+				.catch(() => {
+					setErrMsg("Could not get an update on the item stats.");
+				});
+		});
+		createToken().then(token => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
+				.then(res => {
+					setStoreData(res.data.storeResults);
+				})
+				.catch(() => {
+					setErrMsg("Could not get an update on the store stats.");
+				});
+		});
+	}, [createToken]);
+
+	const deleteOldEntries = () => {
+		createToken().then(token => {
+			axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
+		});
+	};
+
 	return (
 		<>
 			<Card>
@@ -75,6 +94,7 @@ const AdminAccess = () => {
 								className={`collapse-arrow ${
 									openOldItemsInfo ? "collapse-arrow--open" : ""
 								}`}
+								alt=""
 							/>
 							Outdated Documents of Items
 						</div>
@@ -105,6 +125,7 @@ const AdminAccess = () => {
 							<img
 								src={arrow}
 								className={`collapse-arrow ${openList ? "collapse-arrow--open" : ""}`}
+								alt=""
 							/>
 							Items Searched
 						</div>
@@ -117,7 +138,7 @@ const AdminAccess = () => {
 										})}
 								</ul>
 								<button className="formBtn" onClick={itemStats}>
-									Get item stats{" "}
+									Update item stats{" "}
 								</button>
 							</div>
 						</Collapse>
@@ -135,6 +156,7 @@ const AdminAccess = () => {
 								className={`collapse-arrow ${
 									openStoreData ? "collapse-arrow--open" : ""
 								}`}
+								alt=""
 							/>
 							Results on Store Performances
 						</div>
@@ -151,7 +173,7 @@ const AdminAccess = () => {
 										})}
 								</ul>
 								<button className="formBtn" onClick={storeStats}>
-									Get store stats{" "}
+									Update store stats{" "}
 								</button>
 							</div>
 						</Collapse>
