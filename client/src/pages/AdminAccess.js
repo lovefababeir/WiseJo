@@ -6,6 +6,7 @@ import axios from "axios";
 import "./AdminAccess.scss";
 import Collapse from "react-bootstrap/Collapse";
 import arrow from "../assets/images/collapsearrow.png";
+import { v4 as uuidv4 } from "uuid";
 
 const AdminAccess = () => {
 	const { createToken } = useAuth();
@@ -135,7 +136,7 @@ const AdminAccess = () => {
 								<ul>
 									{itemList.length &&
 										itemList.map(item => {
-											return <li>{item}</li>;
+											return <li key={uuidv4()}>{item}</li>;
 										})}
 								</ul>
 								<button className="formBtn" onClick={itemStats}>
@@ -168,7 +169,7 @@ const AdminAccess = () => {
 									{storeData.length &&
 										storeData.map(item => {
 											return (
-												<li>
+												<li key={uuidv4()}>
 													{item.store}: {item.num_of_results}
 												</li>
 											);
