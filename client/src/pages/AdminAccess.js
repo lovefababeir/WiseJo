@@ -5,6 +5,7 @@ import ButtonDashboard from "../components/ButtonDashboard.js";
 import axios from "axios";
 import "./AdminAccess.scss";
 import Collapse from "react-bootstrap/Collapse";
+import Alert from "react-bootstrap/Alert";
 import arrow from "../assets/images/collapsearrow.png";
 import { v4 as uuidv4 } from "uuid";
 
@@ -81,6 +82,17 @@ const AdminAccess = () => {
 				<Card.Body>
 					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Adminstrator</h2>
+
+					{errMsg && (
+						<Alert variant="danger" style={{ marginTop: "3rem" }}>
+							<Alert.Heading>Sorry, an error occurred</Alert.Heading>
+							<p>{errMsg}</p>
+							<hr />
+							<p className="mb-0">
+								Please check server and make sure you are signed-in
+							</p>
+						</Alert>
+					)}
 					<div className="admin">
 						<div
 							onClick={() => {
