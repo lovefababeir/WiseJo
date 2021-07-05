@@ -107,7 +107,7 @@ const AdminAccess = () => {
 											return <li>{item}</li>;
 										})}
 								</ul>
-								<h4>Number of Outdate Docs: {oldItems.num_of_old_docs}</h4>
+								<h4>Number of outdated docs: {oldItems.num_of_old_docs}</h4>
 								<button className="formBtn" onClick={deleteOldEntries}>
 									Delete Old Entries{" "}
 								</button>
@@ -131,6 +131,7 @@ const AdminAccess = () => {
 						</div>
 						<Collapse in={openList}>
 							<div id="appData" className="appData__stats">
+								<h4>List of the {itemList.length} items Searched: </h4>
 								<ul>
 									{itemList.length &&
 										itemList.map(item => {
@@ -162,6 +163,7 @@ const AdminAccess = () => {
 						</div>
 						<Collapse in={openStoreData}>
 							<div id="appData" className="appData__stats">
+								<h4>Number of successful searches from each store:</h4>
 								<ul>
 									{storeData.length &&
 										storeData.map(item => {
