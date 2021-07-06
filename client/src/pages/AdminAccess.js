@@ -26,6 +26,7 @@ const AdminAccess = () => {
 				.then(res => {
 					setItemList(res.data.items.searchWords);
 					setOldItems(res.data.oldItems);
+					setErrMsg("");
 				})
 				.catch(() => {
 					setErrMsg("Could not get an update on the item stats.");
@@ -39,6 +40,7 @@ const AdminAccess = () => {
 				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
 				.then(res => {
 					setStoreData(res.data.storeResults);
+					setErrMsg("");
 				})
 				.catch(() => {
 					setErrMsg("Could not get an update on the store stats.");
@@ -53,6 +55,7 @@ const AdminAccess = () => {
 				.then(res => {
 					setItemList(res.data.items.searchWords);
 					setOldItems(res.data.oldItems);
+					setErrMsg("");
 				})
 				.catch(() => {
 					setErrMsg("Could not get an update on the item stats.");
@@ -63,6 +66,7 @@ const AdminAccess = () => {
 				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
 				.then(res => {
 					setStoreData(res.data.storeResults);
+					setErrMsg("");
 				})
 				.catch(() => {
 					setErrMsg("Could not get an update on the store stats.");
@@ -71,9 +75,14 @@ const AdminAccess = () => {
 	}, [createToken]);
 
 	const deleteOldEntries = () => {
-		createToken().then(token => {
-			axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
-		});
+		createToken()
+			.then(token => {
+				axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
+				setErrMsg("");
+			})
+			.catch(err => {
+				setErrMsg(`Could not delete old items:${err}`);
+			});
 	};
 
 	return (
@@ -82,7 +91,6 @@ const AdminAccess = () => {
 				<Card.Body>
 					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Adminstrator</h2>
-
 					{errMsg && (
 						<Alert variant="danger" style={{ marginTop: "3rem" }}>
 							<Alert.Heading>Sorry, an error occurred</Alert.Heading>
@@ -113,6 +121,7 @@ const AdminAccess = () => {
 						</div>
 						<Collapse in={openOldItemsInfo}>
 							<div id="appData" className="appData__stats">
+								<h4>Number of outdated docs: {oldItems.num_of_old_docs}</h4>
 								<h4>List of outdated items:</h4>
 								<ul>
 									{oldItems.itemList &&
@@ -120,7 +129,7 @@ const AdminAccess = () => {
 											return <li>{item}</li>;
 										})}
 								</ul>
-								<h4>Number of outdated docs: {oldItems.num_of_old_docs}</h4>
+
 								<button className="formBtn" onClick={deleteOldEntries}>
 									Delete Old Entries{" "}
 								</button>
@@ -144,10 +153,10 @@ const AdminAccess = () => {
 						</div>
 						<Collapse in={openList}>
 							<div id="appData" className="appData__stats">
-								<h4>List of the {itemList.length} items Searched: </h4>
+								<h4>{itemList?.length} items in search history: </h4>
 								<ul>
-									{itemList.length &&
-										itemList.map(item => {
+									{itemList?.length &&
+										itemList?.map(item => {
 											return <li key={uuidv4()}>{item}</li>;
 										})}
 								</ul>
@@ -178,7 +187,7 @@ const AdminAccess = () => {
 							<div id="appData" className="appData__stats">
 								<h4>Number of successful searches from each store:</h4>
 								<ul>
-									{storeData.length &&
+									{storeData?.length &&
 										storeData.map(item => {
 											return (
 												<li key={uuidv4()}>
