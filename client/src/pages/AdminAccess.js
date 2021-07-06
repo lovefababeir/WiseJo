@@ -18,6 +18,7 @@ const AdminAccess = () => {
 	const [openList, setOpenList] = useState(false);
 	const [openOldItemsInfo, setOpenOldItemsInfo] = useState(false);
 	const [openStoreData, setOpenStoreData] = useState(false);
+	const [userData, setUserData] = useState("");
 
 	const itemStats = () => {
 		createToken().then(token => {
@@ -70,6 +71,21 @@ const AdminAccess = () => {
 				})
 				.catch(() => {
 					setErrMsg("Could not get an update on the store stats.");
+				});
+		});
+		createToken().then(token => {
+			axios
+				.get(`${process.env.REACT_APP_BASE_URL}admin/items/users`, token)
+				.then(res => {
+					setUserData({
+						ids: res.data.users.IDs,
+						emails: res.data.users.email.length,
+						guests: res.data.users.IDs - res.data.users.email.length,
+					});
+					setErrMsg("");
+				})
+				.catch(() => {
+					setErrMsg("Could not get an update on the user stats.");
 				});
 		});
 	}, [createToken]);
@@ -126,7 +142,7 @@ const AdminAccess = () => {
 								<ul>
 									{oldItems.itemList &&
 										oldItems.itemList.map(item => {
-											return <li>{item}</li>;
+											return <li key={uuidv4()}>{item}</li>;
 										})}
 								</ul>
 
