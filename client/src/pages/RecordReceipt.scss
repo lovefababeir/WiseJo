@@ -12,6 +12,7 @@
 	}
 	&__storeSelect {
 		@include inputBox;
+		margin: 0;
 		&:disabled {
 			opacity: 0.6;
 		}
