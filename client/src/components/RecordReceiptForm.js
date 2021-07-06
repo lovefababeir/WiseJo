@@ -18,17 +18,19 @@ const RecordReceiptForm = ({
 				<label className="form__label form__label--receipts">
 					Select the store from where you made your purchase
 				</label>
-				<select
-					className="receipt-form__storeSelect"
-					name="receiptStore"
-					id="receiptStore"
-					disabled={loading}
-				>
-					<option value="Dollarama">Dollarama</option>
-					<option value="Longo's">Longo's</option>
-					<option value="No Frills">No Frills</option>
-					<option value="Walmart">Walmart</option>
-				</select>
+				<div className="groceryStoreList">
+					<select
+						className="receipt-form__storeSelect"
+						name="receiptStore"
+						id="receiptStore"
+						disabled={loading}
+					>
+						<option value="Dollarama">Dollarama</option>
+						<option value="Longo's">Longo's</option>
+						<option value="No Frills">No Frills</option>
+						<option value="Walmart">Walmart</option>
+					</select>
+				</div>
 				<label className="form__label form__label--receipts">
 					Upload a picture of your receipt in jpg form
 				</label>
