@@ -38,54 +38,90 @@ router.get("/items", async (req, res) => {
 				num_of_old_docs: oldDocs,
 			},
 		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
 	}
 });
 
 router.get("/items/stores", async (req, res) => {
-	const storesList = [
-		"loblaws",
-		"longos",
-		"nofrills",
-		"sobeys",
-		"superstore",
-		"walmart",
-	];
-	const totalDocs = await ItemResults.countDocuments();
+	const auth = req.currentUser;
 
-	const storeResults = await Promise.all(
-		storesList.map(async store => {
-			const resultsCount = await ItemResults.where({
-				[store]: { $size: 0 },
-			}).countDocuments();
-			return { store: store, num_of_results: totalDocs - resultsCount };
-		}),
-	)
-		.then(result => {
-			return result;
-		})
-		.catch(err => console.log(err));
+	if (auth) {
+		const storesList = [
+			"loblaws",
+			"longos",
+			"nofrills",
+			"sobeys",
+			"superstore",
+			"walmart",
+		];
+		const totalDocs = await ItemResults.countDocuments();
 
-	res.send({
-		storeResults,
-	});
+		const storeResults = await Promise.all(
+			storesList.map(async store => {
+				const resultsCount = await ItemResults.where({
+					[store]: { $size: 0 },
+				}).countDocuments();
+				return { store: store, num_of_results: totalDocs - resultsCount };
+			}),
+		)
+			.then(result => {
+				return result;
+			})
+			.catch(err => console.log(err));
+
+		res.send({
+			storeResults,
+		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.get("/items/users", async (req, res) => {
-	const itemsUsersID = await UserResults.distinct("user_id");
-	const itemsUsersEmail = await UserResults.distinct("user_email");
+	const auth = req.currentUser;
 
-	res.send({
-		users: { IDs: itemsUsersID.length, email: itemsUsersEmail },
-	});
+	if (auth) {
+		const itemsUsersID = await UserResults.distinct("user_id");
+		const itemsUsersEmail = await UserResults.distinct("user_email");
+
+		res.send({
+			users: { IDs: itemsUsersID.length, email: itemsUsersEmail },
+		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.get("/receipts/users", async (req, res) => {
-	const receiptUsersID = await ReceiptCollection.distinct("user_id");
-	const receiptUsersEmail = await ReceiptCollection.distinct("user_email");
+	const auth = req.currentUser;
 
-	res.send({
-		receipt: { IDs: receiptUsersID.length, emails: receiptUsersEmail },
-	});
+	if (auth) {
+		const receiptUsersID = await ReceiptCollection.distinct("user_id");
+		const receiptUsersEmail = await ReceiptCollection.distinct("user_email");
+
+		res.send({
+			receipt: { IDs: receiptUsersID.length, emails: receiptUsersEmail },
+		});
+	} else {
+		res
+			.status(403)
+			.send(
+				"Sorry, you are not authorized to access the databased. Please check with Wisejo adminstration.",
+			);
+	}
 });
 
 router.delete("/olditems", async (req, res) => {
