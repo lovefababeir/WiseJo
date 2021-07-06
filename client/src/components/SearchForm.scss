@@ -26,6 +26,7 @@
 
 #storeList {
 	@include inputBox;
+	margin: 0;
 	&:disabled {
 		opacity: 0.6;
 	}
@@ -42,4 +43,13 @@
 	&:disabled {
 		opacity: 0.6;
 	}
+}
+
+.groceryStoreList {
+	@include inputBox;
+	padding-left: 0;
+	display: inline-block;
+	overflow: hidden;
+	background: #cccccc;
+	border: 1px solid #cccccc;
 }
