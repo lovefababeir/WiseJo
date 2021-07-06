@@ -6,7 +6,10 @@
 	&__container {
 		height: calc(100vh - #{$menuBarSmall});
 		height: calc(var(--vh, 1vh) * 100 - #{$menuBarSmall});
-		overflow: hidden;
+		//======
+		// overflow: hidden;
+		overflow-y: scroll;
+		//=======
 		padding: 0.1rem 0;
 		background-color: white;
 		@include breakpoint(321px) {
@@ -65,21 +68,24 @@
 	&__view {
 		@include flex(column, flex-start, flex-start, nowrap);
 		overflow-y: scroll;
-		height: calc(100vh - #{$menuBarSmall} - 12.8rem - 7rem);
-		height: calc(var(--vh, 1vh) * 100 - #{$menuBarSmall} - 12.8rem - 7rem);
+		//Added 12rem to the height so that the screen will scroll enough to hid the title.
+		height: calc(100vh - #{$menuBarSmall} - 12.8rem - 7rem + 12rem);
+		height: calc(
+			var(--vh, 1vh) * 100 - #{$menuBarSmall} - 12.8rem - 7rem + 12rem
+		);
 		box-shadow: 2px 2px 10px 2px rgb(0 0 0 / 15%);
 		@include breakpoint(321px) {
-			height: calc(100vh - #{$menuBar} - 12.8rem - 7rem);
-			height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 12.8rem - 7rem);
+			height: calc(100vh - #{$menuBar} - 12.8rem - 7rem + 12rem);
+			height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 12.8rem - 7rem + 12rem);
 			@include surface {
-				height: calc(100vh - #{$menuBar} - 13.6rem - 7rem);
-				height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 13.6rem - 7rem);
+				height: calc(100vh - #{$menuBar} - 13.6rem - 7rem + 12rem);
+				height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 13.6rem - 7rem + 12rem);
 				@include tablet {
-					height: calc(100vh - #{$menuBar} - 14.8rem - 7rem);
-					height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 14.8rem - 7rem);
+					height: calc(100vh - #{$menuBar} - 14.8rem - 7rem + 12rem);
+					height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 14.8rem - 7rem + 12rem);
 					@include desktop {
-						height: calc(100vh - #{$menuBar} - 16rem - 7rem);
-						height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 16rem - 7rem);
+						height: calc(100vh - #{$menuBar} - 16rem - 7rem + 12rem);
+						height: calc(var(--vh, 1vh) * 100 - #{$menuBar} - 16rem - 7rem + 12rem);
 					}
 				}
 			}
