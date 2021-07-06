@@ -47,9 +47,10 @@
 
 .groceryStoreList {
 	@include inputBox;
-	padding-left: 0;
+	padding: 0;
 	display: inline-block;
 	overflow: hidden;
 	background: #cccccc;
-	border: 1px solid #cccccc;
+	border: none;
+	outline: none;
 }
