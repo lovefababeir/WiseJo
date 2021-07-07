@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-//Athenticate token with firebase
+//Authenticate token with firebase
 app.use(decodeIDToken);
 
 app.use("/login", (req, res) => {
