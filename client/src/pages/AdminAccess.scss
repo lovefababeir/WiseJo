@@ -46,7 +46,11 @@
 		width: 95%;
 		padding-left: 2rem;
 		font-size: 1.4rem;
-
+		& span {
+			font-weight: bold;
+			color: $orange;
+			text-transform: capitalize;
+		}
 		@include surface {
 			padding-left: 5rem;
 		}
