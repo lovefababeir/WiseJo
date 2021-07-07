@@ -207,7 +207,10 @@ const AdminAccess = () => {
 										storeData.map(item => {
 											return (
 												<li key={uuidv4()}>
-													{item.store}: {item.num_of_results}
+													<span>
+														{item.store}: {item.num_of_results}
+													</span>{" "}
+													({parseInt((item.num_of_results / itemList?.length) * 100)}%)
 												</li>
 											);
 										})}
