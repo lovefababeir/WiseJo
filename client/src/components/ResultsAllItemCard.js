@@ -75,7 +75,7 @@ const ResultsAllItemCard = ({
 			<p className="item__title">{title}</p>
 			<div className="item__details">
 				<div>
-					<p className="item__capacity">{capacity}</p>
+					<p className="item__capacity">{capacity || "est. each"}</p>
 					<p className="item__price">{price}</p>
 				</div>
 				<img
