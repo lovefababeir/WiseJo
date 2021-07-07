@@ -1,7 +1,7 @@
 import React from "react";
 import "./TipsSection.scss";
 
-const TipsSection = ({ page }) => {
+const TipsSection = ({ page, item }) => {
 	return (
 		<section className="tips">
 			<h1 className="tips__title">Tips for best results:</h1>
@@ -14,22 +14,21 @@ const TipsSection = ({ page }) => {
 			)}
 			{page === "all" && (
 				<p className="tips__tip">
-					Missing the results from a store? Walmart and No Frills can sometimes take
-					up to two mins, so check again later if the results show up. If not do a
-					search for the same search word.
+					Missing the results from a store? Sometimes the search for items doesn't
+					work the first time around. Try submitting a search for {item} again.
 				</p>
 			)}
 			{page === "all" && (
 				<p className="tips__tip">
-					Not the items you're looking for? The results you see are the top 8
-					returned from each store according the item you submitted in the Shop form.
-					Try changing your search to something more specific.
+					Not the item you're looking for? The results you see are the top 8 returned
+					from each store for "{item}". Try changing your search to something more
+					specific.
 				</p>
 			)}
 			{(page === "all" || page === "capacity" || page === "solutions") && (
 				<p className="tips__tip">
-					Not seeing any results? Make sure your internet service is strong and try
-					the search again.
+					Not seeing any results? Make sure you have a strong internet service and
+					try the search again.
 				</p>
 			)}
 			{page === "receiptList" && (
