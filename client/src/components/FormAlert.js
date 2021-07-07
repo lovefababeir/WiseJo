@@ -8,8 +8,10 @@ const FormAlert = ({ page }) => {
 			{page === "shop" && (
 				<div className="submission-msg">
 					<h3>Search in Progress</h3> You will be redirected as soon as the results
-					from all the stores are retrieved. Some stores can be faster than others so
-					feel free to check the results available in the COMPARE page.
+					from all the stores are retrieved. Some stores may take up to 30s so we
+					thank you for your patience. Feel free to jump ahead to the COMPARE page to
+					see the results that are already available. Just don't forget to refresh
+					the page to see the updates.
 					<Link to="/about" className="link-to-page">
 						{"  "}
 						Learn more
