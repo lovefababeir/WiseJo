@@ -2,7 +2,7 @@ import React from "react";
 import "./StoreChecklist.scss";
 import success from "../assets/images/success.png";
 import fail from "../assets/images/fail.png";
-import box from "../assets/images/box.png";
+import box from "../assets/images/loading.png";
 import { v4 as uuidv4 } from "uuid";
 
 const StoreChecklist = ({ storelist }) => {
