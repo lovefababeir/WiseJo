@@ -28,7 +28,7 @@ const store = async function (searchWords) {
 			const title = `${
 				document.querySelector(
 					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--brand`,
-				)?.innerText
+				)?.innerText || ""
 			} ${
 				document.querySelector(
 					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--name`,
@@ -39,9 +39,10 @@ const store = async function (searchWords) {
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices.product-prices--product-tile > div > div > span > span:nth-child(1)`,
 			)?.innerText;
 
-			const capacity = document.querySelector(
-				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
-			)?.innerText;
+			const capacity =
+				document.querySelector(
+					`${path} > div > div > div.product-tile__details > div.product-tile__details__info > h3 > a > span > span.product-name__item.product-name__item--package-size`,
+				)?.innerText || "";
 
 			const unitCost = document.querySelector(
 				`${path} > div > div > div.product-tile__details > div.product-tile__details__info > div > div.product-prices.product-prices--product-tile > ul > li > span > span:nth-child(1)`,
