@@ -62,7 +62,7 @@ const ResultsAll = ({ list, deleteHandler, values, setValues, updateList }) => {
 					);
 				})}
 			</section>
-			<TipsSection page={"all"} />
+			<TipsSection page={"all"} item={values.searchWord} />
 		</animated.div>
 	);
 };
