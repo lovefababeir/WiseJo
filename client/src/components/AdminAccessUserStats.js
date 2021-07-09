@@ -26,7 +26,7 @@ const AdminAccessUserStats = ({ createToken, setErrMsg }) => {
 	}, [createToken, setErrMsg]);
 
 	return (
-		<div>
+		<>
 			<div
 				onClick={() => {
 					setOpenUserData(!openUserData);
@@ -49,7 +49,7 @@ const AdminAccessUserStats = ({ createToken, setErrMsg }) => {
 					<h4>Guests: {userData.guests}</h4>
 				</div>
 			</Collapse>
-		</div>
+		</>
 	);
 };
 
