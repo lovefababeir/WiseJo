@@ -37,7 +37,7 @@ const AdminAccessStoreStats = ({ createToken, setErrMsg, itemList }) => {
 	};
 
 	return (
-		<div>
+		<>
 			<div
 				onClick={() => {
 					setOpenStoreData(!openStoreData);
@@ -74,7 +74,7 @@ const AdminAccessStoreStats = ({ createToken, setErrMsg, itemList }) => {
 					</button>
 				</div>
 			</Collapse>
-		</div>
+		</>
 	);
 };
 
