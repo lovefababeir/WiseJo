@@ -5,11 +5,10 @@ import ButtonDashboard from "../components/ButtonDashboard.js";
 import AdminAccessOldItems from "../components/AdminAccessOldItems";
 import AdminAccessItems from "../components/AdminAccessItems";
 import AdminAccessStoreStats from "../components/AdminAccessStoreStats";
+import AdminAccessUserStats from "../components/AdminAccessUserStats";
 import axios from "axios";
 import "./AdminAccess.scss";
-import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
-import arrow from "../assets/images/collapsearrow.png";
 
 const AdminAccess = () => {
 	const { createToken } = useAuth();
@@ -19,9 +18,6 @@ const AdminAccess = () => {
 	const [errMsg2, setErrMsg2] = useState("");
 	const [errMsg3, setErrMsg3] = useState("");
 	const [errMsg4, setErrMsg4] = useState("");
-
-	const [userData, setUserData] = useState("");
-	const [openUserData, setOpenUserData] = useState(false);
 
 	useEffect(() => {
 		createToken().then(token => {
@@ -34,21 +30,6 @@ const AdminAccess = () => {
 				})
 				.catch(() => {
 					setErrMsg2("Could not get an update on the item stats.");
-				});
-		});
-		createToken().then(token => {
-			axios
-				.get(`${process.env.REACT_APP_BASE_URL}admin/items/users`, token)
-				.then(res => {
-					setUserData({
-						ids: res.data.users.IDs,
-						emails: res.data.users.email.length,
-						guests: res.data.users.IDs - res.data.users.email.length,
-					});
-					setErrMsg4("");
-				})
-				.catch(() => {
-					setErrMsg4("Could not get an update on the user stats.");
 				});
 		});
 	}, [createToken]);
@@ -89,30 +70,7 @@ const AdminAccess = () => {
 							setErrMsg={setErrMsg3}
 							itemList={itemList}
 						/>
-						<div
-							onClick={() => {
-								setOpenUserData(!openUserData);
-							}}
-							aria-controls="appData"
-							aria-expanded={openUserData}
-							className="appData__title"
-						>
-							<img
-								src={arrow}
-								className={`collapse-arrow ${
-									openUserData ? "collapse-arrow--open" : ""
-								}`}
-								alt=""
-							/>
-							SNAP & COMPARE User Data
-						</div>
-						<Collapse in={openUserData}>
-							<div id="appData" className="appData__stats">
-								<h4>Number of Users: {userData.ids}</h4>
-								<h4>Members: {userData.emails}</h4>
-								<h4>Guests: {userData.guests}</h4>
-							</div>
-						</Collapse>
+						<AdminAccessUserStats createToken={createToken} setErrMsg={setErrMsg4} />
 					</div>
 					<ButtonDashboard />
 				</Card.Body>
