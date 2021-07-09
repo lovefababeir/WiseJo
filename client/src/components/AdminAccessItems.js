@@ -29,7 +29,7 @@ const AdminAccessItems = ({
 	};
 
 	return (
-		<div>
+		<>
 			<div
 				onClick={() => {
 					setOpenList(!openList);
@@ -59,7 +59,7 @@ const AdminAccessItems = ({
 					</button>
 				</div>
 			</Collapse>
-		</div>
+		</>
 	);
 };
 
