@@ -4,36 +4,24 @@ import { useAuth } from "../contexts/AuthContext.js";
 import ButtonDashboard from "../components/ButtonDashboard.js";
 import AdminAccessOldItems from "../components/AdminAccessOldItems";
 import AdminAccessItems from "../components/AdminAccessItems";
+import AdminAccessStoreStats from "../components/AdminAccessStoreStats";
 import axios from "axios";
 import "./AdminAccess.scss";
 import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
 import arrow from "../assets/images/collapsearrow.png";
-import { v4 as uuidv4 } from "uuid";
 
 const AdminAccess = () => {
 	const { createToken } = useAuth();
 	const [itemList, setItemList] = useState("");
 	const [oldItems, setOldItems] = useState("");
-	const [storeData, setStoreData] = useState("");
-	const [errMsg, setErrMsg] = useState("");
-	const [openStoreData, setOpenStoreData] = useState(false);
+	const [errMsg1, setErrMsg1] = useState("");
+	const [errMsg2, setErrMsg2] = useState("");
+	const [errMsg3, setErrMsg3] = useState("");
+	const [errMsg4, setErrMsg4] = useState("");
+
 	const [userData, setUserData] = useState("");
 	const [openUserData, setOpenUserData] = useState(false);
-
-	const storeStats = () => {
-		createToken().then(token => {
-			axios
-				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
-				.then(res => {
-					setStoreData(res.data.storeResults);
-					setErrMsg("");
-				})
-				.catch(() => {
-					setErrMsg("Could not get an update on the store stats.");
-				});
-		});
-	};
 
 	useEffect(() => {
 		createToken().then(token => {
@@ -42,21 +30,10 @@ const AdminAccess = () => {
 				.then(res => {
 					setItemList(res.data.items.searchWords);
 					setOldItems(res.data.oldItems);
-					setErrMsg("");
+					setErrMsg2("");
 				})
 				.catch(() => {
-					setErrMsg("Could not get an update on the item stats.");
-				});
-		});
-		createToken().then(token => {
-			axios
-				.get(`${process.env.REACT_APP_BASE_URL}admin/items/stores`, token)
-				.then(res => {
-					setStoreData(res.data.storeResults);
-					setErrMsg("");
-				})
-				.catch(() => {
-					setErrMsg("Could not get an update on the store stats.");
+					setErrMsg2("Could not get an update on the item stats.");
 				});
 		});
 		createToken().then(token => {
@@ -68,10 +45,10 @@ const AdminAccess = () => {
 						emails: res.data.users.email.length,
 						guests: res.data.users.IDs - res.data.users.email.length,
 					});
-					setErrMsg("");
+					setErrMsg4("");
 				})
 				.catch(() => {
-					setErrMsg("Could not get an update on the user stats.");
+					setErrMsg4("Could not get an update on the user stats.");
 				});
 		});
 	}, [createToken]);
@@ -81,10 +58,14 @@ const AdminAccess = () => {
 				<Card.Body>
 					<h1 className="signin__appName">WiseJo</h1>
 					<h2 className="accountForms__title">Adminstrator</h2>
-					{errMsg && (
+					{(errMsg1 || errMsg2 || errMsg3 || errMsg4) && (
 						<Alert variant="danger" style={{ marginTop: "3rem" }}>
 							<Alert.Heading>Sorry, an error occurred</Alert.Heading>
-							<p>{errMsg}</p>
+							{errMsg1 && <p>{errMsg1}</p>}
+							{errMsg2 && <p>{errMsg2}</p>}
+							{errMsg3 && <p>{errMsg3}</p>}
+							{errMsg4 && <p>{errMsg4}</p>}
+
 							<hr />
 							<p className="mb-0">
 								Please check server and make sure you are signed-in
@@ -95,53 +76,19 @@ const AdminAccess = () => {
 						<AdminAccessOldItems
 							createToken={createToken}
 							oldItems={oldItems}
-							setErrMsg={setErrMsg}
+							setErrMsg={setErrMsg1}
 						/>
 						<AdminAccessItems
 							createToken={createToken}
-							setErrMsg={setErrMsg}
+							setErrMsg={setErrMsg2}
 							itemList={itemList}
 							setItemList={setItemList}
 						/>
-						<div
-							onClick={() => {
-								setOpenStoreData(!openStoreData);
-							}}
-							aria-controls="appData"
-							aria-expanded={openStoreData}
-							className="appData__title"
-						>
-							<img
-								src={arrow}
-								className={`collapse-arrow ${
-									openStoreData ? "collapse-arrow--open" : ""
-								}`}
-								alt=""
-							/>
-							Results on Store Performances
-						</div>
-						<Collapse in={openStoreData}>
-							<div id="appData" className="appData__stats">
-								<h4>Number of successful searches from each store:</h4>
-								<ul>
-									{storeData?.length &&
-										storeData.map(item => {
-											return (
-												<li key={uuidv4()}>
-													<span>
-														{item.store}: {item.num_of_results}
-													</span>{" "}
-													({parseInt((item.num_of_results / itemList?.length) * 100)}%)
-												</li>
-											);
-										})}
-								</ul>
-								<button className="formBtn" onClick={storeStats}>
-									Update store stats{" "}
-								</button>
-							</div>
-						</Collapse>
-
+						<AdminAccessStoreStats
+							createToken={createToken}
+							setErrMsg={setErrMsg3}
+							itemList={itemList}
+						/>
 						<div
 							onClick={() => {
 								setOpenUserData(!openUserData);
