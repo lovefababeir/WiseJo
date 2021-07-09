@@ -37,11 +37,11 @@ const AdminAccessOldItems = ({ oldItems, createToken, setErrMsg }) => {
 			</div>
 			<Collapse in={openOldItemsInfo}>
 				<div id="appData" className="appData__stats">
-					<h4>Number of outdated docs: {oldItems.num_of_old_docs}</h4>
+					<h4>Number of outdated docs: {oldItems?.num_of_old_docs}</h4>
 					<h4>List of outdated items:</h4>
 					<ul>
-						{oldItems.itemList &&
-							oldItems.itemList.map(item => {
+						{oldItems?.itemList &&
+							oldItems?.itemList.map(item => {
 								return <li key={uuidv4()}>{item}</li>;
 							})}
 					</ul>
