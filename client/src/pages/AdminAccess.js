@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
 import ButtonDashboard from "../components/ButtonDashboard.js";
+import AdminAccessOldItems from "../components/AdminAccessOldItems";
 import axios from "axios";
 import "./AdminAccess.scss";
 import Collapse from "react-bootstrap/Collapse";
@@ -16,7 +17,6 @@ const AdminAccess = () => {
 	const [storeData, setStoreData] = useState("");
 	const [errMsg, setErrMsg] = useState("");
 	const [openList, setOpenList] = useState(false);
-	const [openOldItemsInfo, setOpenOldItemsInfo] = useState(false);
 	const [openStoreData, setOpenStoreData] = useState(false);
 	const [userData, setUserData] = useState("");
 	const [openUserData, setOpenUserData] = useState(false);
@@ -90,17 +90,6 @@ const AdminAccess = () => {
 		});
 	}, [createToken]);
 
-	const deleteOldEntries = () => {
-		createToken()
-			.then(token => {
-				axios.delete(`${process.env.REACT_APP_BASE_URL}admin/olditems`, token);
-				setErrMsg("");
-			})
-			.catch(err => {
-				setErrMsg(`Could not delete old items:${err}`);
-			});
-	};
-
 	return (
 		<>
 			<Card>
@@ -118,40 +107,11 @@ const AdminAccess = () => {
 						</Alert>
 					)}
 					<div className="admin">
-						<div
-							onClick={() => {
-								setOpenOldItemsInfo(!openOldItemsInfo);
-							}}
-							aria-controls="appData"
-							aria-expanded={openOldItemsInfo}
-							className="appData__title"
-						>
-							<img
-								src={arrow}
-								className={`collapse-arrow ${
-									openOldItemsInfo ? "collapse-arrow--open" : ""
-								}`}
-								alt=""
-							/>
-							Outdated Documents of Items
-						</div>
-						<Collapse in={openOldItemsInfo}>
-							<div id="appData" className="appData__stats">
-								<h4>Number of outdated docs: {oldItems.num_of_old_docs}</h4>
-								<h4>List of outdated items:</h4>
-								<ul>
-									{oldItems.itemList &&
-										oldItems.itemList.map(item => {
-											return <li key={uuidv4()}>{item}</li>;
-										})}
-								</ul>
-
-								<button className="formBtn" onClick={deleteOldEntries}>
-									Delete Old Entries{" "}
-								</button>
-							</div>
-						</Collapse>
-
+						<AdminAccessOldItems
+							createToken={createToken}
+							oldItems={oldItems}
+							setErrMsg={setErrMsg}
+						/>
 						<div
 							onClick={() => {
 								setOpenList(!openList);
