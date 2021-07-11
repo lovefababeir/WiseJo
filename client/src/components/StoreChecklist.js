@@ -19,15 +19,24 @@ const StoreChecklist = ({ storelist }) => {
 								src={
 									storelist[x] === "loading"
 										? box
-										: storelist[x] === "success"
-										? success
-										: fail
+										: storelist[x] === "fail"
+										? fail
+										: success
 								}
 								alt={`Results from ${x} are ${
 									storelist[x] === "success" ? "available" : "not available"
 								}`}
 							/>
-							{x === "longos" ? "Longo's" : x === "nofrills" ? "No Frills" : x}{" "}
+							<span>
+								{x === "longos" ? "Longo's" : x === "nofrills" ? "No Frills" : x}
+							</span>{" "}
+							(
+							{storelist[x] === "fail"
+								? "not available"
+								: storelist[x] === "loading"
+								? "loading..."
+								: `${storelist[x]} items`}
+							)
 						</li>
 					);
 				})}
