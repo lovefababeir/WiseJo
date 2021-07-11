@@ -68,7 +68,7 @@ const Search = () => {
 						.then(result => {
 							if (result.data.data.longos.length) {
 								setStoreList(storelist => {
-									return { ...storelist, longos: "success" };
+									return { ...storelist, longos: result.data.data.longos.length };
 								});
 							} else {
 								setStoreList(storelist => {
@@ -95,7 +95,7 @@ const Search = () => {
 						.then(result => {
 							if (result.data.data.sobeys.length) {
 								setStoreList(storelist => {
-									return { ...storelist, sobeys: "success" };
+									return { ...storelist, sobeys: result.data.data.sobeys.length };
 								});
 							} else {
 								setStoreList(storelist => {
@@ -121,7 +121,7 @@ const Search = () => {
 						.then(result => {
 							if (result.data.data.loblaws.length) {
 								setStoreList(storelist => {
-									return { ...storelist, loblaws: "success" };
+									return { ...storelist, loblaws: result.data.data.loblaws.length };
 								});
 							} else {
 								setStoreList(storelist => {
@@ -152,7 +152,10 @@ const Search = () => {
 							});
 							if (result.data.data.superstore.length) {
 								setStoreList(storelist => {
-									return { ...storelist, superstore: "success" };
+									return {
+										...storelist,
+										superstore: result.data.data.superstore.length,
+									};
 								});
 							} else {
 								setStoreList(storelist => {
@@ -180,7 +183,7 @@ const Search = () => {
 						.then(result => {
 							if (result.data.data.nofrills.length) {
 								setStoreList(storelist => {
-									return { ...storelist, nofrills: "success" };
+									return { ...storelist, nofrills: result.data.data.nofrills.length };
 								});
 							} else {
 								setStoreList(storelist => {
@@ -209,7 +212,7 @@ const Search = () => {
 						// 	console.log(result, result.data.data.walmart.length);
 						// 	if (result.data.data.walmart.length) {
 						// 		setStoreList(storelist => {
-						// 			return { ...storelist, walmart: "success" };
+						// 			return { ...storelist, walmart: result.data.data.walmart.length };
 						// 		});
 						// 	} else {
 						// 		setStoreList(storelist => {
