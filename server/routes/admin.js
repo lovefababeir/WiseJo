@@ -6,7 +6,6 @@ const ReceiptCollection = require("../models/receipts");
 
 router.get("/items", async (req, res) => {
 	const auth = req.currentUser;
-
 	if (auth) {
 		const today = new Date();
 		const daysSinceSunday =
@@ -105,15 +104,34 @@ router.get("/items/users", async (req, res) => {
 	}
 });
 
-router.get("/receipts/users", async (req, res) => {
+router.get("/receipts", async (req, res) => {
 	const auth = req.currentUser;
 
 	if (auth) {
 		const receiptUsersID = await ReceiptCollection.distinct("user_id");
 		const receiptUsersEmail = await ReceiptCollection.distinct("user_email");
 
+		const receiptList = [];
+		const list = await ReceiptCollection.find({});
+		list.forEach(user => {
+			receiptList.push(...user.receipts);
+		});
+
+		const stores = receiptList
+			.map(receipt => {
+				return receipt.store;
+			})
+			.sort();
+		const storesList = [...new Set(stores)];
+
+		const storeData = storesList.map(store => {
+			return { store: store, receiptQty: stores.filter(x => x === store).length };
+		});
+
 		res.send({
-			receipt: { IDs: receiptUsersID.length, emails: receiptUsersEmail },
+			IDs: receiptUsersID.length,
+			emails: receiptUsersEmail,
+			receiptData: storeData,
 		});
 	} else {
 		res
