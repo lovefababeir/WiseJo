@@ -41,20 +41,24 @@ const AdminAccessReceipts = ({ createToken }) => {
 			</div>
 			<Collapse in={openReceiptsData}>
 				<div id="appData" className="appData__stats">
-					<h4>Number of users tracking their receipts: {receiptsData.IDs}</h4>
-					<h4>Receipts user's are tracking:</h4>
-					<ul>
-						{receiptsData.receiptData.length &&
-							receiptsData.receiptData.map(x => {
-								return (
-									<li key={uuidv4()}>
-										<span>
-											{x.store}: {x.receiptQty}
-										</span>{" "}
-									</li>
-								);
-							})}
-					</ul>
+					{receiptsData && (
+						<>
+							<h4>Number of users tracking their receipts: {receiptsData?.IDs}</h4>
+							<h4>Receipts user's are tracking:</h4>
+							<ul>
+								{receiptsData?.receiptData.length &&
+									receiptsData?.receiptData.map(x => {
+										return (
+											<li key={uuidv4()}>
+												<span>
+													{x.store}: {x.receiptQty}
+												</span>{" "}
+											</li>
+										);
+									})}
+							</ul>
+						</>
+					)}
 					{/* <button className="formBtn" onClick={storeStats}>
 						Update store stats{" "}
 					</button> */}
