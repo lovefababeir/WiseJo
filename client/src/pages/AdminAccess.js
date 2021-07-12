@@ -6,6 +6,7 @@ import AdminAccessOldItems from "../components/AdminAccessOldItems";
 import AdminAccessItems from "../components/AdminAccessItems";
 import AdminAccessStoreStats from "../components/AdminAccessStoreStats";
 import AdminAccessUserStats from "../components/AdminAccessUserStats";
+import AdminAccessReceipts from "../components/AdminAccessReceipts";
 import axios from "axios";
 import "./AdminAccess.scss";
 import Alert from "react-bootstrap/Alert";
@@ -71,6 +72,7 @@ const AdminAccess = () => {
 							itemList={itemList}
 						/>
 						<AdminAccessUserStats createToken={createToken} setErrMsg={setErrMsg4} />
+						<AdminAccessReceipts createToken={createToken} />
 					</div>
 					<ButtonDashboard />
 				</Card.Body>
