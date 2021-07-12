@@ -40,7 +40,7 @@ const AdminAccessUserStats = ({ createToken, setErrMsg }) => {
 					className={`collapse-arrow ${openUserData ? "collapse-arrow--open" : ""}`}
 					alt=""
 				/>
-				SNAP & COMPARE User Data
+				SHOP & COMPARE User Data
 			</div>
 			<Collapse in={openUserData}>
 				<div id="appData" className="appData__stats">
