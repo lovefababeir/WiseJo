@@ -191,7 +191,6 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 			}
 		})
 		.then(updatedRecord => {
-			// console.log(store, "FINALIZED ITEM RECORD============");
 			return userCollection
 				.find({
 					user_id: userid,
@@ -205,10 +204,8 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 						!updatedRecord[store].length ||
 						userRecord[store].length
 					) {
-						// console.log(store, "YAY, User results is already updated");
 						return userRecord;
 					} else {
-						// console.log(store, "User has no results from ", store, "Adding========");
 						return userCollection.findOneAndUpdate(
 							{
 								user_id: userid,
@@ -228,7 +225,6 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 				});
 		})
 		.then(updatedUserCopy => {
-			//  console.log(store, "Finally DONE! User record:", updatedUserCopy);
 			if (updatedUserCopy) {
 				return {
 					code: 201,
