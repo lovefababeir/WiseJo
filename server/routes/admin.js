@@ -69,6 +69,8 @@ router.get("/items/stores", async (req, res) => {
 		];
 		const totalDocs = await ItemResults.countDocuments();
 
+		//Counts the number of documents that has the results for each store.
+		//Returns an object that states the store and the number of successful searches.
 		const storeResults = await Promise.all(
 			storesList.map(async store => {
 				const resultsCount = await ItemResults.where({
