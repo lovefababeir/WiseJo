@@ -123,11 +123,14 @@ router.get("/receipts", async (req, res) => {
 		const receiptUsersEmail = await ReceiptCollection.distinct("user_email");
 
 		const receiptList = [];
+
+		//Using list of all receipt documents to retrieve all records of receipts and put them together in an array - receiptList
 		const list = await ReceiptCollection.find({});
 		list.forEach(user => {
 			receiptList.push(...user.receipts);
 		});
 
+		//Using the list of receipts to create a list of the stores
 		const stores = receiptList
 			.map(receipt => {
 				return receipt.store;
@@ -135,6 +138,7 @@ router.get("/receipts", async (req, res) => {
 			.sort();
 		const storesList = [...new Set(stores)];
 
+		//Counts the number of receipts from each store
 		const storeData = storesList.map(store => {
 			return { store: store, receiptQty: stores.filter(x => x === store).length };
 		});
