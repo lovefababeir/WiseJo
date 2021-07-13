@@ -16,14 +16,23 @@ router.get("/items", async (req, res) => {
 			today.getUTCDate() - daysSinceSunday,
 		);
 
+		// A list of the items searched.
 		const itemsSearchWords = await ItemResults.distinct("searchItem");
+
+		// A list of all the times the items were searched. Some times have the same search words if the old record has not been deleted.
 		const itemsSearchTime = await ItemResults.distinct("searchTime");
+
+		//list of the items that have old records.
 		const oldSearches = await ItemResults.distinct("searchItem", {
 			searchTime: { $lt: sunday.getTime() },
 		});
+
+		//Number of documents that are old and need to be deleted.
 		const oldDocs = await ItemResults.where({
 			searchTime: { $lt: sunday.getTime() },
 		}).countDocuments();
+
+		//Number of documents
 		const docs = await ItemResults.countDocuments();
 
 		res.send({
