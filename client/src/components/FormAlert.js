@@ -12,7 +12,7 @@ const FormAlert = ({ page }) => {
 					thank you for your patience. Feel free to jump ahead to the COMPARE page to
 					see the results that are already available. If you do, don't forget to
 					refresh the page to see the updates.
-					<Link to="/about" className="link-to-page">
+					<Link to="/about" className="link-to-page" target="_blank">
 						{"  "}
 						Learn more
 					</Link>
