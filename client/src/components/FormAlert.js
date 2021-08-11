@@ -22,7 +22,7 @@ const FormAlert = ({ page }) => {
 				<div className="submission-msg">
 					<h3>Reading Receipt</h3> You will be redirected to the TRACK page as soon
 					as your receipt has been read and analyzed.
-					<Link to="/about" className="link-to-page">
+					<Link to="/about" className="link-to-page" target="_blank">
 						{"  "}
 						Learn more
 					</Link>
