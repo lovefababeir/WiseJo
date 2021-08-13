@@ -62,7 +62,7 @@ function SignInScreen() {
 							SNAP and TRACK features. Log in for free to get started!
 						</p>
 					</div>
-					<div>
+					<div className="signin__intro">
 						<p className="signin__text">Please sign-in:</p>
 						<Collapse in={!emailPassword}>
 							<div id="OAuthSignIn">
