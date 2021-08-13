@@ -52,24 +52,38 @@ function SignInScreen() {
 
 			<Card className="signin__card">
 				<Card.Body className="loginForm">
-					<h1 className="signin__appName">WiseJo</h1>
-					<p className="signin__text">Please sign-in:</p>
-					<Collapse in={!emailPassword}>
-						<div id="OAuthSignIn">
-							<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-						</div>
-					</Collapse>
-					<button
-						onClick={() => {
-							setEmailPassword(!emailPassword);
-						}}
-						aria-controls="OAuthSignIn emailPassword"
-						aria-expanded={emailPassword}
-						className="emailPassword__button"
-					>
-						{!emailPassword ? "Sign in with Account" : "Sign with Third Party"}
-					</button>
-					<EmailPasswordLogin emailPassword={emailPassword} />
+					<h1 className="signin__appName">WiseJo</h1>{" "}
+					<div className="signin__intro">
+						<p>
+							WiseJo is an app where you can search up items in your grocery list and
+							compare up to date prices from different stores. You can tailor the
+							results and get some advice for what would be your best option. You can
+							also keep a record of all your receipts and track your expenses using the
+							SNAP and TRACK features. Log in for free to get started!
+						</p>
+					</div>
+					<div>
+						<p className="signin__text">Please sign-in:</p>
+						<Collapse in={!emailPassword}>
+							<div id="OAuthSignIn">
+								<StyledFirebaseAuth
+									uiConfig={uiConfig}
+									firebaseAuth={firebase.auth()}
+								/>
+							</div>
+						</Collapse>
+						<button
+							onClick={() => {
+								setEmailPassword(!emailPassword);
+							}}
+							aria-controls="OAuthSignIn emailPassword"
+							aria-expanded={emailPassword}
+							className="emailPassword__button"
+						>
+							{!emailPassword ? "Sign in with Account" : "Sign with Third Party"}
+						</button>
+						<EmailPasswordLogin emailPassword={emailPassword} />
+					</div>
 				</Card.Body>
 			</Card>
 		</section>
