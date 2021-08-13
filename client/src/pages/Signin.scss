@@ -10,6 +10,7 @@
 		@include flex(column, center, center);
 		&.loginForm {
 			@include fadeIn(ease-in-out, 6s);
+			@include flex(row, space-around, center, wrap);
 		}
 	}
 }
@@ -51,6 +52,8 @@
 		font-family: "Kaushan Script", cursive;
 		text-align: center;
 		font-size: 7rem;
+		width: 100vw;
+		align-self: flex-end;
 		@include mobileM {
 			margin: 1rem auto;
 			font-size: 10rem;
