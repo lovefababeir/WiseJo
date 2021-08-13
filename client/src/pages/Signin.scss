@@ -64,6 +64,14 @@
 			display: block;
 		}
 	}
+	&__intro {
+		font-size: 1.6rem;
+		width: 40vw;
+		@include flex(column, center, center);
+		&:last-child {
+			border-left: rgb(218, 218, 218) solid 0.2rem;
+		}
+	}
 }
 
 .firebaseui-card-content {
