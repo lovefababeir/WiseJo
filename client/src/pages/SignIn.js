@@ -52,8 +52,8 @@ function SignInScreen() {
 
 			<Card className="signin__card">
 				<Card.Body className="loginForm">
-					<h1 className="signin__appName">WiseJo</h1>{" "}
 					<div className="signin__intro">
+						<h1 className="signin__appName">WiseJo</h1>{" "}
 						<p>
 							WiseJo is an app where you can search up items in your grocery list and
 							compare up to date prices from different stores. You can tailor the
