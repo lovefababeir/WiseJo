@@ -58,7 +58,10 @@
 		// width: 100vw;
 		@include mobileM {
 			margin: 1rem auto;
-			font-size: 10rem;
+			font-size: 8rem;
+			@include surface {
+				font-size: 10rem;
+			}
 		}
 	}
 	&__text {
@@ -70,14 +73,18 @@
 		}
 	}
 	&__intro {
-		font-size: 1.6rem;
 		@include flex(column, center, center);
 		// align-self: flex-start;
 		padding: 0 5vw;
 		margin-bottom: 3rem;
 		max-width: 60rem;
-		@include breakpoint(720px) {
-			width: 50vw;
+		font-size: 1.3rem;
+		@include surface {
+			font-size: 1.5rem;
+			@include breakpoint(720px) {
+				font-size: 1.6rem;
+				width: 50vw;
+			}
 		}
 		&:last-child {
 			width: 30vw;
