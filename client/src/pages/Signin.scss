@@ -52,8 +52,7 @@
 		font-family: "Kaushan Script", cursive;
 		text-align: center;
 		font-size: 7rem;
-		width: 100vw;
-
+		// width: 100vw;
 		@include mobileM {
 			margin: 1rem auto;
 			font-size: 10rem;
@@ -71,9 +70,11 @@
 		font-size: 1.6rem;
 		width: 40vw;
 		@include flex(column, center, center);
-		align-self: flex-start;
+		// align-self: flex-start;
 		&:last-child {
 			border-left: rgb(218, 218, 218) solid 0.2rem;
+			min-width: 26rem;
+			max-width: 37rem;
 		}
 		& > p {
 			text-align: center;
