@@ -68,13 +68,16 @@
 	}
 	&__intro {
 		font-size: 1.6rem;
-		width: 40vw;
+		width: 50vw;
 		@include flex(column, center, center);
 		// align-self: flex-start;
 		&:last-child {
-			border-left: rgb(218, 218, 218) solid 0.2rem;
+			width: 30vw;
 			min-width: 26rem;
 			max-width: 37rem;
+			@include breakpoint(640px) {
+				border-left: rgb(218, 218, 218) solid 0.2rem;
+			}
 		}
 		& > p {
 			text-align: center;
