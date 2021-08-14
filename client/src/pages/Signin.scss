@@ -73,11 +73,18 @@
 		font-size: 1.6rem;
 		@include flex(column, center, center);
 		// align-self: flex-start;
+		padding: 0 5vw;
+		margin-bottom: 3rem;
+		max-width: 60rem;
+		@include breakpoint(720px) {
+			width: 50vw;
+		}
 		&:last-child {
 			width: 30vw;
 			min-width: 26rem;
 			max-width: 37rem;
-			@include breakpoint(640px) {
+			padding: 0;
+			@include breakpoint(720px) {
 				border-left: rgb(218, 218, 218) solid 0.2rem;
 			}
 		}
