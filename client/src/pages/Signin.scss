@@ -10,7 +10,7 @@
 		@include flex(column, center, center);
 		&.loginForm {
 			@include fadeIn(ease-in-out, 6s);
-			@include flex(row, space-around, center, wrap);
+			@include flex(row, center, center, wrap);
 		}
 	}
 }
