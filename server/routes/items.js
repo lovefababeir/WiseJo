@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const longos = require("../webScrapingFunctions/gateway");
+const longos = require("../webScrapingFunctions/longos");
 const sobeys = require("../webScrapingFunctions/sobeys");
 const walmart = require("../webScrapingFunctions/walmart");
 const nofrills = require("../webScrapingFunctions/nofrills");
