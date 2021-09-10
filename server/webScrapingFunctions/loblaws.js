@@ -15,7 +15,8 @@ const store = async function (searchWords) {
 		let topResults = [];
 
 		for (var i = 1; i < 9; i++) {
-			const path = `#site-content > div > div > div > div.with-tab-view > div > div.product-grid > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${i})`;
+			const path = `#site-content > div > div > div > div.with-tab-view > div > div.product-grid__results > div.product-grid__results__products > div > ul > li:nth-child(${i})`;
+
 			if (!document.querySelector(path)) {
 				break;
 			}
