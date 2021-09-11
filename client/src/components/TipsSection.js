@@ -12,13 +12,13 @@ const TipsSection = ({ page, item }) => {
 					to this page to see what new adice I have for you.
 				</p>
 			)}
-			{page === "all" && (
+			{page === "all" && item && (
 				<p className="tips__tip">
 					Missing the results from a store? Sometimes the search for items doesn't
 					work the first time around. Try submitting a search for {item} again.
 				</p>
 			)}
-			{page === "all" && (
+			{page === "all" && item && (
 				<p className="tips__tip">
 					Not the item you're looking for? The results you see are the top 8 returned
 					from each store for "{item}". Try changing your search to something more
