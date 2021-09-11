@@ -72,7 +72,7 @@ const Search = () => {
 								});
 							} else {
 								setStoreList(storelist => {
-									return { ...storelist, longos: "fails" };
+									return { ...storelist, longos: "fail" };
 								});
 							}
 						})
