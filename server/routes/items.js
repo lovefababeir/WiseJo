@@ -165,7 +165,7 @@ const conductSearch = async (storeFunction, item, time, userid, store) => {
 				// console.log(store, "already has results=======");
 				return existingRecord[0];
 			} else {
-				console.log(store, "has no results");
+				console.log(store, "has no results for", item);
 				return storeFunction
 					.store(item)
 					.then(storeResult => {
